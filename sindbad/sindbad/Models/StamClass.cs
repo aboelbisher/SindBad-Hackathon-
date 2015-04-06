@@ -7,6 +7,7 @@ namespace sindbad.Models
 {
     public class StamClass
     {
+       
         //tel7aso teze ya e5wan :D 
     }
 }
