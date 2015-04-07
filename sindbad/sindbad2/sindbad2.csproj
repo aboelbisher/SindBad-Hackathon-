@@ -92,6 +92,7 @@
     <Content Include="images\2.png" />
     <Content Include="images\3.jpg" />
     <Content Include="images\3.png" />
+    <Content Include="images\3omar.jpg" />
     <Content Include="images\4-.jpg" />
     <Content Include="images\4.jpg" />
     <Content Include="images\4.png" />
@@ -106,9 +107,13 @@
     <Content Include="images\9-.jpg" />
     <Content Include="images\9.jpg" />
     <Content Include="images\a.png" />
+    <Content Include="images\a7mad.jpg" />
     <Content Include="images\aa.png" />
+    <Content Include="images\abo elrazek.jpg" />
+    <Content Include="images\ana.jpg" />
     <Content Include="images\arrow.png" />
     <Content Include="images\banner.jpg" />
+    <Content Include="images\banner.png" />
     <Content Include="images\bb.png" />
     <Content Include="images\camera.png" />
     <Content Include="images\cc.png" />
@@ -138,6 +143,7 @@
     <Content Include="images\men.png" />
     <Content Include="images\menu.png" />
     <Content Include="images\o.png" />
+    <Content Include="images\Rami.jpg" />
     <Content Include="images\refresh.png" />
     <Content Include="images\round.png" />
     <Content Include="images\round2.png" />
@@ -185,6 +191,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="images\Thumbs.db" />
+    <Content Include="images\banner.rar" />
+    <Content Include="images\images.rar" />
+    <Content Include="images\logo.rar" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
