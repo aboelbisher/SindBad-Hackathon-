@@ -13,7 +13,8 @@ namespace sindbad2
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            SendBadHttpRequest.getPlaceId("barcelona");
+            GoogleAttractions[] attractions = new GoogleAttractions[4] {GoogleAttractions.AMUSE_PARK , GoogleAttractions.BAR , GoogleAttractions.CASINO , GoogleAttractions.NIGHT_CLUB} ;
+            Journey journey = new Journey("Tel-Aviv", PRICE.NONE, PRICE.NONE, attractions, 2000);
 
         }
     }
