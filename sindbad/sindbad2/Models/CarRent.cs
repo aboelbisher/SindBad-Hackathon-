@@ -62,20 +62,14 @@ namespace sindbad2.Models
                         double estimatedTotal = double.Parse(_car["estimated_total"]["amount"].ToString());
                         Car car = new Car(price, type, imageUrl, estimatedTotal, providerName, line1, city);
                         cars.Add(car);
+
+                        var t = car.ToString();
                         ++count;
                         if (count == 10)
                         {
                             return;
                         }
                     }
-                }
-                foreach (var car in cars)
-                {
-                    if (car == null)
-                    {
-                        continue;
-                    }
-                    var t = car.ToString();
                 }
             }
         }
