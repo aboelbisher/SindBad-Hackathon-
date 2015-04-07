@@ -16,6 +16,10 @@ namespace sindbad2
             List<Car> cars = t.cars;
             foreach (var car in cars)
             {
+                if (car == null)
+                {
+                    continue;
+                }
                 Console.WriteLine(car.ToString());
             }
             GlobalConfiguration.Configure(WebApiConfig.Register);
