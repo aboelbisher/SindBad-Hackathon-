@@ -74,7 +74,7 @@ namespace sindbad2.Models
         private Pair location; // First = latitude , Second = longtitude
         private string cityName;
          */ 
-        private PRICE maxPrice;
+        private int maxPrice;
         private GoogleAttractions[] attractionsEnum;
         private int radius;
         private List<Attraction> attractions;
@@ -86,8 +86,15 @@ namespace sindbad2.Models
         private bool direct;
         private TRAVEL_CLASS travelClass;
 
+        private Trip trip;
+
         private Dictionary<string, Airport> fromAirports;
         private Dictionary<string, Airport> toAirports;
+
+
+        private Object thisLock = new Object();
+
+        
 
         //private 
         //private string[] toIATA;
@@ -100,7 +107,7 @@ namespace sindbad2.Models
         /// </summary>
         /// <param name="cityName"></param>
         /// <param name="raduis"></param>
-        public Journey(string fromCityName, string toCityName , PRICE maxPrice, GoogleAttractions[] attractions,string startDate ,
+        public Journey(string fromCityName, string toCityName , int maxPrice, GoogleAttractions[] attractions,string startDate ,
             string returnDate , int adultsNum , int childrenNum , int infantsNum , bool direct ,
             TRAVEL_CLASS travelClass , int raduis = 100)
         {
@@ -122,7 +129,6 @@ namespace sindbad2.Models
             this.radius = raduis;
 
             this.getFromPlaceId(this.fromCity.name);
-            this.getToPlaceId(this.toCity.name);
 
         }
 
@@ -156,6 +162,9 @@ namespace sindbad2.Models
 
                 this.fromCity.placeId = placeId;
             }
+
+            this.getToPlaceId(this.toCity.name);
+
         }
 
         private void getToPlaceId(string name)
@@ -186,7 +195,6 @@ namespace sindbad2.Models
             }
 
             this.getFromAirportsInfo(this.fromCity.location);
-            this.getToAirportsInfo(this.toCity.location);
 
         }
 
@@ -317,6 +325,9 @@ namespace sindbad2.Models
 
             }
 
+            this.getToAirportsInfo(this.toCity.location);
+
+
         }
 
         private void getToAirportsInfo(Pair location)
@@ -346,13 +357,16 @@ namespace sindbad2.Models
             }
 
             
-            foreach(var fromAirPort in this.fromAirports)
+            foreach(KeyValuePair<string, Airport> fromAirPort in this.fromAirports)
             {
-                foreach(var toAirPort in this.toAirports)
+                foreach (KeyValuePair<string, Airport> toAirPort in this.toAirports)
                 {
-                    
+                    this.getFlights(fromAirPort.Value, toAirPort.Value, this.startDate, this.endDate
+                        , this.adultsNum, this.childrenNum, this.infantsNum, this.direct, this.maxPrice, this.travelClass);
                 }
             }
+
+            var x = 0;
 
 
         }
@@ -370,15 +384,17 @@ namespace sindbad2.Models
             string departureDateApi = "&departure_date=" + startDate;
             string retDateApi = "&return_date=" + returnDate;
             string adultsApi = "&adults=" + adultsNum.ToString();
-            string childrenApi = "&adults=" + childrenNum.ToString();
+            string childrenApi = "&children=" + childrenNum.ToString();
             string infantsApi = "&infants=" + infantsNum.ToString();
-            string directApi = "&direct=" + direct.ToString();
+            string directApi = "&direct=false"; //+ direct.ToString().ToLower();
             string currencyApi = "&currency=USD";
             string maxPriceApi = "&max_price=" + maxPrice.ToString();
             string travelClassApi = "&travel_class=" + travelClass.ToString();
+            string resultsNumApi = "&number_of_results=1";
+            string appApiKey = "&apikey=" + Config.amadeuisAppId;
 
             string apiUrl = Config.getFlightsApi + originApi + dstApi + departureDateApi + retDateApi + adultsApi + childrenApi
-                + infantsApi + directApi + currencyApi + maxPriceApi + travelClassApi;
+                + infantsApi + directApi + currencyApi + maxPriceApi + travelClassApi + resultsNumApi+  appApiKey;
 
             SendBadHttpRequest.sendHttpRequest(apiUrl, getFlightsComplete);
 
@@ -396,14 +412,28 @@ namespace sindbad2.Models
                 var r = new StreamReader(stream);
                 var resp = r.ReadToEnd();
 
-                JArray values = JsonConvert.DeserializeObject<JArray>(resp);
+                Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(resp);
 
-                //this.toAirports = Airport.makeAirport(values);
+                lock (this.thisLock)
+                {
+                    if (this.trip == null)
+                    {
 
-                var x = 0;
-
-
+                        this.trip = Trip.MakeTrip(values, this.fromAirports.Union(this.toAirports).ToDictionary(k => k.Key, v => v.Value));
+                        //var result = d1.Union(d2).Union(d3).ToDictionary (k => k.Key, v => v.Value
+                    }
+                    else
+                    {
+                        Trip tmpTrip = Trip.MakeTrip(values, this.fromAirports.Union(this.toAirports).ToDictionary(k => k.Key, v => v.Value));
+                        if (tmpTrip.price < this.trip.price)
+                        {
+                            this.trip = tmpTrip;
+                        }
+                    }
+                }
             }
+
+            var x = 0;
 
         }
 
