@@ -74,6 +74,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="calculate.html" />
+    <Content Include="css\bootstrap-slider.css" />
+    <Content Include="css\jquery.steps.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\normalize.css" />
+    <Content Include="css\style2.css" />
     <Content Include="Global.asax" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\popuo-box.css" />
@@ -129,6 +135,32 @@
     <Content Include="images\heart.png" />
     <Content Include="images\home.png" />
     <Content Include="images\icons.png" />
+    <Content Include="images\icons\amusement-park.png" />
+    <Content Include="images\icons\amusement-park2.png" />
+    <Content Include="images\icons\bar.png" />
+    <Content Include="images\icons\bar2.png" />
+    <Content Include="images\icons\bowling-alley.png" />
+    <Content Include="images\icons\bowling-alley2.png" />
+    <Content Include="images\icons\cafe.png" />
+    <Content Include="images\icons\cafe2.png" />
+    <Content Include="images\icons\casino.png" />
+    <Content Include="images\icons\casino2.png" />
+    <Content Include="images\icons\movie-theater.png" />
+    <Content Include="images\icons\movie-theater2.png" />
+    <Content Include="images\icons\museum.png" />
+    <Content Include="images\icons\museum2.png" />
+    <Content Include="images\icons\night-clup.png" />
+    <Content Include="images\icons\night-clup2.png" />
+    <Content Include="images\icons\night-life.png" />
+    <Content Include="images\icons\night-life2.png" />
+    <Content Include="images\icons\park.png" />
+    <Content Include="images\icons\park2.png" />
+    <Content Include="images\icons\restaurant.png" />
+    <Content Include="images\icons\restaurant2.png" />
+    <Content Include="images\icons\spa.png" />
+    <Content Include="images\icons\spa2.png" />
+    <Content Include="images\icons\zoo.png" />
+    <Content Include="images\icons\zoo2.png" />
     <Content Include="images\img.png" />
     <Content Include="images\line-1.png" />
     <Content Include="images\line-2.png" />
@@ -151,17 +183,23 @@
     <Content Include="images\search-1.png" />
     <Content Include="images\search.png" />
     <Content Include="images\sp-1.png" />
+    <Content Include="images\style.png" />
     <Content Include="images\twitter-1.png" />
     <Content Include="images\twitter-2.png" />
     <Content Include="images\twitter.png" />
+    <Content Include="images\yourtravel.png" />
     <Content Include="index.html" />
+    <Content Include="js\bootstrap-datepicker.js" />
+    <Content Include="js\bootstrap-slider.js" />
     <Content Include="js\classie.js" />
     <Content Include="js\easing.js" />
     <Content Include="js\jquery.magnific-popup.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\jquery.mixitup.min.js" />
+    <Content Include="js\jquery.steps.min.js" />
     <Content Include="js\jquery.swipebox.min.js" />
     <Content Include="js\modernizr.custom.min.js" />
+    <Content Include="js\modernizr.js" />
     <Content Include="js\move-top.js" />
     <Content Include="js\responsiveslides.min.js" />
     <Content Include="js\uisearch.js" />
@@ -195,6 +233,7 @@
     <Content Include="images\banner.rar" />
     <Content Include="images\images.rar" />
     <Content Include="images\logo.rar" />
+    <Content Include="data\countries.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
