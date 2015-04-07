@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using sindbad2.Models;
 
 namespace sindbad2
 {
@@ -11,6 +12,9 @@ namespace sindbad2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            GoogleAttractions[] attractions = new GoogleAttractions[4] {GoogleAttractions.AMUSE_PARK , GoogleAttractions.BAR , GoogleAttractions.CASINO , GoogleAttractions.NIGHT_CLUB} ;
+            Journey journey = new Journey("Tel-Aviv", PRICE.NONE, PRICE.NONE, attractions, 2000);
 
         }
     }

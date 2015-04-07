@@ -5,7 +5,5 @@ using System.Web;
 
 namespace sindbad2.Models
 {
-    public class StamClass
-    {
-    }
+
 }
