@@ -214,13 +214,10 @@
     </Compile>
     <Compile Include="Models\Airport.cs" />
     <Compile Include="Models\Attraction.cs" />
-    <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\CarRent.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Journey.cs" />
-    <Compile Include="Models\Median.cs" />
     <Compile Include="Models\SendBadHttpRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="default.aspx.cs">
