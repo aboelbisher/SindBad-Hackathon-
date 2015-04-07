@@ -76,6 +76,10 @@ namespace sindbad2.Models
                     }
                     else
                     {
+                        flight.from = new Airport();
+                        flight.from.IATA = it["origin"]["airport"].ToString();
+                        flight.from.cityIata = flight.from.IATA;
+                        flight.from.name = flight.from.IATA;
                     }
                     if (Airports.ContainsKey(it["destination"]["airport"].ToString()))
                     {
@@ -83,11 +87,15 @@ namespace sindbad2.Models
                     }
                     else
                     {
+                        flight.from = new Airport();
+                        flight.from.IATA = it["origin"]["airport"].ToString();
+                        flight.from.cityIata = flight.from.IATA;
+                        flight.from.name = flight.from.IATA;
                     }
                     if (iterator.Equals("outbound"))
                         retVal.outBound.Add(flight);
                     else
-                        retVal.inBound.Add(flight);
+                        retVal.inBound.Insert(0,flight);
                 }
             }
             return retVal;
