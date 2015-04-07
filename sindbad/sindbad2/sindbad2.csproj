@@ -216,6 +216,7 @@
     <Compile Include="Models\Attraction.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\FindMedian.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Journey.cs" />
     <Compile Include="Models\SendBadHttpRequest.cs" />
