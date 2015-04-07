@@ -7,6 +7,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.UI;
+using System.Device.Location;
+using System.Linq.Expressions;
+using System.Data;
 
 
 namespace sindbad2.Models
@@ -40,12 +43,12 @@ namespace sindbad2.Models
 
     public enum PRICE
     {
-        ONE , TWO , THREE , FOUR  , FIVE , NONE//no price restrections
+        ONE, TWO, THREE, FOUR, FIVE, NONE//no price restrections
     }
 
     public enum TRAVEL_CLASS
     {
-         FIRST, BUSINESS, PREMIUM_ECONOMY , ECONOMY
+        FIRST, BUSINESS, PREMIUM_ECONOMY, ECONOMY
     }
 
 
@@ -69,14 +72,15 @@ namespace sindbad2.Models
 
         private City fromCity;
         private City toCity;
+        private GeoCoordinate hotelLocation;
 
         /*private string placeId;
         private Pair location; // First = latitude , Second = longtitude
         private string cityName;
-         */ 
+         */
         private int maxPrice;
         private GoogleAttractions[] attractionsEnum;
-        private int radius;
+        private double radius;
         private List<Attraction> attractions;
         private string startDate;
         private string endDate;
@@ -86,6 +90,7 @@ namespace sindbad2.Models
         private bool direct;
         private TRAVEL_CLASS travelClass;
 
+
         private Trip trip;
 
         private Dictionary<string, Airport> fromAirports;
@@ -94,7 +99,7 @@ namespace sindbad2.Models
 
         private Object thisLock = new Object();
 
-        
+
 
         //private 
         //private string[] toIATA;
@@ -107,9 +112,9 @@ namespace sindbad2.Models
         /// </summary>
         /// <param name="cityName"></param>
         /// <param name="raduis"></param>
-        public Journey(string fromCityName, string toCityName , int maxPrice, GoogleAttractions[] attractions,string startDate ,
-            string returnDate , int adultsNum , int childrenNum , int infantsNum , bool direct ,
-            TRAVEL_CLASS travelClass , int raduis = 100)
+        public Journey(string fromCityName, string toCityName, int maxPrice, GoogleAttractions[] attractions, string startDate,
+            string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct,
+            TRAVEL_CLASS travelClass)
         {
 
             this.startDate = startDate;
@@ -126,7 +131,7 @@ namespace sindbad2.Models
 
             this.maxPrice = maxPrice;
             this.attractionsEnum = attractions;
-            this.radius = raduis;
+            //this.radius = raduis;
 
             this.getFromPlaceId(this.fromCity.name);
 
@@ -189,9 +194,22 @@ namespace sindbad2.Models
                 var latitude = res[0]["geometry"]["location"]["lat"];
                 var longtitude = res[0]["geometry"]["location"]["lng"];
 
+                GeoCoordinate northEastCoor = new GeoCoordinate(Double.Parse(res[0]["geometry"]["viewport"]["northeast"]["lat"].ToString()),
+                   Double.Parse(res[0]["geometry"]["viewport"]["northeast"]["lng"].ToString()));
+
+                GeoCoordinate southWestCoor = new GeoCoordinate(Double.Parse(res[0]["geometry"]["viewport"]["southwest"]["lat"].ToString()),
+                   Double.Parse(res[0]["geometry"]["viewport"]["southwest"]["lng"].ToString()));
+
+                GeoCoordinate centerCoor = new GeoCoordinate(Double.Parse(latitude.ToString()),
+                   Double.Parse(longtitude.ToString()));
+
+                double radius = Math.Max(centerCoor.GetDistanceTo(northEastCoor), centerCoor.GetDistanceTo(southWestCoor));
+                this.radius = radius;
                 this.toCity.location = new Pair(latitude.ToString(), longtitude.ToString());
 
                 this.toCity.placeId = placeId;
+
+                this.getAttractions(radius, this.attractionsEnum);
             }
 
             this.getFromAirportsInfo(this.fromCity.location);
@@ -203,23 +221,23 @@ namespace sindbad2.Models
 
         #region get Attractions
 
-        private void getAttractions(int raduis , GoogleAttractions[] attractions , PRICE maxPrice) 
+        private void getAttractions(double raduis, GoogleAttractions[] attractions)
         {
             string locationApi = "location=" + this.toCity.location.First + "," + this.toCity.location.Second;
             string raduisApi = "&radius=" + raduis.ToString();
             string typesApi = this.makeAttractionApiString(attractions); // attractions
             //string minPriceApi = minPrice == PRICE.NONE ? "" : "&minprice=" + ((int)minPrice).ToString();
-            string maxPriceApi = maxPrice == PRICE.NONE ? "" : "&maxprice=" + ((int)maxPrice).ToString();
+            //string maxPriceApi = maxPrice == PRICE.NONE ? "" : "&maxprice=" + ((int)maxPrice).ToString();
             string appKeyApi = "&key=" + Config.googleAppId;
 
-            string searcNearbyApi = Config.searchNearByApi + locationApi + raduisApi + typesApi + maxPriceApi + appKeyApi;
+            string searcNearbyApi = Config.searchNearByApi + locationApi + raduisApi + typesApi + appKeyApi;
 
             SendBadHttpRequest.sendHttpRequest(searcNearbyApi, getAttractionsRequestCompleted);
         }
 
         private void getAttractionsRequestCompleted(IAsyncResult result)
         {
-            
+
             var request = (HttpWebRequest)result.AsyncState;
             var response = (HttpWebResponse)request.EndGetResponse(result);
             using (var stream = response.GetResponseStream())
@@ -234,9 +252,12 @@ namespace sindbad2.Models
 
                 this.attractions = attractions;
 
+                this.getMedianOfAttractions();
+
+                //this.getHotels();
 
             }
-            
+
         }
 
         private string makeAttractionApiString(GoogleAttractions[] attractions)
@@ -260,7 +281,7 @@ namespace sindbad2.Models
         {
             List<Attraction> attractions = new List<Attraction>();
 
-            for (int i = 0 ; i < jsonArray.Count ; i++)
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 string latitude = jsonArray[i]["geometry"]["location"]["lat"].ToString();
                 string longtitude = jsonArray[i]["geometry"]["location"]["lng"].ToString();
@@ -269,13 +290,16 @@ namespace sindbad2.Models
                 double? rating = (double?)jsonArray[i]["rating"];
                 string vicinty = jsonArray[i]["vicinity"].ToString();
 
-                Pair location = new Pair{First = latitude , Second = longtitude};
+                Pair location = new Pair { First = latitude, Second = longtitude };
 
-                Attraction attr = new Attraction { location = location,
+                Attraction attr = new Attraction
+                {
+                    location = location,
                     name = placeName,
                     placeID = placeId,
                     rating = rating == null ? -1 : rating.Value,
-                    vicinty = vicinty};
+                    vicinty = vicinty
+                };
 
                 attractions.Add(attr);
             }
@@ -283,10 +307,28 @@ namespace sindbad2.Models
             return attractions;
         }
 
-        
+        private void getMedianOfAttractions()
+        {
+            List<double> latitudes = new List<double>();
+            List<double> longtitudes = new List<double>();
+
+            foreach (var it in this.attractions)
+            {
+                latitudes.Add(Double.Parse(it.location.First.ToString()));
+                longtitudes.Add(Double.Parse(it.location.Second.ToString()));
+            }
+
+            this.hotelLocation = new GeoCoordinate(latitudes.Median(), longtitudes.Median());
+
+            var x = 0;
+
+
+        }
+
+
         #endregion //get Attractions
 
-        #region Aiport info 
+        #region Aiport info
 
 
         /// <summary>
@@ -353,11 +395,11 @@ namespace sindbad2.Models
 
                 JArray values = JsonConvert.DeserializeObject<JArray>(resp);
 
-                this.toAirports = Airport.makeAirport(values);             
+                this.toAirports = Airport.makeAirport(values);
             }
 
-            
-            foreach(KeyValuePair<string, Airport> fromAirPort in this.fromAirports)
+
+            foreach (KeyValuePair<string, Airport> fromAirPort in this.fromAirports)
             {
                 foreach (KeyValuePair<string, Airport> toAirPort in this.toAirports)
                 {
@@ -371,13 +413,13 @@ namespace sindbad2.Models
 
         }
 
-        #endregion //Airport info 
+        #endregion //Airport info
 
 
-        #region flights info 
+        #region flights info
 
-        private void getFlights(Airport fromAirport , Airport toAirPort , string startDate , string returnDate ,
-            int adultsNum , int childrenNum , int infantsNum , bool direct , int maxPrice , TRAVEL_CLASS travelClass)
+        private void getFlights(Airport fromAirport, Airport toAirPort, string startDate, string returnDate,
+            int adultsNum, int childrenNum, int infantsNum, bool direct, int maxPrice, TRAVEL_CLASS travelClass)
         {
             string originApi = "origin=" + fromAirport.IATA;
             string dstApi = "&destination=" + toAirPort.IATA;
@@ -394,7 +436,7 @@ namespace sindbad2.Models
             string appApiKey = "&apikey=" + Config.amadeuisAppId;
 
             string apiUrl = Config.getFlightsApi + originApi + dstApi + departureDateApi + retDateApi + adultsApi + childrenApi
-                + infantsApi + directApi + currencyApi + maxPriceApi + travelClassApi + resultsNumApi+  appApiKey;
+                + infantsApi + directApi + currencyApi + maxPriceApi + travelClassApi + resultsNumApi + appApiKey;
 
             SendBadHttpRequest.sendHttpRequest(apiUrl, getFlightsComplete);
 
@@ -437,6 +479,59 @@ namespace sindbad2.Models
 
         }
 
-        #endregion //flights info 
+        #endregion //flights info
+
+
+        #region hotels
+
+        private void getHotels(string startDate , string endDate , GeoCoordinate location , int childrenNum , int adultsNum , int maxPrice)
+        {
+
+
+           //Y&arrivalDate=09/04/2015&departureDate=09/05/2015";
+
+            string apiKeyApi = Config.expediaAppId;
+            string minorRevApi = "&minorRev=4";
+            string localeApi = "&locale=en_US";
+            string currencyApi = "&currencyCode=USD";
+            string latitudeApi = "&latitude=" + location.Latitude.ToString();
+            string longtitudeApi = "&longitude=" + location.Longitude.ToString();
+            string sortApi = "&sort=PRICE";
+            string arrivalDate = "&&arrivalDate=";
+
+            string @requestString = "";
+
+
+
+            HttpWebRequest webRequest = WebRequest.Create(@requestString) as HttpWebRequest;
+            webRequest.Timeout = 20000;
+            webRequest.Method = "GET";
+            webRequest.ContentType = "text/json; charset=UTF-8";
+            webRequest.Accept = "application/json";
+            webRequest.BeginGetResponse(new AsyncCallback(getHotelsCompleted), webRequest);
+
+
+
+
+        }
+
+        private void getHotelsCompleted(IAsyncResult result)
+        {
+
+            var request = (HttpWebRequest)result.AsyncState;
+            var response = (HttpWebResponse)request.EndGetResponse(result);
+            using (var stream = response.GetResponseStream())
+            {
+                var r = new StreamReader(stream);
+                var resp = r.ReadToEnd();
+
+                Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(resp);
+
+                var x = 0;
+            }
+
+        #endregion// hotels
+
+        }
     }
 }
