@@ -92,6 +92,7 @@ namespace sindbad2.Models
         private double minStarRate;
 
 
+
         private Trip trip;
 
         private Dictionary<string, Airport> fromAirports;
@@ -541,6 +542,7 @@ namespace sindbad2.Models
                 var resp = r.ReadToEnd();
 
                 Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(resp);
+
 
                 
             }

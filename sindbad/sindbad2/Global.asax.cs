@@ -12,7 +12,7 @@ namespace sindbad2
     {
         protected void Application_Start()
         {
-            CarRent t = new CarRent("SFO", new DateTime(2015, 4, 10), new DateTime(2015, 4, 20));
+           // CarRent t = new CarRent("SFO", new DateTime(2015, 4, 10), new DateTime(2015, 4, 20));
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
