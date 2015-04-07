@@ -72,7 +72,7 @@ namespace sindbad2.Models
 
         private City fromCity;
         private City toCity;
-        private GeoCoordinate hotelLocation;
+        private GeoCoordinate hotelLocation; // the nearest point to the attractions (MEDIAN)
 
         /*private string placeId;
         private Pair location; // First = latitude , Second = longtitude
@@ -89,6 +89,7 @@ namespace sindbad2.Models
         private int infantsNum;
         private bool direct;
         private TRAVEL_CLASS travelClass;
+        private double minStarRate;
 
 
         private Trip trip;
@@ -114,7 +115,7 @@ namespace sindbad2.Models
         /// <param name="raduis"></param>
         public Journey(string fromCityName, string toCityName, int maxPrice, GoogleAttractions[] attractions, string startDate,
             string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct,
-            TRAVEL_CLASS travelClass)
+            TRAVEL_CLASS travelClass, double minStarRate = 0)
         {
 
             this.startDate = startDate;
@@ -124,6 +125,7 @@ namespace sindbad2.Models
             this.infantsNum = infantsNum;
             this.direct = direct;
             this.travelClass = travelClass;
+            this.minStarRate = minStarRate;
 
 
             this.fromCity = new City { name = fromCityName };
@@ -254,7 +256,7 @@ namespace sindbad2.Models
 
                 this.getMedianOfAttractions();
 
-                //this.getHotels();
+                this.getHotels(this.startDate, this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.maxPrice);
 
             }
 
@@ -484,22 +486,35 @@ namespace sindbad2.Models
 
         #region hotels
 
-        private void getHotels(string startDate , string endDate , GeoCoordinate location , int childrenNum , int adultsNum , int maxPrice)
+        private void getHotels(string startDate , string endDate , GeoCoordinate location , int childrenNum , int adultsNum , double minStarRate , int maxPrice)
         {
 
 
-           //Y&arrivalDate=09/04/2015&departureDate=09/05/2015";
+            DateTime startDT = Convert.ToDateTime(startDate);
+            DateTime endDDT = Convert.ToDateTime(endDate);
 
-            string apiKeyApi = Config.expediaAppId;
+
+           
+
+            string apiKeyApi = "&apiKey=" + Config.expediaAppId;
             string minorRevApi = "&minorRev=4";
             string localeApi = "&locale=en_US";
             string currencyApi = "&currencyCode=USD";
             string latitudeApi = "&latitude=" + location.Latitude.ToString();
             string longtitudeApi = "&longitude=" + location.Longitude.ToString();
             string sortApi = "&sort=PRICE";
-            string arrivalDate = "&&arrivalDate=";
+            string arrivalDateApi = "&arrivalDate=" + startDT.Month.ToString() + "/" + startDT.Day.ToString()
+                + "/" + startDT.Year.ToString() ;
+            string departureDateApi = "&departureDate=" + endDDT.Month.ToString() + "/" + endDDT.Day.ToString()
+                + "/" + endDDT.Year.ToString();
+            string adultsNumApi = "&Room.numberOfAdults=" + adultsNum.ToString();
+            string childrenNumApi = "&Room.numberOfChildren=" + childrenNum.ToString();
+            string minStarRateApi = "&minStarRating=" + minStarRate.ToString();
 
-            string @requestString = "";
+
+
+            string requestString = Config.getHotelApi + apiKeyApi + minorRevApi + localeApi + currencyApi + latitudeApi + longtitudeApi +
+                sortApi + arrivalDateApi + departureDateApi + adultsNumApi  + childrenNumApi + minStarRateApi;
 
 
 
@@ -527,7 +542,7 @@ namespace sindbad2.Models
 
                 Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(resp);
 
-                var x = 0;
+                
             }
 
         #endregion// hotels
