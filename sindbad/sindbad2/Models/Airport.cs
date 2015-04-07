@@ -8,12 +8,12 @@ namespace sindbad2.Models
 {
     public class Airport
     {
-        String IATA { get; set; }
-        String name { get; set; }
-        String cityIata { get; set; }
-        String cityName { get; set; }
-        double locationLat { get; set; }
-        double locationLong { get; set; }
+        public String IATA { get; set; }
+        public String name { get; set; }
+        public String cityIata { get; set; }
+        public String cityName { get; set; }
+        public double locationLat { get; set; }
+        public double locationLong { get; set; }
         public static Dictionary<string,Airport> makeAirport(JArray jsonArray)
         {
             Dictionary<string,Airport> retVal = new Dictionary<string,Airport>();
@@ -21,8 +21,9 @@ namespace sindbad2.Models
             {
 
                 string key = jsonArray[i]["airport"].ToString();
+                retVal[key] = new Airport();
                 retVal[key].IATA = key;
-                retVal[key].cityIata = jsonArray[i]["DUB"].ToString();
+                retVal[key].cityIata = jsonArray[i]["city"].ToString();
                 retVal[key].cityName = jsonArray[i]["city_name"].ToString();
                 retVal[key].locationLat = Double.Parse(jsonArray[i]["location"]["latitude"].ToString());
                 retVal[key].locationLong = Double.Parse(jsonArray[i]["location"]["longitude"].ToString());

@@ -14,7 +14,7 @@ namespace sindbad2
         {
 
             GoogleAttractions[] attractions = new GoogleAttractions[4] {GoogleAttractions.AMUSE_PARK , GoogleAttractions.BAR , GoogleAttractions.CASINO , GoogleAttractions.NIGHT_CLUB} ;
-            Journey journey = new Journey("Tel-Aviv", PRICE.NONE, PRICE.NONE, attractions, 2000);
+            Journey journey = new Journey("Israel", "Paris", PRICE.NONE, attractions, 2000);
 
         }
     }
