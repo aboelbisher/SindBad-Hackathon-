@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json.Linq;
- 
+
 namespace sindbad2.Models
 {
     public class Airport
@@ -14,10 +14,10 @@ namespace sindbad2.Models
         String cityName { get; set; }
         double locationLat { get; set; }
         double locationLong { get; set; }
-        public static Dictionary<string,Airport> makeAirport(JArray jsonArray)
+        public static Dictionary<string, Airport> makeAirport(JArray jsonArray)
         {
-            Dictionary<string,Airport> retVal = new Dictionary<string,Airport>();
-            for (int i=0;i<jsonArray.Count;i++)
+            Dictionary<string, Airport> retVal = new Dictionary<string, Airport>();
+            for (int i = 0; i < jsonArray.Count; i++)
             {
 
                 string key = jsonArray[i]["airport"].ToString();
@@ -33,10 +33,57 @@ namespace sindbad2.Models
     }
     public class Flight
     {
-        String DeparteTime { get; set; }
-        String ArrivingTime { get; set; }
-        String departAirportName { get; set; }
-        String ArrivingAirportName { get; set; }
-        double price { get; set; }
+        public Airport from { get; set; }
+        public Airport to { get; set; }
+        public String DeparteTime { get; set; }
+        public String ArrivingTime { get; set; }
+    }
+    public class Trip
+    {
+        public List<Flight> outBound { get; set; }
+        public List<Flight> inBound { get; set; }
+        public double price { get; set; }
+        public static Trip MakeTrip(JArray jsonArray, Dictionary<string, Airport> Airports)
+        {
+            Trip retVal = new Trip();
+            var arr = jsonArray["results"] as JArray;
+            if (arr.Count == 0)
+            {
+                return retVal;
+            }
+            var array = arr[0];
+            retVal.price = Double.Parse(array["fare"]["total_price"].ToString());
+            var array1 = arr["itineraries"] as JArray;
+            var array2 = array1[0];
+            string[] collect = {"outbound","inbound"};
+            foreach(var iterator in collect){
+                foreach (var it in array2["outbound"]["flights"])
+            {
+                Flight flight = new Flight();
+                flight.DeparteTime = it["departs_at"].ToString();
+                flight.ArrivingTime = it["arrives_at"].ToString();
+
+                if (Airports.ContainsKey(it["origin"]["airport"].ToString()))
+                {
+                    flight.from = Airports[it["origin"]["airport"].ToString()];
+                }
+                else
+                {
+                }
+                if (Airports.ContainsKey(it["destination"]["airport"].ToString()))
+                {
+                    flight.to = Airports[it["destination"]["airport"].ToString()];
+                }
+                else
+                {
+                }
+                if (iterator.Equals("outbound"))
+                    retVal.outBound.Add(flight);
+                else
+                    retVal.inBound.Add(flight);
+             }
+            }
+            return retVal;
+        }
     }
 }
