@@ -50,13 +50,13 @@ namespace sindbad2.Models
                     double longtitude = double.Parse(_res["location"]["longitude"].ToString());
                     KeyValuePair<double, double> location = new KeyValuePair<double, double>(latitude, longtitude);
                     String providerName = _res["provider"]["company_name"].ToString();
-                    String line1 = _res["location"]["line1"].ToString();
-                    String city = _res["location"]["city"].ToString();
+                    String line1 = _res["address"]["line1"].ToString();
+                    String city = _res["address"]["city"].ToString();
                     var _cars = _res["cars"] as JArray;
                     foreach (var _car in _cars)
                     {
-                        double price = double.Parse(_car["rates"]["price"]["amount"].ToString());
-                        String _type = _car["rates"]["type"].ToString();
+                        double price = double.Parse(_car["rates"][0]["price"]["amount"].ToString());
+                        String _type = _car["rates"][0]["type"].ToString();
                         ratePlan type = getRatePlan(_type);
                         Url imageUrl = new Url(_car["images"][0]["url"].ToString());
                         double estimatedTotal = double.Parse(_car["estimated_total"]["amount"].ToString());
@@ -68,6 +68,14 @@ namespace sindbad2.Models
                             return;
                         }
                     }
+                }
+                foreach (var car in cars)
+                {
+                    if (car == null)
+                    {
+                        continue;
+                    }
+                    var t = car.ToString();
                 }
             }
         }

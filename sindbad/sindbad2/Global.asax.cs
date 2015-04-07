@@ -12,16 +12,7 @@ namespace sindbad2
     {
         protected void Application_Start()
         {
-            CarRent t = new CarRent("SFO", new DateTime(2015,4,10), new DateTime(2015, 4, 20));
-            List<Car> cars = t.cars;
-            foreach (var car in cars)
-            {
-                if (car == null)
-                {
-                    continue;
-                }
-                Console.WriteLine(car.ToString());
-            }
+            CarRent t = new CarRent("SFO", new DateTime(2015, 4, 10), new DateTime(2015, 4, 20));
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
