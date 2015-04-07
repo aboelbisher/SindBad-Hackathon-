@@ -1,0 +1,49 @@
+#step-1,#step-2{
+    width:900px;
+    margin:40px auto;
+}
+#step-1 .row{
+    margin-top: 25px!important;
+}
+.slider-handle{
+    background: #ddd!important;
+}
+.slider-selection{
+	background: #FFD700!important;
+}
+
+.slider-handle.custom::before,.slider-tick.custom::before{
+color: #FFD700!important;
+}
+
+.contact11{
+    background-size:cover!important;
+    width:100%;
+    padding:40px 0;
+    background-color: aqua;
+    text-align: center;
+}
+
+.contact11 span{
+   
+
+    font-size: 42px;
+    font-weight: 700;
+    color:#fff;
+}
+
+.option{
+    border:10px solid #fff;
+    background-size: cover;
+    box-shadow: 0 0 1px #aaa;
+    border-radius: 50%;
+    margin:12px;
+    float: left;
+    width: 90px;
+    height: 90px;
+    background-color: #ddd;
+}
+.option p{
+    margin-top: 90px;
+    text-align: center;
+}
