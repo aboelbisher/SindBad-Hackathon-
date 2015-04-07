@@ -10,14 +10,14 @@ using Newtonsoft.Json.Linq;
 
 namespace sindbad2.Models
 {
-    
+
     public class CarRent
     {
         private String IATA { get; set; }
         private DateTime pickUp { get; set; }
         private DateTime dropOff { get; set; }
         public List<Car> cars;
-        private  String apiUrl;
+        private String apiUrl;
         public CarRent(String _IATA, DateTime _pickUp, DateTime _dropOff)
         {
             IATA = _IATA;
@@ -26,14 +26,14 @@ namespace sindbad2.Models
             String t1 = pickUp.Year.ToString() + "-" + pickUp.Month.ToString() + "-" + pickUp.Day.ToString();
             String t2 = dropOff.Year.ToString() + "-" + dropOff.Month.ToString() + "-" + dropOff.Day.ToString();
 
-            apiUrl = "http://api.sandbox.amadeus.com/v1.2/cars/search-airport?location="+IATA+"&pick_up="+t1+"&drop_off="+t2+"&apikey=dv9T2akqevMJ5GKHH5E8BSKsiNODLoY8";
+            apiUrl = "http://api.sandbox.amadeus.com/v1.2/cars/search-airport?location=" + IATA + "&pick_up=" + t1 + "&drop_off=" + t2 + "&apikey=dv9T2akqevMJ5GKHH5E8BSKsiNODLoY8";
             String t = apiUrl;
             SendBadHttpRequest.sendHttpRequest(apiUrl, FindCar);
         }
 
         private void FindCar(IAsyncResult result)
         {
-            cars = new List<Car>(); 
+            cars = new List<Car>();
             var request = (HttpWebRequest)result.AsyncState;
             var response = (HttpWebResponse)request.EndGetResponse(result);
             using (var stream = response.GetResponseStream())
@@ -43,7 +43,7 @@ namespace sindbad2.Models
                 Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(resp);
                 var res = values["results"] as JArray;
                 int count = 0;
-                
+
                 foreach (var _res in res)
                 {
                     double latitude = double.Parse(_res["location"]["latitude"].ToString());
@@ -60,7 +60,7 @@ namespace sindbad2.Models
                         ratePlan type = getRatePlan(_type);
                         Url imageUrl = new Url(_car["images"][0]["url"].ToString());
                         double estimatedTotal = double.Parse(_car["estimated_total"]["amount"].ToString());
-                        Car car = new Car(price, type, imageUrl, estimatedTotal, providerName,line1,city);
+                        Car car = new Car(price, type, imageUrl, estimatedTotal, providerName, line1, city);
                         cars.Add(car);
                         ++count;
                         if (count == 10)
@@ -76,13 +76,13 @@ namespace sindbad2.Models
         {
             switch (_type)
             {
-                case "DAILY":return ratePlan.DAILY;
-                case "WEEKEND":return ratePlan.WEEKEND;
-                case "WEEKLY":return ratePlan.WEEKLY;
-                case"MONTHLY":return ratePlan.MONTHLY;
+                case "DAILY": return ratePlan.DAILY;
+                case "WEEKEND": return ratePlan.WEEKEND;
+                case "WEEKLY": return ratePlan.WEEKLY;
+                case "MONTHLY": return ratePlan.MONTHLY;
                 default: throw new RuntimeBinderException("NOT SUPPORTED PLAN");
             }
         }
-        
+
     }
 }

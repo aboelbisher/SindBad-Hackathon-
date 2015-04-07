@@ -22,7 +22,7 @@ namespace sindbad2.Models
     }
     public enum ratePlan
     {
-         DAILY, WEEKEND, WEEKLY, MONTHLY
+        DAILY, WEEKEND, WEEKLY, MONTHLY
     }
     public class Car
     {
