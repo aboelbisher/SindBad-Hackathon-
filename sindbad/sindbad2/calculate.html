@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fly High a Travel Category Flat Bootstarp Resposive Website Template | Home :: w3layouts</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/style2.css" rel="stylesheet" type="text/css" media="all" />
+
+<link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/normalize.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css" media="all" />
+
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>	
+<!-- js -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap-slider.js"></script>
+    <script src="js/modernizr.js"></script>
+<!-- //js -->
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Fly High Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+	function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript">
+function endwith(str,suffix){
+    return str.indexOf(suffix,str.length-suffix.length) !== -1;
+}    
+
+jQuery(document).ready(function($) {
+	$(".scroll").click(function(event){		
+		event.preventDefault();
+		$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+	});
+    
+    
+ 
+    
+    $.ajax({
+        url: "/data/countries.json",
+        success: function (data) {
+                console.dir(data);
+                var obj = data;
+                obj.forEach(function(country){
+                    $("#from-coutnry").append("<option>"+country.name+"</option>");
+                    $("#to-coutnry").append("<option>"+country.name+"</option>");
+                });
+            }
+        });
+    
+    
+$("#ex2").slider({
+        scale: 'logarithmic'
+        });
+    $("#ex11").slider({step: 1, min: 1, max: 5, range: true, value: [3, 4] ,
+                       ticks: [1, 2, 3, 4, 5]});
+
+    $("#ex13").slider({});
+    
+    $("#to2").click(function(){
+        var str="(";
+       $(".option").toArray().forEach(function(category){
+            var url = $(category).css("background-image");
+           if(!endwith(url,"2.png)")){
+                url= url.replace(".png)","");
+              
+               url=url.slice( url.indexOf("icons/")+6);
+               str+=url;
+               str+="|";
+               if(url == "zoo"){
+                 str+="aquarium|";
+               } 
+               if(url == "museum"){
+                 str+="art-gallery|";
+               }
+               if(url == "restaurant"){
+                 str+="food|";
+               }
+           }
+       });
+        str+=")";
+        str= str.replace("|)",")");
+        if(str=="()"){
+            alert("You have to select al least one category ");
+        }
+        console.log(str);
+    });
+    
+    $(".option").on("mouseenter",function(){
+        $(this).css("opacity","0.7");
+    });
+    $(".option").on("mouseleave",function(){
+        $(this).css("opacity","1");
+    });
+    $(".option").on("click",function(){
+        var url = $(this).css("background-image");
+        if(endwith(url,"2.png)")){
+           url= url.replace("2.png)",".png)");
+        }else{
+         url = url.replace(".png)","2.png)");
+        }
+        $(this).css("background-image",url);
+    });
+});
+    
+    
+
+</script>
+<!-- start-smoth-scrolling -->
+</head>
+	
+<body>
+<!-- banner -->
+	<div id="home" >
+        
+	<div class="navigation">
+	<div class="container">
+		<div class="navi">
+			<div class="head-logo">
+				<a href="index.html"><img src="images/logo.png" alt=" "></a>
+			</div>
+
+			
+		</div>
+	</div>
+        
+        
+
+	</div>
+        
+	</div>
+   
+    
+      <div class="contact11" style="background:url('images/yourtravel.png') 0 -60px; no-repeat cover">
+	<div >
+		<span>Your Trip</span>
+	</div>          
+</div>
+        
+    
+  
+      
+
+<div id="step-1">
+
+    <div class="row">  </div>
+      <div class="row">  
+                    <div class="col-md-2">Your Laction:</div>  
+                    <div  class="col-md-4"><select class="form-control" width="200" class="" id="from-coutnry"> </select> </div>
+           
+                    <div class="col-md-2">Destination:</div>  
+                    <div class="col-md-4">  <select class="form-control" id="to-coutnry"> </select></div>
+        </div>
+    <div  class="row">
+         <div class="col-md-6"></div> 
+         <div class="col-md-2">City:</div> 
+        <div class="col-md-4">  <input class="form-control" type="text" id="to-city"> </select></div>
+    </div>
+          <div class="row">  
+                    <div class="col-md-2">From Date: </div>
+                    <div  class="col-md-4"> <input class="form-control" id="from-date" type="date" name="bday"></div>
+                    <div class="col-md-2">To Date:</div>
+                    <div  class="col-md-4"> <input class="form-control" id="to-date" type="date" name="bday" /></div>
+                     </div>
+    <div class="row">  </div>
+        <div class="row" style="width:65%;margin:25px auto 5px!important; text-align:center;">  
+                     <div class="col-md-4">infants</div>
+                    <div class="col-md-4">childern</div>
+                    <div class="col-md-4">adults</div>
+                   </div>   
+     <div class="row" style="width:65%;margin: 5px auto 30px!important;">  
+                    <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
+                    <div class="col-md-4"><input id="childern" class="form-control" min="0"  step="1" value="0" type="number" /></div>
+                    <div class="col-md-4"><input id="adults" class="form-control" min="0" value="0" step="1" type="number" /></div>
+                                 </div>  
+    <div class="row">  </div>
+     <div class="row"> 
+         
+                    <div class="col-md-2">Buget</div>   
+                    <div class="col-md-10"> <input id="ex2" class="form-control" type="text" class="span2" value="" data-slider-min="100" data-slider-max="100000" data-slider-data-slider-value="[250,4500]"/> <b>$ 50000</b></div>  
+                               </div>   
+     <div class="row">       
+                    <div class="col-md-2">Hotel's stars</div>   
+                    <div class="col-md-10"> <input class="form-control" id="ex11" type="text" /></div>
+    </div>   
+     <div class="row">       
+                    <div class="col-md-2"> Plan class</div>   
+                    <div class="col-md-10">  <input id="ex13" class="form-control" type="text"  data-slider-value="2" data-slider-max="4"  data-slider-min="1" /></div>
+  
+    </div>
+
+
+
+</div>
+    
+        <div class="clearfix"> </div>
+    <div class="clearfix"> </div>
+    <div class="clearfix"> </div>
+      <div class="contact11" style="background:url('images/style.png') 0 -260px; no-repeat cover">
+	<div >
+		<span>Your Style</span>
+	</div>          
+</div>
+        
+
+    <div id="step-2">
+<div class="row" style="width:684px!important;margin:30px auto;">
+        <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
+        <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
+        <div class="option" style="background-image:url('images/icons/night-clup2.png');"><p>Desico</p></div>
+        <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Cafe Shop</p></div>
+        <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
+        <div class="option" style="background-image:url('images/icons/amusement-park2.png');"><p>Amusement</p></div>
+       
+    </div>
+    <div class="row"  style="width:570px!important;margin:30px auto;">
+        <div class="option" style="background-image:url('images/icons/bowling-alley2.png');"><p>Bowling</p></div>
+        <div class="option" style="background-image:url('images/icons/zoo2.png');"><p>Zoo</p></div>
+        <div class="option" style="background-image:url('images/icons/museum2.png');"><p>Land Marks</p></div>
+        <div class="option" style="background-image:url('images/icons/spa2.png');"><p>Spa</p></div>
+        <div class="option" style="background-image:url('images/icons/movie-theater2.png');"><p>Cinema</p></div>
+
+
+    </div>
+    <div class="row">     
+        <div class="clearfix"> </div>
+        <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="next" />  
+    </div>
+    </div>
+        	
+
+
+
+    
+    
+    
+<!-- footer -->
+	<div class="footer">
+	<div class="container">
+		<div class="footer-logo">
+			<div class="footer-logo-left">
+			</div>
+			<div class="footer-logo-right">
+                
+				<p><a href="#">Sindbad</a></p>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		
+		<div class="clearfix"> </div>
+	</div>
+
+
+</body>
+
+</html>
