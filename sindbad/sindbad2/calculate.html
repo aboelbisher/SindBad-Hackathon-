@@ -87,15 +87,24 @@ $("#ex2").slider({
         str+=")";
         str = str.replace("|)", "");
 
-        if(str=="()"){
+        if(str==")"){
             alert("You have to select al least one category ");
         }
+        if (    $("#from-coutnry").val() == "" ||
+               $("#to-coutnry").val() == "" ||
+              $("#from-date").val() =="" ||   
+              $("#to-date").val() ==""  
+            ){
+            alert("Missing fields");
+            return;
+        }
+
         /*
         */
 
         $.post("/api/SindbadAPI", {
             "fromCityName": $("#from-coutnry").val(),
-            "toCityName": $("#to-coutnry").val(),
+            "toCityName": $("#to-city").val() + $("#to-coutnry").val(),
             "maxPrice": $("#ex2").val(),
             "startDate": $("#from-date").val(),
             "endDate": $("#to-date").val(),
