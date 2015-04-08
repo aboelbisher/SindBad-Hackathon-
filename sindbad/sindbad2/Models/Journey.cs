@@ -102,6 +102,7 @@ namespace sindbad2.Models
 
 
         private Object thisLock = new Object();
+        public bool finished = false;
 
 
 
@@ -480,6 +481,7 @@ namespace sindbad2.Models
                 }
             }
 
+
             var x = 0;
 
         }
@@ -554,8 +556,9 @@ namespace sindbad2.Models
 
                 this.hotel = Hotel.BestHotel(dict,this.remainMoney);
                 this.remainMoney -= this.hotel.Price;
-                this.myCallBack(this);
             }
+
+            this.finished = true;
 
         #endregion// hotels
 
