@@ -219,6 +219,7 @@
     <Compile Include="Models\CarRent.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\DataToAttract.cs" />
     <Compile Include="Models\FindMedian.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Journey.cs" />
