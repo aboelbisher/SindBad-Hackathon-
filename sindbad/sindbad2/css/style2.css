@@ -2,6 +2,10 @@
     width:900px;
     margin:40px auto;
 }
+#loader22 {
+    display:none;
+    height:600px;
+}
 #resualt {
     display:none;
 }

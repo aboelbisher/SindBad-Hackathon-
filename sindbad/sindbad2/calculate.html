@@ -149,6 +149,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 /*
                 */
                 $("#steps").slideUp();
+                $("#loader22").slideDown();
                 $.post("/api/SindbadAPI", {
                     "fromCityName": $("#from-city").val() + " " + $("#from-coutnry").val(),
                     "toCityName": $("#to-city").val() + " " + $("#to-coutnry").val(),
@@ -166,6 +167,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 .done(function (data) {
 
                     console.dir(data.data);
+                    $("#loader22").slideUp();
+                    $("#resualt").slideDown();
+
+                    data.data.trip.outBound.forEach(function(tt){
+                        $("#flight").append(" <div class='row'>\
+                                <div class='col-md-3'>" + tt.companyIATA + tt.flightNumber + " </div>\
+                                <div class='col-md-9'> " + tt.from.name + " ," + tt.DepartTime + " ->" + tt.to.name + " ," + tt.ArrivingTime + " </div>\
+                            </div>");
+                    });
+
+                    data.data.cars.cars.forEach(function (car) {
+                        $("#cars").append(" <div class='car'> <div class='card-head'> <div class='car-image'></div> <div class='car-model'>Volvo sffs</div> <div class='payment'> \
+                                    <div class='car-prise'>133$</div>\
+                                    <div class='payment-plan'>Monthly</div>\
+                                </div>\
+                            </div>\
+                            <div class='card-body'>\
+                                <div class='adress'>Address</div>\
+                            </div>\
+                        </div>");
+
+                    });
+                   
     
                 })
                 .fail(function () {
@@ -195,7 +219,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
 
+    <link rel="stylesheet" href="css/main2.css">
+    <style type="text/css">
+        .back-link a {
+            color: #4ca340;
+            text-decoration: none;
+            border-bottom: 1px #4ca340 solid;
+        }
 
+            .back-link a:hover,
+            .back-link a:focus {
+                color: #408536;
+                text-decoration: none;
+                border-bottom: 1px #408536 solid;
+            }
+
+        h1 {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+            margin: 0;
+            font-size: 14px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 32px;
+            margin-bottom: 3px;
+        }
+
+        .entry-header {
+            text-align: left;
+            margin: 0 auto 50px auto;
+            width: 80%;
+            max-width: 978px;
+            position: relative;
+            z-index: 10001;
+        }
+
+        #demo-content {
+            padding-top: 100px;
+        }
+    </style>
    
     <!-- start-smoth-scrolling -->
 </head>
@@ -329,7 +390,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
     </div>
+    <div id="loader22">
 
+        <div id="demo-content">
+
+            <div id="loader-wrapper">
+                <div id="loader"></div>
+            </div>
+        </div>
+    </div>
     <div id="resualt">
         <div class="contact11" style="background:url('/images/airplane.png');background-position-y:-60px;">
             <div>
@@ -359,60 +428,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
         <div id="cars">
-            <div class="row">
-                <div class="car">
-                    <div class="card-head">
-                        <div class="car-image"></div> 
-                        <div class="car-model">Volvo sffs</div>
-                        <div class="payment">
-                            <div class="car-prise">133$</div>
-                            <div class="payment-plan">Monthly</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="adress">Address</div>
-                    </div>
-                </div>
-                <div class="car">
-                    <div class="card-head">
-                        <div class="car-image"></div>
-                        <div class="car-model">Volvo sffs</div>
-                        <div class="payment">
-                            <div class="car-prise">133$</div>
-                            <div class="payment-plan">Monthly</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="adress">Address</div>
-                    </div>
-                </div>
-                <div class="car">
-                    <div class="card-head">
-                        <div class="car-image"></div>
-                        <div class="car-model">Volvo sffs</div>
-                        <div class="payment">
-                            <div class="car-prise">133$</div>
-                            <div class="payment-plan">Monthly</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="adress">Address</div>
-                    </div>
-                </div>
-                <div class="car">
-                    <div class="card-head">
-                        <div class="car-image"></div>
-                        <div class="car-model">Volvo sffs</div>
-                        <div class="payment">
-                            <div class="car-prise">133$</div>
-                            <div class="payment-plan">Monthly</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="adress">Address</div>
-                    </div>
-                </div>
-            </div>
+               
         </div>
 
 
