@@ -44,9 +44,8 @@ namespace sindbad2.Controllers
             public int infantsNum { get; set; }
             public bool direct { get; set; }
             public TRAVEL_CLASS travelClass { get; set; }
-
-            public string
-                attractions { get; set; }
+            public string attractions { get; set; }
+            public bool ifCar { get; set; }
         }
 
         // POST: api/SindbadAPI
@@ -76,7 +75,7 @@ namespace sindbad2.Controllers
         private static void ThreadProc()
         {
             SindbadAPIController.journey = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate,
-               post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass);
+               post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass , post.ifCar);
             while(!SindbadAPIController.journey.finished)
             {}
 

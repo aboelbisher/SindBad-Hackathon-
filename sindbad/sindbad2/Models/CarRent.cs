@@ -18,6 +18,9 @@ namespace sindbad2.Models
         private DateTime dropOff { get; set; }
         public List<Car> cars;
         private String apiUrl;
+        public bool finished = false;
+
+
         public CarRent(String _IATA, DateTime _pickUp, DateTime _dropOff)
         {
             IATA = _IATA;
@@ -63,14 +66,15 @@ namespace sindbad2.Models
                         Car car = new Car(price, type, imageUrl, estimatedTotal, providerName, line1, city);
                         cars.Add(car);
 
-                        var t = car.ToString();
                         ++count;
-                        if (count == 10)
+                        if (count == 5)
                         {
+                            this.finished = true;
                             return;
                         }
                     }
                 }
+                this.finished = true;
             }
         }
 

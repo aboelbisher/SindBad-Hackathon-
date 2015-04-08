@@ -63,6 +63,7 @@ namespace sindbad2.Models
         public string name;
         public double rating;
         public string vicinty; //area name
+        public string types;
     }
 
     #endregion // structs
@@ -90,19 +91,23 @@ namespace sindbad2.Models
         private bool direct;
         private TRAVEL_CLASS travelClass;
         private double minStarRate;
-        private Hotel hotel;
+        private List<Hotel> hotels;
         private double remainMoney;
+        private bool ifCar;
+        private CarRent cars;
+
 
         private Trip trip;
 
         private Dictionary<string, Airport> fromAirports;
         private Dictionary<string, Airport> toAirports;
 
-        private Action<Journey> myCallBack;
 
 
         private Object thisLock = new Object();
         public bool finished = false;
+
+        private int flightsNum; // for synchronizations
 
 
 
@@ -117,7 +122,9 @@ namespace sindbad2.Models
         /// </summary>
         /// <param name="cityName"></param>
         /// <param name="raduis"></param>
-        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate, string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct, TRAVEL_CLASS travelClass, double minStarRate = 0)
+        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate
+            , string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct
+            , TRAVEL_CLASS travelClass, bool ifCar ,double minStarRate = 0)
         {
 
             this.startDate = startDate;
@@ -129,6 +136,7 @@ namespace sindbad2.Models
             this.travelClass = travelClass;
             this.minStarRate = minStarRate;
             this.remainMoney = maxPrice;
+            this.ifCar = ifCar;
 
 
             this.fromCity = new City { name = fromCityName };
@@ -169,7 +177,6 @@ namespace sindbad2.Models
                 var longtitude = res[0]["geometry"]["location"]["lng"];
 
                 this.fromCity.location = new Pair(latitude.ToString(), longtitude.ToString());
-
                 this.fromCity.placeId = placeId;
             }
 
@@ -214,14 +221,14 @@ namespace sindbad2.Models
 
                 this.toCity.placeId = placeId;
 
-                this.getAttractions(radius, this.attractionsString);
+                //this.getAttractions(radius, this.attractionsString);
             }
 
             this.getFromAirportsInfo(this.fromCity.location);
 
         }
 
-        #endregion //get place id
+        #endregion //get place id // first called
 
 
         #region get Attractions
@@ -259,7 +266,19 @@ namespace sindbad2.Models
 
                 this.getMedianOfAttractions();
 
-                this.getHotels(this.startDate, this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.remainMoney);
+                DateTime startDateTime = Convert.ToDateTime(this.trip.outBound.Last().ArrivingTime);
+                DateTime endDateTime = Convert.ToDateTime(this.trip.inBound.Last().DepartTime);
+
+                if(ifCar)
+                {
+                    string IATA = this.trip.outBound.Last().to.IATA;
+
+                    this.getCar(IATA, startDateTime, endDateTime);  
+                }
+
+                string startDateString = startDateTime.Year.ToString() + "-" + startDateTime.Month.ToString()
+                    + "-" + startDateTime.Day.ToString();
+                this.getHotels(startDateString , this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.remainMoney);
 
             }
 
@@ -294,6 +313,7 @@ namespace sindbad2.Models
                 string placeName = jsonArray[i]["name"].ToString();
                 double? rating = (double?)jsonArray[i]["rating"];
                 string vicinty = jsonArray[i]["vicinity"].ToString();
+                string types = jsonArray[i]["types"].ToString();
 
                 Pair location = new Pair { First = latitude, Second = longtitude };
 
@@ -303,7 +323,8 @@ namespace sindbad2.Models
                     name = placeName,
                     placeID = placeId,
                     rating = rating == null ? -1 : rating.Value,
-                    vicinty = vicinty
+                    vicinty = vicinty ,
+                    types = types
                 };
 
                 attractions.Add(attr);
@@ -311,6 +332,7 @@ namespace sindbad2.Models
 
             return attractions;
         }
+
 
         private void getMedianOfAttractions()
         {
@@ -332,6 +354,35 @@ namespace sindbad2.Models
 
 
         #endregion //get Attractions
+
+        #region get car
+
+        private void getCar(string IATA, DateTime startTime , DateTime endTime)
+        {
+            CarRent carRent = new CarRent(IATA, startTime, endTime);
+
+            while(!carRent.finished){}
+
+            this.cars = carRent;
+        }
+
+        private void getMaxCarPriceAndDecreaseMaxPrice(List<Car> cars)
+        {
+            double max = 0;
+            foreach (Car car in cars)
+            {
+                if(car.estimatedTotal1 > max)
+                {
+                    max = car.estimatedTotal1;
+                }
+            }
+
+            this.remainMoney -= max ;
+        }
+
+
+        #endregion // get car
+
 
         #region Aiport info
 
@@ -413,12 +464,17 @@ namespace sindbad2.Models
                 }
             }
 
+            while(this.flightsNum < this.fromAirports.Count() * this.toAirports.Count()){}
+
+            this.getAttractions(this.radius, this.attractionsString);
+
+
             var x = 0;
 
 
         }
 
-        #endregion //Airport info
+        #endregion //Airport info // Second called
 
 
         #region flights info
@@ -453,7 +509,20 @@ namespace sindbad2.Models
         {
 
             var request = (HttpWebRequest)result.AsyncState;
-            var response = (HttpWebResponse)request.EndGetResponse(result);
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse)request.EndGetResponse(result);
+            }
+            catch(Exception e)
+            {
+                lock(this.thisLock)
+                {
+                    this.flightsNum++;
+                }
+                return;
+            }
+
             using (var stream = response.GetResponseStream())
             {
                 var r = new StreamReader(stream);
@@ -478,12 +547,10 @@ namespace sindbad2.Models
                             this.remainMoney = this.maxPrice - this.trip.price;
                         }
                     }
+
+                    this.flightsNum++;
                 }
             }
-
-
-            var x = 0;
-
         }
 
         #endregion //flights info
@@ -550,12 +617,8 @@ namespace sindbad2.Models
                 var obj = JObject.Parse(values.ToString());
 
                 var dict = obj["HotelListResponse"].ToObject<Dictionary<string, object>>();
-
-
-                //var test = values[0] as Dictionary<string, object>;
-
-                this.hotel = Hotel.BestHotel(dict,this.remainMoney);
-                this.remainMoney -= this.hotel.Price;
+                this.hotels = Hotel.BestHotel(dict,this.remainMoney);
+                this.remainMoney -= this.hotels.First().Price;
             }
 
             this.finished = true;

@@ -11,9 +11,9 @@ namespace sindbad2.Models
         public String IATA { get; set; }
         public String name { get; set; }
         public String cityIata { get; set; }
-        String cityName { get; set; }
-        double locationLat { get; set; }
-        double locationLong { get; set; }
+        public String cityName { get; set; }
+        public double locationLat { get; set; }
+        public double locationLong { get; set; }
         public static Dictionary<string, Airport> makeAirport(JArray jsonArray)
         {
             Dictionary<string, Airport> retVal = new Dictionary<string, Airport>();
@@ -36,8 +36,11 @@ namespace sindbad2.Models
     {
         public Airport from { get; set; }
         public Airport to { get; set; }
-        public String DeparteTime { get; set; }
+        public String DepartTime { get; set; }
         public String ArrivingTime { get; set; }
+
+        public String flightNumber { get; set; }
+        public String companyIATA { get; set; }
     }
     public class Trip
     {
@@ -64,12 +67,13 @@ namespace sindbad2.Models
             string[] collect = { "outbound", "inbound" };
             foreach (var iterator in collect)
             {
-                foreach (var it in array2["outbound"]["flights"])
+                foreach (var it in array2[iterator]["flights"])
                 {
                     Flight flight = new Flight();
-                    flight.DeparteTime = it["departs_at"].ToString();
+                    flight.DepartTime = it["departs_at"].ToString();
                     flight.ArrivingTime = it["arrives_at"].ToString();
-
+                    flight.flightNumber = it["flight_number"].ToString();
+                    flight.companyIATA = it["marketing_airline"].ToString();
                     if (Airports.ContainsKey(it["origin"]["airport"].ToString()))
                     {
                         flight.from = Airports[it["origin"]["airport"].ToString()];
@@ -87,15 +91,15 @@ namespace sindbad2.Models
                     }
                     else
                     {
-                        flight.from = new Airport();
-                        flight.from.IATA = it["origin"]["airport"].ToString();
-                        flight.from.cityIata = flight.from.IATA;
-                        flight.from.name = flight.from.IATA;
+                        flight.to = new Airport();
+                        flight.to.IATA = it["destination"]["airport"].ToString();
+                        flight.to.cityIata = flight.to.IATA;
+                        flight.to.name = flight.to.IATA;
                     }
                     if (iterator.Equals("outbound"))
                         retVal.outBound.Add(flight);
                     else
-                        retVal.inBound.Insert(0,flight);
+                        retVal.inBound.Add(flight);
                 }
             }
             return retVal;
