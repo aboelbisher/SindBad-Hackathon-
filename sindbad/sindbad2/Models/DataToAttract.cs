@@ -27,19 +27,37 @@ namespace sindbad2.Models
                 }
             }
         }
-
-        public void schedule(DateTime startDate,DateTime endDate,List<Attraction> attractions)
+        public Dictionary<DateTime, List<Attraction>> schedule(DateTime startDate, DateTime endDate, List<Attraction> attractions)
         {
-            //var tmpList = attractions.Clone();
+            PrepareForSched(attractions);
             jumpDist = ((int)(1 - perc) * (endDate.Subtract(startDate).Days));
             for(var dateIt = startDate.AddDays(1);!dateIt.Equals(endDate);dateIt.AddDays(jumpDist))
             {
                 this.sched[dateIt] = new List<Attraction>();
-                foreach(Attraction it in attractions)
+                Random r = new Random();
+                if(nightLife.Count == 0)
                 {
-
+                    if(otherAttr.Count != 0)
+                    {
+                        int indexToRemove = r.Next(otherAttr.Count);
+                        this.sched[dateIt].Add(otherAttr[indexToRemove]);
+                        otherAttr.RemoveAt(indexToRemove);
+                    }
+                }
+                else
+                {
+                    int indexToRemove = r.Next(nightLife.Count);
+                    this.sched[dateIt].Add(nightLife[indexToRemove]);
+                    nightLife.RemoveAt(indexToRemove);
+                }
+                if(otherAttr.Count !=0)
+                {
+                    int indexToRemove = r.Next(otherAttr.Count);
+                    this.sched[dateIt].Add(otherAttr[indexToRemove]);
+                    otherAttr.RemoveAt(indexToRemove);
                 }
             }
-        }
+            return sched;
+          }
     }
 }
