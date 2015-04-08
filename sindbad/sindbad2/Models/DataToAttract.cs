@@ -72,7 +72,7 @@ namespace sindbad2.Models
           
             if(!( i == this.nightLife.Count - 1))
             {
-                  for(int j = i ; j < this.nightLife.Count ; j+=2)
+                  for(int j = i ; j < this.nightLife.Count-1 ; j+=2)
                   {
                       Pair newPair = new Pair(this.nightLife[j] , this.nightLife[j+1]);
                       attractions.Add(newPair);
@@ -81,7 +81,7 @@ namespace sindbad2.Models
 
             if(this.otherAttr.Count > 1)
             {
-                for(int j = 0 ; j < this.otherAttr.Count ; j++)
+                for(int j = 0 ; j < this.otherAttr.Count-1 ; j+=2)
                 {
                     Pair newPair = new Pair(this.otherAttr[j], this.otherAttr[j + 1]);
                     attractions.Add(newPair);

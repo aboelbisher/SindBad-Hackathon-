@@ -252,9 +252,10 @@ namespace sindbad2.Models
             string typesApi = "&types=" + attractions; // attractions
             //string minPriceApi = minPrice == PRICE.NONE ? "" : "&minprice=" + ((int)minPrice).ToString();
             //string maxPriceApi = maxPrice == PRICE.NONE ? "" : "&maxprice=" + ((int)maxPrice).ToString();
+            string languageApi = "&language=en";
             string appKeyApi = "&key=" + Config.googleAppId;
 
-            string searcNearbyApi = Config.searchNearByApi + locationApi + raduisApi + typesApi + appKeyApi;
+            string searcNearbyApi = Config.searchNearByApi + locationApi + raduisApi + typesApi + languageApi + appKeyApi;
 
             SendBadHttpRequest.sendHttpRequest(searcNearbyApi, getAttractionsRequestCompleted);
         }
@@ -633,13 +634,13 @@ namespace sindbad2.Models
                 this.remainMoney -= this.hotels.First().Price;
             }
 
-            /*
+            
             var randomiser = new DataToAttract();
             DateTime startDateTime = Convert.ToDateTime(this.trip.outBound.Last().ArrivingTime);
             DateTime endDateTime = Convert.ToDateTime(this.trip.inBound.Last().DepartTime);
             this.randomisedAttractions = randomiser.schedule(startDateTime, endDateTime, this.attractions);
 
-             */
+             
  
             this.finished = true;
 
