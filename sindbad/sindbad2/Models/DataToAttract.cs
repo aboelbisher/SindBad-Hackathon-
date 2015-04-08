@@ -27,12 +27,10 @@ namespace sindbad2.Models
                 }
             }
         }
-        public void 
-            
-            
-            (DateTime startDate,DateTime endDate,List<Attraction> attractions)
+
+        public void schedule(DateTime startDate,DateTime endDate,List<Attraction> attractions)
         {
-            var tmpList = 
+            //var tmpList = attractions.Clone();
             jumpDist = ((int)(1 - perc) * (endDate.Subtract(startDate).Days));
             for(var dateIt = startDate.AddDays(1);!dateIt.Equals(endDate);dateIt.AddDays(jumpDist))
             {
