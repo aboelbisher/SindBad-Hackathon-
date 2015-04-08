@@ -18,7 +18,7 @@ namespace sindbad2.Models
         public String hotelUrl { set; get; }
         public double Price { set; get;}
         public double tripAdvisorRating { set; get; }
-        public static Hotel BestHotel(Dictionary<string,object> jsonRetVal)
+        public static Hotel BestHotel(Dictionary<string,object> jsonRetVal,double maxPrice)
         {
             List<Hotel> hotelsSorted = new List<Hotel>();
             Dictionary<Hotel, int> hotelHash = new Dictionary<Hotel, int>();
@@ -32,6 +32,7 @@ namespace sindbad2.Models
             for(int i=0;i<hotelLists.Count;i++)
             {
                 Hotel hotel = new Hotel();
+                 hotel.Price = Double.Parse(values["@total"].ToString());
                 hotel.address = hotelLists[i]["address1"].ToString();
                 hotel.name = hotelLists[i]["name"].ToString();
                 hotel.city = hotelLists[i]["city"].ToString();
@@ -45,6 +46,10 @@ namespace sindbad2.Models
                 values = JsonConvert.DeserializeObject<Dictionary<string,object>>(values["RateInfo"].ToString());
                 values = JsonConvert.DeserializeObject<Dictionary<string,object>>(values["ChargeableRateInfo"].ToString());
                 hotel.Price = Double.Parse(values["@total"].ToString());
+                if(hotel.Price > maxPrice)
+                {
+                    continue;
+                }
                 hotel.location = new GeoCoordinate();
                 hotel.location.Latitude = Double.Parse(hotelLists[i]["latitude"].ToString());
                 hotel.location.Longitude = Double.Parse(hotelLists[i]["longitude"].ToString());
