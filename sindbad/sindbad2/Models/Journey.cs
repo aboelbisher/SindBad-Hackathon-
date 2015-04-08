@@ -90,7 +90,7 @@ namespace sindbad2.Models
         private bool direct;
         private TRAVEL_CLASS travelClass;
         private double minStarRate;
-
+        private Hotel hotel;
 
 
         private Trip trip;
@@ -503,7 +503,7 @@ namespace sindbad2.Models
             string currencyApi = "&currencyCode=USD";
             string latitudeApi = "&latitude=" + location.Latitude.ToString();
             string longtitudeApi = "&longitude=" + location.Longitude.ToString();
-            string sortApi = "&sort=PRICE";
+            string sortApi = "&sort=PROXIMITY";
             string arrivalDateApi = "&arrivalDate=" + startDT.Month.ToString() + "/" + startDT.Day.ToString()
                 + "/" + startDT.Year.ToString() ;
             string departureDateApi = "&departureDate=" + endDDT.Month.ToString() + "/" + endDDT.Day.ToString()
@@ -541,10 +541,18 @@ namespace sindbad2.Models
                 var r = new StreamReader(stream);
                 var resp = r.ReadToEnd();
 
-                Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>(resp);
+                JToken values = JsonConvert.DeserializeObject<JToken>(resp);
+
+                var obj = JObject.Parse(values.ToString());
+
+                var dict = obj["HotelListResponse"].ToObject<Dictionary<string, object>>();
 
 
-                
+                //var test = values[0] as Dictionary<string, object>;
+
+                this.hotel = Hotel.BestHotel(dict);
+
+                var x = 0;
             }
 
         #endregion// hotels

@@ -22,7 +22,9 @@ namespace sindbad2.Models
         {
             List<Hotel> hotelsSorted = new List<Hotel>();
             Dictionary<Hotel, int> hotelHash = new Dictionary<Hotel, int>();
-            var hotelLists = ((JArray)jsonRetVal["HotelList"])["HotelSummary"] as JArray;
+            string tmp = jsonRetVal["HotelList"].ToString();
+            var tmpDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(tmp);
+            var hotelLists = JsonConvert.DeserializeObject<JArray>(tmpDict["HotelSummary"].ToString());
             if(hotelLists.Count == 0)
             {
                 throw new Exception("There is No Hotel");
@@ -42,10 +44,11 @@ namespace sindbad2.Models
                 values = JsonConvert.DeserializeObject<Dictionary<string,object>>(values["RoomRateDetails"].ToString());
                 values = JsonConvert.DeserializeObject<Dictionary<string,object>>(values["RateInfo"].ToString());
                 values = JsonConvert.DeserializeObject<Dictionary<string,object>>(values["ChargeableRateInfo"].ToString());
-                hotel.Price = Double.Parse(values["total"].ToString());
+                hotel.Price = Double.Parse(values["@total"].ToString());
                 hotel.location = new GeoCoordinate();
-                hotel.location.Latitude = Double.Parse(hotelLists["latitude"].ToString());
-                hotel.location.Longitude = Double.Parse(hotelLists["longitude"].ToString());
+                hotel.location.Latitude = Double.Parse(hotelLists[i]["latitude"].ToString());
+                hotel.location.Longitude = Double.Parse(hotelLists[i]["longitude"].ToString());
+                hotel.hotelUrl = hotelLists[i]["deepLink"].ToString();
                 hotelHash[hotel] = i;
                 hotelsSorted.Add(hotel);
             }
