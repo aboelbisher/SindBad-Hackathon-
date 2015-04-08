@@ -64,7 +64,7 @@ $("#ex2").slider({
     $("#ex13").slider({});
     
     $("#to2").click(function(){
-        var str="(";
+        var str="";
        $(".option").toArray().forEach(function(category){
             var url = $(category).css("background-image");
            if(!endwith(url,"2.png)")){
@@ -85,24 +85,26 @@ $("#ex2").slider({
            }
        });
         str+=")";
-        str= str.replace("|)",")");
+        str = str.replace("|)", "");
+
         if(str=="()"){
             alert("You have to select al least one category ");
         }
-
+        /*
+        */
 
         $.post("/api/SindbadAPI", {
-            "fromCityName": "paris",
-            "toCityName": "london",
-            "maxPrice": "1234",
-            "startDate": "2015-12-20",
-            "endDate": "2015-12-28",
-            "adultsNum": "3",
-            "childrenNum": "2",
-            "infantsNum": "2",
-            "direct":"false",
-            "travelClass":"2" ,
-            "attractions":"food|zoo"
+            "fromCityName": $("#from-coutnry").val(),
+            "toCityName": $("#to-coutnry").val(),
+            "maxPrice": $("#ex2").val(),
+            "startDate": $("#from-date").val(),
+            "endDate": $("#to-date").val(),
+            "adultsNum": $("#adults").val(),
+            "childrenNum": $("#children").val(),
+            "infantsNum": $("#infants").val(),
+            "direct": "false",
+            "travelClass": $("#ex13").val(),
+            "attractions": str
         })
         .done(function (data) {
             alert(" success");
@@ -202,7 +204,7 @@ $("#ex2").slider({
                    </div>   
      <div class="row" style="width:65%;margin: 5px auto 30px!important;">  
                     <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
-                    <div class="col-md-4"><input id="childern" class="form-control" min="0"  step="1" value="0" type="number" /></div>
+                    <div class="col-md-4"><input id="children" class="form-control" min="0" step="1" value="0" type="number" /></div>
                     <div class="col-md-4"><input id="adults" class="form-control" min="0" value="0" step="1" type="number" /></div>
                                  </div>  
     <div class="row">  </div>
@@ -216,7 +218,7 @@ $("#ex2").slider({
                     <div class="col-md-10"> <input class="form-control" id="ex11" type="text" /></div>
     </div>   
      <div class="row">       
-                    <div class="col-md-2"> Plan class</div>   
+                    <div class="col-md-2"> Travel Class</div>   
                     <div class="col-md-10">  <input id="ex13" class="form-control" type="text"  data-slider-value="2" data-slider-max="4"  data-slider-min="1" /></div>
   
     </div>
