@@ -148,7 +148,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                 /*
                 */
-
+                $("#steps").slideUp();
                 $.post("/api/SindbadAPI", {
                     "fromCityName": $("#from-city").val() + " " + $("#from-coutnry").val(),
                     "toCityName": $("#to-city").val() + " " + $("#to-coutnry").val(),
@@ -161,12 +161,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     "direct": "false",
                     "travelClass": $("#ex13").val(),
                     "attractions": str,
-                    "ifCar": $("#carC").val()
-                })
-                .done(function (data,res) {
+                    "ifCar": $("#carC").is(':checked')
+                })                                                                  
+                .done(function (data) {
 
-                    console.dir(data); 
-                    console.dir(res);
+                    console.dir(data.data);
+    
                 })
                 .fail(function () {
                     alert("error");
@@ -193,9 +193,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 $(this).css("background-image", url);
             });
         });
-
-
-
     </script>
 
 
@@ -225,110 +222,113 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     </div>
 
-  
-    <div class="contact11" style="background:url('images/yourtravel.png') 0 -60px; no-repeat cover">
-        <div>
-            <span>Your Trip</span>
+    <div id="steps">
+
+
+
+        <div class="contact11" style="background:url('images/yourtravel.png') 0 -60px; no-repeat cover">
+            <div>
+                <span>Your Trip</span>
+            </div>
+        </div>
+
+
+
+
+
+        <div id="step-1">
+
+            <div class="row">  </div>
+            <div class="row">
+                <div class="col-md-2">Your Laction:</div>
+                <div class="col-md-4"><select class="form-control" width="200" class="" id="from-coutnry"> </select> </div>
+
+                <div class="col-md-2">Destination:</div>
+                <div class="col-md-4">  <select class="form-control" id="to-coutnry"> </select></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">City:</div>
+                <div class="col-md-4">  <input class="form-control" type="text" id="from-city"> </select></div>
+                <div class="col-md-2">City:</div>
+                <div class="col-md-4">  <input class="form-control" type="text" id="to-city"> </select></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">From Date: </div>
+                <div class="col-md-4"> <input class="form-control" id="from-date" type="date" name="bday"></div>
+                <div class="col-md-2">To Date:</div>
+                <div class="col-md-4"> <input class="form-control" id="to-date" type="date" name="bday" /></div>
+            </div>
+            <div class="row">  </div>
+            <div class="row" style="width:65%;margin:25px auto 5px!important; text-align:center;">
+                <div class="col-md-4">Infants</div>
+                <div class="col-md-4">Childern</div>
+                <div class="col-md-4">Adults</div>
+            </div>
+            <div class="row" style="width:65%;margin: 5px auto 30px!important;">
+                <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
+                <div class="col-md-4"><input id="children" class="form-control" min="0" step="1" value="0" type="number" /></div>
+                <div class="col-md-4"><input id="adults" class="form-control" min="0" value="0" step="1" type="number" /></div>
+            </div>
+            <div class="row">  </div>
+            <div class="row">
+
+                <div class="col-md-2">Buget</div>
+                <div class="col-md-10"> <input id="ex2" class="form-control" type="text" class="span2" value="" data-slider-min="100" data-slider-max="100000" data-slider-data-slider-value="[250,4500]" /> <b>$ 50000</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">Hotel's stars</div>
+                <div class="col-md-10"> <input class="form-control" id="ex11" type="text" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"> Travel Class</div>
+                <div class="col-md-10">  <input id="ex13" class="form-control" type="text" data-slider-value="2" data-slider-max="4" data-slider-min="1" /></div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-2"> Rent A Car</div>
+                <div class="col-md-10"> <input style="float:left;" type="checkbox" id="carC" /></div>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="clearfix"> </div>
+        <div class="clearfix"> </div>
+        <div class="clearfix"> </div>
+        <div class="contact11" style="background:url('images/style.png') 0 -260px; ">
+            <div>
+                <span>Your Style</span>
+            </div>
+        </div>
+
+
+        <div id="step-2">
+            <div class="row" style="width:684px!important;margin:30px auto;">
+                <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
+                <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
+                <div class="option" style="background-image:url('images/icons/night_club2.png');"><p>Disco</p></div>
+                <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Coffee Shop</p></div>
+                <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
+                <div class="option" style="background-image:url('images/icons/amusement_park2.png');"><p>Amusement</p></div>
+
+            </div>
+            <div class="row" style="width:570px!important;margin:30px auto;">
+                <div class="option" style="background-image:url('images/icons/bowling_alley2.png');"><p>Bowling</p></div>
+                <div class="option" style="background-image:url('images/icons/zoo2.png');"><p>Zoo</p></div>
+                <div class="option" style="background-image:url('images/icons/museum2.png');"><p>Landmarks</p></div>
+                <div class="option" style="background-image:url('images/icons/spa2.png');"><p>Spa</p></div>
+                <div class="option" style="background-image:url('images/icons/movie_theater2.png');"><p>Cinema</p></div>
+
+
+            </div>
+            <div class="row">
+                <div class="clearfix"> </div>
+                <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="Done" />
+            </div>
         </div>
     </div>
-
-
-
-
-
-    <div id="step-1">
-
-        <div class="row">  </div>
-        <div class="row">
-            <div class="col-md-2">Your Laction:</div>
-            <div class="col-md-4"><select class="form-control" width="200" class="" id="from-coutnry"> </select> </div>
-
-            <div class="col-md-2">Destination:</div>
-            <div class="col-md-4">  <select class="form-control" id="to-coutnry"> </select></div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">City:</div>
-            <div class="col-md-4">  <input class="form-control" type="text" id="from-city"> </select></div>
-            <div class="col-md-2">City:</div>
-            <div class="col-md-4">  <input class="form-control" type="text" id="to-city"> </select></div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">From Date: </div>
-            <div class="col-md-4"> <input class="form-control" id="from-date" type="date" name="bday"></div>
-            <div class="col-md-2">To Date:</div>
-            <div class="col-md-4"> <input class="form-control" id="to-date" type="date" name="bday" /></div>
-        </div>
-        <div class="row">  </div>
-        <div class="row" style="width:65%;margin:25px auto 5px!important; text-align:center;">
-            <div class="col-md-4">Infants</div>
-            <div class="col-md-4">Childern</div>
-            <div class="col-md-4">Adults</div>
-        </div>
-        <div class="row" style="width:65%;margin: 5px auto 30px!important;">
-            <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
-            <div class="col-md-4"><input id="children" class="form-control" min="0" step="1" value="0" type="number" /></div>
-            <div class="col-md-4"><input id="adults" class="form-control" min="0" value="0" step="1" type="number" /></div>
-        </div>
-        <div class="row">  </div>
-        <div class="row">
-
-            <div class="col-md-2">Buget</div>
-            <div class="col-md-10"> <input id="ex2" class="form-control" type="text" class="span2" value="" data-slider-min="100" data-slider-max="100000" data-slider-data-slider-value="[250,4500]" /> <b>$ 50000</b></div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">Hotel's stars</div>
-            <div class="col-md-10"> <input class="form-control" id="ex11" type="text" /></div>
-        </div>
-        <div class="row">
-            <div class="col-md-2"> Travel Class</div>
-            <div class="col-md-10">  <input id="ex13" class="form-control" type="text" data-slider-value="2" data-slider-max="4" data-slider-min="1" /></div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-2"> Rent A Car</div>
-            <div class="col-md-10"> <input style="float:left;" class="form-control" type="checkbox" id="carC" /></div>
-
-        </div>
-
-
-
-    </div>
-
-    <div class="clearfix"> </div>
-    <div class="clearfix"> </div>
-    <div class="clearfix"> </div>
-    <div class="contact11" style="background:url('images/style.png') 0 -260px; ">
-        <div>
-            <span>Your Style</span>
-        </div>
-    </div>
-
-
-    <div id="step-2">
-        <div class="row" style="width:684px!important;margin:30px auto;">
-            <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
-            <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
-            <div class="option" style="background-image:url('images/icons/night_club2.png');"><p>Disco</p></div>
-            <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Coffee Shop</p></div>
-            <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
-            <div class="option" style="background-image:url('images/icons/amusement_park2.png');"><p>Amusement</p></div>
-
-        </div>
-        <div class="row" style="width:570px!important;margin:30px auto;">
-            <div class="option" style="background-image:url('images/icons/bowling_alley2.png');"><p>Bowling</p></div>
-            <div class="option" style="background-image:url('images/icons/zoo2.png');"><p>Zoo</p></div>
-            <div class="option" style="background-image:url('images/icons/museum2.png');"><p>Landmarks</p></div>
-            <div class="option" style="background-image:url('images/icons/spa2.png');"><p>Spa</p></div>
-            <div class="option" style="background-image:url('images/icons/movie_theater2.png');"><p>Cinema</p></div>
-
-
-        </div>
-        <div class="row">
-            <div class="clearfix"> </div>
-            <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="Done" />
-        </div>
-    </div>
-
 
     <div id="resualt">
         <div class="contact11" style="background:url('/images/airplane.png');background-position-y:-60px;">
