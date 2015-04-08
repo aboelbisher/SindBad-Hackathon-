@@ -2,13 +2,17 @@
     width:900px;
     margin:40px auto;
 }
+#steps {
+        
+}
+#resualt {
+   opacity:0; 
+}
 #loader22 {
     display:none;
     height:600px;
 }
-#resualt {
-    display:none;
-}
+
 #cars {
     width:810px;
 }
@@ -36,8 +40,6 @@
     }
 #hotels{ 
  width:930px;
-   
-   
 }
 #schedule {
     width:800px;
@@ -150,6 +152,7 @@
             width:70px;
             height:70px;
             background-color:#ddd;
+            background-size:cover;
             float:left;
             margin-right:10px;
         }

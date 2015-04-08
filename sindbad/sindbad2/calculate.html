@@ -30,30 +30,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script>
-        function initialize() {
-            var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
-            var mapOptions = {
-                zoom: 11,
-                center: myLatlng
-            }
-            var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
 
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                title: 'Hello World!'
-            });
-            map = new google.maps.Map(document.getElementsByClassName('map2')[1], mapOptions);
-            marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                title: 'Hello World!'
-            });
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
     <script type="text/javascript">
         function endwith(str, suffix) {
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -166,9 +143,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 })                                                                  
                 .done(function (data) {
 
+
+
+
+
+
+
+
+
+
+
+
                     console.dir(data.data);
                     $("#loader22").slideUp();
-                    $("#resualt").slideDown();
+                    $("#resualt").css("opacity", "1");
 
                     data.data.trip.outBound.forEach(function(tt){
                         $("#flight").append(" <div class='row'>\
@@ -176,27 +164,63 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <div class='col-md-9'> " + tt.from.name + " ," + tt.DepartTime + " ->" + tt.to.name + " ," + tt.ArrivingTime + " </div>\
                             </div>");
                     });
-
+                    if (!data.data.ifCar) {
+                        $('#cartitle').hide();
+                    }
                     data.data.cars.cars.forEach(function (car) {
-                        $("#cars").append(" <div class='car'> <div class='card-head'> <div class='car-image'></div> <div class='car-model'>Volvo sffs</div> <div class='payment'> \
-                                    <div class='car-prise'>133$</div>\
+                        $("#cars").append(" <div class='car'> <div class='card-head'> <div class='car-image' style='background-image:url(" + car.imageUrl1.m_url.m_urlOriginal + ")'></div>\
+<div class='car-model'>" + car.providerName + "</div> <div class='payment'> \
+                                    <div class='car-prise'>"+car.price1+"$</div>\
                                     <div class='payment-plan'>Monthly</div>\
                                 </div>\
                             </div>\
                             <div class='card-body'>\
-                                <div class='adress'>Address</div>\
+                                <div class='adress'>"+car.city+" "+car.line1+"</div>\
                             </div>\
                         </div>");
 
                     });
+                    data.data.hotels.forEach(function(hotel){
+                        $('#hotels').append(" <div class='aa'>\
+                      <div class='row first'>\
+                          <div class='col-md-1 image'></div>\
+                          <div class='col-md-9 hotel'>" +hotel.name + "<span class='prise'>$" + hotel.Price + " /night</span></div>\
+                          <div class='col-md-2'><div class='star'> "+hotel.Rating+"/5 </div></div> </div>\
+                      <div class='row extra'>\
+                          <div class='col-md-7 textt'>"+hotel.ShortDesc+"</div>\
+                          <div class='col-md-5  map-continer'> <div class='map2'></div></div>\
+                      </div>\
+                  </div>");
+                    
+                    });
+
+
+
+
+                    var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
+                    var mapOptions = {
+                        zoom: 11,
+                        center: myLatlng
+                    }
+                    var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
+
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        title: 'Hello World!'
+                    });
+                    map = new google.maps.Map(document.getElementsByClassName('map2')[1], mapOptions);
+                    marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        title: 'Hello World!'
+                    });
                    
-    
+                  
                 })
                 .fail(function () {
                     alert("error");
                 });
-
-
                 
                 console.log(str);
             });
@@ -333,8 +357,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="row">  </div>
             <div class="row">
 
-                <div class="col-md-2">Buget</div>
-                <div class="col-md-10"> <input id="ex2" class="form-control" type="text" class="span2" value="" data-slider-min="100" data-slider-max="100000" data-slider-data-slider-value="[250,4500]" /> <b>$ 50000</b></div>
+                <div class="col-md-2">Budget</div>
+                <div class="col-md-10"> <input id="ex2" class="form-control" type="text" class="span2" value="" data-slider-min="100" data-slider-max="50000" data-slider-data-slider-value="[250,4500]" /> <b>$ 50000</b></div>
             </div>
             <div class="row">
                 <div class="col-md-2">Hotel's stars</div>
@@ -407,22 +431,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
 
         <div id="flight">
-            <div class="row">
-                <div class="col-md-3">Airlines flight num </div>
-                <div class="col-md-9"> airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Airlines flight num </div>
-                <div class="col-md-9"> airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Airlines flight num </div>
-                <div class="col-md-9"> airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00 </div>
-            </div>
+          
 
         </div>
         <div class="clearfix"> </div>
-        <div class="contact11" style="background:url('/images/car.jpg');background-position-y:-280px;">
+        <div class="contact11" id="cartitle" style="background:url('/images/car.jpg');background-position-y:-280px;">
             <div>
                 <span style="text-shadow: 0 0 2px #aaa;">Your Rented Car</span>
             </div>
@@ -439,30 +452,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
         <div id="hotels">
-            <div class="aa">
-                <div class="row first">
-                    <div class="col-md-1 image"></div>
-                    <div class="col-md-9 hotel">hotel name<span class="prise">$123/night</span></div>
-                    <div class="col-md-2"><div class="star"> 2/5 </div></div>
-                </div>
-                <div class="row extra">
-                    <div class="col-md-7 textt">pdkgdi cie ipenpqiw neq iwqr qn xkww mxnf ken  pqnk dfxgdg  iwqr qn xkww mxnf ken  pqnk dfxgdg iwqr qn xkww mxnf ken  pqnk dfxgdg</div>
-                    <div class="col-md-5  map-continer"> <div class="map2"></div></div>
-                </div>
-
-            </div>
-            <div class="aa">
-                <div class="row first">
-                    <div class="col-md-1 image"></div>
-                    <div class="col-md-9 hotel">hotel name<span class="prise">$123/night</span></div>
-                    <div class="col-md-2"><div class="star"> 2/5 </div></div>
-                </div>
-                <div class="row extra">
-                    <div class="col-md-7 textt">pdkgdi cie ipenpqiw neq iwqr qn xkww mxnf ken  pqnk dfxgdg  iwqr qn xkww mxnf ken  pqnk dfxgdg iwqr qn xkww mxnf ken  pqnk dfxgdg</div>
-                    <div class="col-md-5 map-continer"> <div class="map2"></div></div>
-                </div>
-
-            </div>
+         
 
         </div>
 
