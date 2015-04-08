@@ -123,7 +123,7 @@ namespace sindbad2.Models
         /// <param name="raduis"></param>
         public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate
             , string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct
-            , TRAVEL_CLASS travelClass, bool ifCar = true ,double minStarRate = 0)
+            , TRAVEL_CLASS travelClass, bool ifCar ,double minStarRate = 0)
         {
 
             this.startDate = startDate;
