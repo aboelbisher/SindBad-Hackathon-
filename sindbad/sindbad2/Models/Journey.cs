@@ -63,6 +63,7 @@ namespace sindbad2.Models
         public string name;
         public double rating;
         public string vicinty; //area name
+        public string types;
     }
 
     #endregion // structs
