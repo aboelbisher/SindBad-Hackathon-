@@ -18,6 +18,7 @@ namespace sindbad2.Models
         public String hotelUrl { set; get; }
         public double Price { set; get;}
         public double tripAdvisorRating { set; get; }
+        public String HotelIcon { set; get; }
         public static List<Hotel> BestHotel(Dictionary<string,object> jsonRetVal,double maxPrice)
         {
             List<Hotel> hotelsSorted = new List<Hotel>();
@@ -52,7 +53,8 @@ namespace sindbad2.Models
                 hotel.location = new GeoCoordinate();
                 hotel.location.Latitude = Double.Parse(hotelLists[i]["latitude"].ToString());
                 hotel.location.Longitude = Double.Parse(hotelLists[i]["longitude"].ToString());
-                hotel.hotelUrl = "http://images.travelnow.com/" + hotelLists[i]["deepLink"].ToString();
+                hotel.hotelUrl =  hotelLists[i]["deepLink"].ToString();
+                hotel.HotelIcon = "http://www.travelnow.com" + hotelLists[i]["thumbNailUrl"].ToString();
                 hotelHash[hotel] = i;
                 hotelsSorted.Add(hotel);
             }
