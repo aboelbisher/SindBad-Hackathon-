@@ -5,11 +5,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using sindbad2.Models;
+using System.Threading;
 
 namespace sindbad2.Controllers
 {
     public class SindbadAPIController : ApiController
     {
+        public static Journey journey;
+        public static SindbadPostClass post;
         public class PostEnumerableResponse : PostResponse
         {
             public Journey data { get; set; }
@@ -57,17 +60,28 @@ namespace sindbad2.Controllers
                 data = null
             };
 
-         Journey jr = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate,
-                post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass, myCallback);
+            SindbadAPIController.post = post;
 
-            result.data = jr;
+            Thread thread = new Thread(ThreadProc);
+
+            thread.Start();
+            thread.Join();
+
+
+
+            result.data = SindbadAPIController.journey;
             return result;
         }
 
-        static void myCallback(Journey jr)
+        private static void ThreadProc()
         {
-            var x = 0;
+            SindbadAPIController.journey = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate,
+               post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass);
+            while(!SindbadAPIController.journey.finished)
+            {}
+
         }
+
 
     }
 
