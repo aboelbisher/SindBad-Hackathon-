@@ -1,4 +1,4 @@
-#step-1,#step-2,#flight,#cars,#hotels{
+#step-1,#step-2,#flight,#cars,#hotels,#schedule{
     width:900px;
     margin:40px auto;
 }
@@ -32,6 +32,24 @@
    
    
 }
+#schedule {
+    width:800px;
+    text-align:center;
+}
+    #schedule .date {
+        color:#fff;
+        font-size:20px;
+        font-weight:600;
+        background-color:#4800ff;
+        padding:15px 0;
+    }
+    #schedule .atr {
+        color:#444;
+        font-size:17px;
+        background-color:#eee;
+        padding:10px 0;
+        border-bottom :1px  dashed #ccc;
+    }
     #hotels .aa {
     
     }

@@ -807,6 +807,7 @@ ul.callbacks_tabs.callbacks2_tabs.callbacks_here a:after{
 	float:left;
 	width:200px;
     padding-bottom: 10px;
+
 	}
 .john{
 	float:left;
@@ -875,6 +876,7 @@ ul.callbacks_tabs.callbacks2_tabs.callbacks_here a:after{
 	background:#fff;
 	box-shadow: 0px 2px 0px #D4D5D9;
 	padding:0 1em 10px;
+    height:260px;
 	}
 .about-grid img {
 	width: 100%;
