@@ -90,7 +90,7 @@ namespace sindbad2.Models
         private bool direct;
         private TRAVEL_CLASS travelClass;
         private double minStarRate;
-        private List<Hotel> hotel;
+        private List<Hotel> hotels;
         private double remainMoney;
         private bool ifCar;
         private CarRent cars;
@@ -613,12 +613,8 @@ namespace sindbad2.Models
                 var obj = JObject.Parse(values.ToString());
 
                 var dict = obj["HotelListResponse"].ToObject<Dictionary<string, object>>();
-
-
-                //var test = values[0] as Dictionary<string, object>;
-
-                this.hotel = Hotel.BestHotel(dict,this.remainMoney);
-                this.remainMoney -= this.hotel.Price;
+                this.hotels = Hotel.BestHotel(dict,this.remainMoney);
+                this.remainMoney -= this.hotels.First().Price;
             }
 
             this.finished = true;

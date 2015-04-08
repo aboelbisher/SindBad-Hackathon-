@@ -64,7 +64,7 @@ namespace sindbad2.Models
             hotelsSorted = hotelsSorted.OrderBy(o => o.tripAdvisorRating).ToList();
             for (int index = 0; index < hotelsSorted.Count; index++)
             {
-                hotelHash[hotelsSorted[index]] += index;
+                hotelHash[hotelsSorted[index]] += (hotelsSorted.Count - index);
             }
             List<Hotel> retVal = new List<Hotel>();
             for (int i = 0; i < 3; i++)
@@ -73,7 +73,7 @@ namespace sindbad2.Models
                 int tmpMin = -1;
                 foreach (KeyValuePair<Hotel, int> entry in hotelHash)
                 {
-                    if (tmpMinHotel == null || tmpMin > entry.Value)
+                    if (tmpMinHotel == null || (tmpMin) > entry.Value)
                     {
                         tmpMinHotel = entry.Key;
                         tmpMin = entry.Value;
