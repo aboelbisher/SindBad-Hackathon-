@@ -102,6 +102,8 @@ namespace sindbad2.Models
         public Dictionary<string, Airport> fromAirports { get; set; }
         public Dictionary<string, Airport> toAirports { get; set; }
 
+        public Dictionary<DateTime, List<Attraction>> randomisedAttractions;
+
 
 
         private Object thisLock = new Object();
@@ -617,6 +619,11 @@ namespace sindbad2.Models
                 this.hotels = Hotel.BestHotel(dict,this.remainMoney);
                 this.remainMoney -= this.hotels.First().Price;
             }
+
+            var randomiser = new DataToAttract();
+            DateTime startDateTime = Convert.ToDateTime(this.trip.outBound.Last().ArrivingTime);
+            DateTime endDateTime = Convert.ToDateTime(this.trip.inBound.Last().DepartTime);
+            this.randomisedAttractions = randomiser.schedule(startDateTime, endDateTime, this.attractions);
 
             this.finished = true;
 
