@@ -2,6 +2,9 @@
     width:900px;
     margin:40px auto;
 }
+#resualt {
+    display:none;
+}
 #cars {
     width:810px;
 }

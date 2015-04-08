@@ -26,13 +26,13 @@ namespace sindbad2.Models
     }
     public class Car
     {
-        private string providerName;
-        private double price1;
-        private ratePlan type1;
-        private Url imageUrl1;
+        public string providerName;
+        public double price1;
+        public ratePlan type1;
+        public Url imageUrl1;
         public double estimatedTotal1 { get; set; }
-        private string line1;
-        private string city { get; set; }
+        public string line1;
+        public string city { get; set; }
 
         public Car(double price1, ratePlan type1, Url imageUrl1, double estimatedTotal1, string providerName, string line1, string city)
         {
