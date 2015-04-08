@@ -79,28 +79,28 @@ namespace sindbad2.Models
         private Pair location; // First = latitude , Second = longtitude
         private string cityName;
          */
-        private int maxPrice;
-        private string attractionsString;
-        private double radius;
-        private List<Attraction> attractions;
-        private string startDate;
-        private string endDate;
-        private int adultsNum;
-        private int childrenNum;
-        private int infantsNum;
-        private bool direct;
-        private TRAVEL_CLASS travelClass;
-        private double minStarRate;
-        private List<Hotel> hotels;
-        private double remainMoney;
-        private bool ifCar;
-        private CarRent cars;
+        public int maxPrice {get ; set;}
+        public string attractionsString {get ; set;}
+        public double radius {get ; set;}
+        public List<Attraction> attractions {get ; set;}
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+        public int adultsNum { get; set; }
+        public int childrenNum { get; set; }
+        public int infantsNum { get; set; }
+        public bool direct { get; set; }
+        public TRAVEL_CLASS travelClass { get; set; }
+        public double minStarRate { get; set; }
+        public List<Hotel> hotels { get; set; }
+        public double remainMoney { get; set; }
+        public bool ifCar { get; set; }
+        public CarRent cars { get; set; }
 
 
-        private Trip trip;
+        public Trip trip { get; set; }
 
-        private Dictionary<string, Airport> fromAirports;
-        private Dictionary<string, Airport> toAirports;
+        public Dictionary<string, Airport> fromAirports { get; set; }
+        public Dictionary<string, Airport> toAirports { get; set; }
 
 
 
@@ -110,9 +110,6 @@ namespace sindbad2.Models
         private int flightsNum; // for synchronizations
 
 
-
-        //private 
-        //private string[] toIATA;
 
 
         /// <summary>
