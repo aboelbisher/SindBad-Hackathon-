@@ -79,7 +79,7 @@ namespace sindbad2.Models
         private string cityName;
          */
         private int maxPrice;
-        private GoogleAttractions[] attractionsEnum;
+        private string attractionsString;
         private double radius;
         private List<Attraction> attractions;
         private string startDate;
@@ -116,7 +116,7 @@ namespace sindbad2.Models
         /// </summary>
         /// <param name="cityName"></param>
         /// <param name="raduis"></param>
-        public Journey(string fromCityName, string toCityName, int maxPrice, GoogleAttractions[] attractions, string startDate,
+        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate,
             string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct,
             TRAVEL_CLASS travelClass, Action<Journey> callback, double minStarRate = 0)
         {
@@ -137,7 +137,7 @@ namespace sindbad2.Models
             this.toCity = new City { name = toCityName };
 
             this.maxPrice = maxPrice;
-            this.attractionsEnum = attractions;
+            this.attractionsString = attractions;
             //this.radius = raduis;
 
             this.getFromPlaceId(this.fromCity.name);
@@ -216,7 +216,7 @@ namespace sindbad2.Models
 
                 this.toCity.placeId = placeId;
 
-                this.getAttractions(radius, this.attractionsEnum);
+                this.getAttractions(radius, this.attractionsString);
             }
 
             this.getFromAirportsInfo(this.fromCity.location);
@@ -228,11 +228,11 @@ namespace sindbad2.Models
 
         #region get Attractions
 
-        private void getAttractions(double raduis, GoogleAttractions[] attractions)
+        private void getAttractions(double raduis, string attractions)
         {
             string locationApi = "location=" + this.toCity.location.First + "," + this.toCity.location.Second;
             string raduisApi = "&radius=" + raduis.ToString();
-            string typesApi = this.makeAttractionApiString(attractions); // attractions
+            string typesApi = "&types=" + attractions; // attractions
             //string minPriceApi = minPrice == PRICE.NONE ? "" : "&minprice=" + ((int)minPrice).ToString();
             //string maxPriceApi = maxPrice == PRICE.NONE ? "" : "&maxprice=" + ((int)maxPrice).ToString();
             string appKeyApi = "&key=" + Config.googleAppId;
