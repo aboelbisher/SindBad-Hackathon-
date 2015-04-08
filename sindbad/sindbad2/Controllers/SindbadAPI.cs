@@ -76,8 +76,8 @@ namespace sindbad2.Controllers
         {
             SindbadAPIController.journey = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate,
                post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass , post.ifCar);
-            while(!SindbadAPIController.journey.finished)
-            {}
+            
+            while(!SindbadAPIController.journey.finished){}
 
         }
 

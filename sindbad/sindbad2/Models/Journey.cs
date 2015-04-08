@@ -486,9 +486,9 @@ namespace sindbad2.Models
             string dstApi = "&destination=" + toAirPort.IATA;
             string departureDateApi = "&departure_date=" + startDate;
             string retDateApi = "&return_date=" + returnDate;
-            string adultsApi = "&adults=" + adultsNum.ToString();
-            string childrenApi = "&children=" + childrenNum.ToString();
-            string infantsApi = "&infants=" + infantsNum.ToString();
+            string adultsApi = this.adultsNum > 0? "&adults=" + adultsNum.ToString() : "" ;
+            string childrenApi = this.childrenNum > 0 ? "&children=" + childrenNum.ToString() : "";
+            string infantsApi = this.infantsNum > 0 ? "&infants=" + infantsNum.ToString() : "";
             string directApi = "&direct=false"; //+ direct.ToString().ToLower();
             string currencyApi = "&currency=USD";
             string maxPriceApi = "&max_price=" + maxPrice.ToString();
@@ -579,8 +579,8 @@ namespace sindbad2.Models
                 + "/" + startDT.Year.ToString() ;
             string departureDateApi = "&departureDate=" + endDDT.Month.ToString() + "/" + endDDT.Day.ToString()
                 + "/" + endDDT.Year.ToString();
-            string adultsNumApi = "&Room.numberOfAdults=" + adultsNum.ToString();
-            string childrenNumApi = "&Room.numberOfChildren=" + childrenNum.ToString();
+            string adultsNumApi = this.adultsNum > 0 ? "&Room.numberOfAdults=" + this.adultsNum.ToString() : "";
+            string childrenNumApi = this.childrenNum > 0 ? "&Room.numberOfChildren=" + this.childrenNum.ToString() : "";
             string minStarRateApi = "&minStarRating=" + minStarRate.ToString();
 
 
