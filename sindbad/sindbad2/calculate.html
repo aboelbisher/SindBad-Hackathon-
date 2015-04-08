@@ -166,7 +166,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     });
                     if (!data.data.ifCar) {
                         $('#cartitle').hide();
-                    }
+                    }else{
                     data.data.cars.cars.forEach(function (car) {
                         $("#cars").append(" <div class='car'> <div class='card-head'> <div class='car-image' style='background-image:url(" + car.imageUrl1.m_url.m_urlOriginal + ")'></div>\
 <div class='car-model'>" + car.providerName + "</div> <div class='payment'> \
@@ -180,11 +180,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>");
 
                     });
+                    }
                     data.data.hotels.forEach(function(hotel){
                         $('#hotels').append(" <div class='aa'>\
                       <div class='row first'>\
                           <div class='col-md-1 image'></div>\
-                          <div class='col-md-9 hotel'>" +hotel.name + "<span class='prise'>$" + hotel.Price + " /night</span></div>\
+                          <div class='col-md-9 hotel'>" +hotel.name + "<span class='prise'>$" + hotel.Price + " /Trip</span></div>\
                           <div class='col-md-2'><div class='star'> "+hotel.Rating+"/5 </div></div> </div>\
                       <div class='row extra'>\
                           <div class='col-md-7 textt'>"+hotel.ShortDesc+"</div>\
@@ -193,6 +194,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   </div>");
                     
                     });
+
+                    var lats=[];
+                    for (var i = 0; i < data.data.hotels.length;i++){
+
+                    }
 
 
 
