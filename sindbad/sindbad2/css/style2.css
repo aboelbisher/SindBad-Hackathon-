@@ -35,14 +35,21 @@
 #schedule {
     width:800px;
     text-align:center;
+    
 }
+    #schedule .row {
+        box-shadow: 0 10px 7px -1px #aaa;
+    }
     #schedule .date {
         color:#fff;
         font-size:20px;
         font-weight:600;
-        background-color:#4800ff;
+        background-color:#283593;
         padding:15px 0;
     }
+        #schedule .date:first-child {
+            border-radius:10px 10px 0 0 ;        
+        }
     #schedule .atr {
         color:#444;
         font-size:17px;
@@ -50,6 +57,10 @@
         padding:10px 0;
         border-bottom :1px  dashed #ccc;
     }
+        #schedule .atr:last-child {
+         border-radius: 0 0 10px 10px  ; 
+           border-bottom :1px  solid #ccc;    
+        }
     #hotels .aa {
     
     }
