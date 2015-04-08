@@ -53,7 +53,7 @@ namespace sindbad2.Models
                 hotel.location = new GeoCoordinate();
                 hotel.location.Latitude = Double.Parse(hotelLists[i]["latitude"].ToString());
                 hotel.location.Longitude = Double.Parse(hotelLists[i]["longitude"].ToString());
-                hotel.hotelUrl = hotelLists[i]["deepLink"].ToString();
+                hotel.hotelUrl = "http://images.travelnow.com/" + hotelLists[i]["deepLink"].ToString();
                 hotelHash[hotel] = i;
                 hotelsSorted.Add(hotel);
             }
