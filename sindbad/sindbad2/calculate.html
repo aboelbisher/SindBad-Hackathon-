@@ -77,7 +77,7 @@ $("#ex2").slider({
                  str+="aquarium|";
                } 
                if(url == "museum"){
-                 str+="art-gallery|";
+                 str+="art_gallery|";
                }
                if(url == "restaurant"){
                  str+="food|";
@@ -103,7 +103,7 @@ $("#ex2").slider({
         */
 
         $.post("/api/SindbadAPI", {
-            "fromCityName": $("#from-coutnry").val(),
+            "fromCityName": $("#from-city").val() + $("#from-coutnry").val(),
             "toCityName": $("#to-city").val() + $("#to-coutnry").val(),
             "maxPrice": $("#ex2").val(),
             "startDate": $("#from-date").val(),
@@ -195,7 +195,8 @@ $("#ex2").slider({
                     <div class="col-md-4">  <select class="form-control" id="to-coutnry"> </select></div>
         </div>
     <div  class="row">
-         <div class="col-md-6"></div> 
+        <div class="col-md-2">City:</div>
+        <div class="col-md-4">  <input class="form-control" type="text" id="from-city"> </select></div>
          <div class="col-md-2">City:</div> 
         <div class="col-md-4">  <input class="form-control" type="text" id="to-city"> </select></div>
     </div>
@@ -250,18 +251,18 @@ $("#ex2").slider({
 <div class="row" style="width:684px!important;margin:30px auto;">
         <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
         <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
-        <div class="option" style="background-image:url('images/icons/night-clup2.png');"><p>Desico</p></div>
+        <div class="option" style="background-image:url('images/icons/night_club2.png');"><p>Disco</p></div>
         <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Cafe Shop</p></div>
         <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
-        <div class="option" style="background-image:url('images/icons/amusement-park2.png');"><p>Amusement</p></div>
+        <div class="option" style="background-image:url('images/icons/amusement_park2.png');"><p>Amusement</p></div>
        
     </div>
     <div class="row"  style="width:570px!important;margin:30px auto;">
-        <div class="option" style="background-image:url('images/icons/bowling-alley2.png');"><p>Bowling</p></div>
+        <div class="option" style="background-image:url('images/icons/bowling_alley2.png');"><p>Bowling</p></div>
         <div class="option" style="background-image:url('images/icons/zoo2.png');"><p>Zoo</p></div>
         <div class="option" style="background-image:url('images/icons/museum2.png');"><p>Land Marks</p></div>
         <div class="option" style="background-image:url('images/icons/spa2.png');"><p>Spa</p></div>
-        <div class="option" style="background-image:url('images/icons/movie-theater2.png');"><p>Cinema</p></div>
+        <div class="option" style="background-image:url('images/icons/movie_theater2.png');"><p>Cinema</p></div>
 
 
     </div>
@@ -269,6 +270,19 @@ $("#ex2").slider({
         <div class="clearfix"> </div>
         <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="next" />  
     </div>
+    </div>
+
+
+    <div id="resualt">
+            your flight
+        <ul>
+            <li>
+                <div>Airlines flight num from airport XXXX time 00-00-00 00:00 -to airport XXXX time 00-00-00 00:00 </div>
+
+            </li>
+        </ul>
+
+
     </div>
         	
 
