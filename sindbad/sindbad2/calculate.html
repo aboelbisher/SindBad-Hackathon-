@@ -1,322 +1,483 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<title>Fly High a Travel Category Flat Bootstarp Resposive Website Template | Home :: w3layouts</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/style2.css" rel="stylesheet" type="text/css" media="all" />
+    <title>Fly High a Travel Category Flat Bootstarp Resposive Website Template | Home :: w3layouts</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/style2.css" rel="stylesheet" type="text/css" media="all" />
 
-<link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/normalize.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/normalize.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/bootstrap-slider.css" rel="stylesheet" type="text/css" media="all" />
 
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>	
-<!-- js -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap-slider.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
+    <!-- js -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-slider.js"></script>
     <script src="js/modernizr.js"></script>
-<!-- //js -->
-<!-- for-mobile-apps -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Fly High Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+    <!-- //js -->
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Fly High Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-	function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- //for-mobile-apps -->
-<!-- start-smoth-scrolling -->
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>
-<script type="text/javascript">
-function endwith(str,suffix){
-    return str.indexOf(suffix,str.length-suffix.length) !== -1;
-}    
-
-jQuery(document).ready(function($) {
-	$(".scroll").click(function(event){		
-		event.preventDefault();
-		$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-	});
-    
-    
- 
-    
-    $.ajax({
-        url: "/data/countries.json",
-        success: function (data) {
-                console.dir(data);
-                var obj = data;
-                obj.forEach(function(country){
-                    $("#from-coutnry").append("<option>"+country.name+"</option>");
-                    $("#to-coutnry").append("<option>"+country.name+"</option>");
-                });
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+           function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="js/move-top.js"></script>
+    <script type="text/javascript" src="js/easing.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
+            var mapOptions = {
+                zoom: 11,
+                center: myLatlng
             }
-        });
-    
-    
-$("#ex2").slider({
-        scale: 'logarithmic'
-        });
-    $("#ex11").slider({step: 1, min: 1, max: 5, range: true, value: [3, 4] ,
-                       ticks: [1, 2, 3, 4, 5]});
+            var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
 
-    $("#ex13").slider({});
-    
-    $("#to2").click(function(){
-        var str="";
-       $(".option").toArray().forEach(function(category){
-            var url = $(category).css("background-image");
-           if(!endwith(url,"2.png)")){
-                url= url.replace(".png)","");
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: 'Hello World!'
+            });
+            map = new google.maps.Map(document.getElementsByClassName('map2')[1], mapOptions);
+            marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script type="text/javascript">
+        function endwith(str, suffix) {
+            return str.indexOf(suffix, str.length - suffix.length) !== -1;
+        }
+
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+
+
+
+
+            $.ajax({
+                url: "/data/countries.json",
+                success: function (data) {
+                    console.dir(data);
+                    var obj = data;
+                    obj.forEach(function (country) {
+                        $("#from-coutnry").append("<option>" + country.name + "</option>");
+                        $("#to-coutnry").append("<option>" + country.name + "</option>");
+                    });
+                }
+            });
+
+
+            $("#ex2").slider({
+                scale: 'logarithmic'
+            });
+            $("#ex11").slider({
+                step: 1, min: 1, max: 5, range: true, value: [3, 4],
+                ticks: [1, 2, 3, 4, 5]
+            });
+
+            $("#ex13").slider({});
+
+            $(".first").click(function () {
+                var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
+                var mapOptions = {
+                    zoom: 11,
+                    center: myLatlng
+                }
+                var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
+                $(".row.extra").slideUp();
+                $(this).siblings(".extra").slideToggle();
+                for (var i = 0; i < document.getElementsByClassName('map2').length; i++) {
+                    google.maps.event.trigger(document.getElementsByClassName('map2')[i], 'resize');
+                    map.setCenter(new google.maps.LatLng(32.8167, 34.9833), 11);
+                }
+
+                
+            });
+
+            $("#to2").click(function () {
               
-               url=url.slice( url.indexOf("icons/")+6);
-               str+=url;
-               str+="|";
-               if(url == "zoo"){
-                 str+="aquarium|";
-               } 
-               if(url == "museum"){
-                 str+="art_gallery|";
-               }
-               if(url == "restaurant"){
-                 str+="food|";
-               }
-           }
-       });
-        str+=")";
-        str = str.replace("|)", "");
+                
+                var str = "";
+                $(".option").toArray().forEach(function (category) {
+                    var url = $(category).css("background-image");
+                    if (!endwith(url, "2.png)")) {
+                        url = url.replace(".png)", "");
 
-        if(str==")"){
-            alert("You have to select al least one category ");
-        }
-        if (    $("#from-coutnry").val() == "" ||
-               $("#to-coutnry").val() == "" ||
-              $("#from-date").val() =="" ||   
-              $("#to-date").val() ==""  
-            ){
-            alert("Missing fields");
-            return;
-        }
+                        url = url.slice(url.indexOf("icons/") + 6);
+                        str += url;
+                        str += "|";
+                        if (url == "zoo") {
+                            str += "aquarium|";
+                        }
+                        if (url == "museum") {
+                            str += "art_gallery|";
+                        }
+                        if (url == "restaurant") {
+                            str += "food|";
+                        }
+                    }
+                });
+                str += ")";
+                str = str.replace("|)", "");
 
-        /*
-        */
+                if (str == ")") {
+                    alert("You have to select al least one category ");
+                }
+                if ($("#from-coutnry").val() == "" ||
+                       $("#to-coutnry").val() == "" ||
+                      $("#from-date").val() == "" ||
+                      $("#to-date").val() == ""
+                    ) {
+                    alert("Missing fields");
+                    return;
+                }
 
-        $.post("/api/SindbadAPI", {
-            "fromCityName": $("#from-city").val() + " " + $("#from-coutnry").val(),
-            "toCityName": $("#to-city").val() + " " + $("#to-coutnry").val(),
-            "maxPrice": $("#ex2").val(),
-            "startDate": $("#from-date").val(),
-            "endDate": $("#to-date").val(),
-            "adultsNum": $("#adults").val(),
-            "childrenNum": $("#children").val(),
-            "infantsNum": $("#infants").val(),
-            "direct": "false",
-            "travelClass": $("#ex13").val(),
-            "attractions": str
-        })
-        .done(function (data) {
-            alert(" success");
-            console.dir(data);
-        })
-        .fail(function () {
-             alert("error");
-        })
-        .always(function () {
-             alert("finished");
+                /*
+                */
+
+                $.post("/api/SindbadAPI", {
+                    "fromCityName": $("#from-city").val() + " " + $("#from-coutnry").val(),
+                    "toCityName": $("#to-city").val() + " " + $("#to-coutnry").val(),
+                    "maxPrice": $("#ex2").val(),
+                    "startDate": $("#from-date").val(),
+                    "endDate": $("#to-date").val(),
+                    "adultsNum": $("#adults").val(),
+                    "childrenNum": $("#children").val(),
+                    "infantsNum": $("#infants").val(),
+                    "direct": "false",
+                    "travelClass": $("#ex13").val(),
+                    "attractions": str
+                })
+                .done(function (data) {
+
+                    console.dir(data);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+
+
+                
+                console.log(str);
+            });
+
+            $(".option").on("mouseenter", function () {
+                $(this).css("opacity", "0.7");
+            });
+            $(".option").on("mouseleave", function () {
+                $(this).css("opacity", "1");
+            });
+            $(".option").on("click", function () {
+                var url = $(this).css("background-image");
+                if (endwith(url, "2.png)")) {
+                    url = url.replace("2.png)", ".png)");
+                } else {
+                    url = url.replace(".png)", "2.png)");
+                }
+                $(this).css("background-image", url);
+            });
         });
 
-        console.log(str);
-    });
-    
-    $(".option").on("mouseenter",function(){
-        $(this).css("opacity","0.7");
-    });
-    $(".option").on("mouseleave",function(){
-        $(this).css("opacity","1");
-    });
-    $(".option").on("click",function(){
-        var url = $(this).css("background-image");
-        if(endwith(url,"2.png)")){
-           url= url.replace("2.png)",".png)");
-        }else{
-         url = url.replace(".png)","2.png)");
-        }
-        $(this).css("background-image",url);
-    });
-});
-    
-    
 
-</script>
-<!-- start-smoth-scrolling -->
-</head>
-	
-<body>
-<!-- banner -->
-	<div id="home" >
-        
-	<div class="navigation">
-	<div class="container">
-		<div class="navi">
-			<div class="head-logo">
-				<a href="index.html"><img src="images/logo.png" alt=" "></a>
-			</div>
 
-			
-		</div>
-	</div>
-        
-        
+    </script>
 
-	</div>
-        
-	</div>
+
    
-    
-      <div class="contact11" style="background:url('images/yourtravel.png') 0 -60px; no-repeat cover">
-	<div >
-		<span>Your Trip</span>
-	</div>          
-</div>
-        
-    
-  
-      
+    <!-- start-smoth-scrolling -->
+</head>
 
-<div id="step-1">
+<body>
+    
+    <!-- banner -->
+    <div id="home">
 
-    <div class="row">  </div>
-      <div class="row">  
-                    <div class="col-md-2">Your Laction:</div>  
-                    <div  class="col-md-4"><select class="form-control" width="200" class="" id="from-coutnry"> </select> </div>
-           
-                    <div class="col-md-2">Destination:</div>  
-                    <div class="col-md-4">  <select class="form-control" id="to-coutnry"> </select></div>
+        <div class="navigation">
+            <div class="container">
+                <div class="navi">
+                    <div class="head-logo">
+                        <a href="index.html"><img src="images/logo.png" alt=" "></a>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
         </div>
-    <div  class="row">
-        <div class="col-md-2">City:</div>
-        <div class="col-md-4">  <input class="form-control" type="text" id="from-city"> </select></div>
-         <div class="col-md-2">City:</div> 
-        <div class="col-md-4">  <input class="form-control" type="text" id="to-city"> </select></div>
+
     </div>
-          <div class="row">  
-                    <div class="col-md-2">From Date: </div>
-                    <div  class="col-md-4"> <input class="form-control" id="from-date" type="date" name="bday"></div>
-                    <div class="col-md-2">To Date:</div>
-                    <div  class="col-md-4"> <input class="form-control" id="to-date" type="date" name="bday" /></div>
-                     </div>
-    <div class="row">  </div>
-        <div class="row" style="width:65%;margin:25px auto 5px!important; text-align:center;">  
-                     <div class="col-md-4">Infants</div>
-                    <div class="col-md-4">Childern</div>
-                    <div class="col-md-4">Adults</div>
-                   </div>   
-     <div class="row" style="width:65%;margin: 5px auto 30px!important;">  
-                    <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
-                    <div class="col-md-4"><input id="children" class="form-control" min="0" step="1" value="0" type="number" /></div>
-                    <div class="col-md-4"><input id="adults" class="form-control" min="0" value="0" step="1" type="number" /></div>
-                                 </div>  
-    <div class="row">  </div>
-     <div class="row"> 
-         
-                    <div class="col-md-2">Buget</div>   
-                    <div class="col-md-10"> <input id="ex2" class="form-control" type="text" class="span2" value="" data-slider-min="100" data-slider-max="100000" data-slider-data-slider-value="[250,4500]"/> <b>$ 50000</b></div>  
-                               </div>   
-     <div class="row">       
-                    <div class="col-md-2">Hotel's stars</div>   
-                    <div class="col-md-10"> <input class="form-control" id="ex11" type="text" /></div>
-    </div>   
-     <div class="row">       
-                    <div class="col-md-2"> Travel Class</div>   
-                    <div class="col-md-10">  <input id="ex13" class="form-control" type="text"  data-slider-value="2" data-slider-max="4"  data-slider-min="1" /></div>
+
   
+    <div class="contact11" style="background:url('images/yourtravel.png') 0 -60px; no-repeat cover">
+        <div>
+            <span>Your Trip</span>
+        </div>
     </div>
 
 
 
-</div>
-    
-        <div class="clearfix"> </div>
+
+
+    <div id="step-1">
+
+        <div class="row">  </div>
+        <div class="row">
+            <div class="col-md-2">Your Laction:</div>
+            <div class="col-md-4"><select class="form-control" width="200" class="" id="from-coutnry"> </select> </div>
+
+            <div class="col-md-2">Destination:</div>
+            <div class="col-md-4">  <select class="form-control" id="to-coutnry"> </select></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">City:</div>
+            <div class="col-md-4">  <input class="form-control" type="text" id="from-city"> </select></div>
+            <div class="col-md-2">City:</div>
+            <div class="col-md-4">  <input class="form-control" type="text" id="to-city"> </select></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">From Date: </div>
+            <div class="col-md-4"> <input class="form-control" id="from-date" type="date" name="bday"></div>
+            <div class="col-md-2">To Date:</div>
+            <div class="col-md-4"> <input class="form-control" id="to-date" type="date" name="bday" /></div>
+        </div>
+        <div class="row">  </div>
+        <div class="row" style="width:65%;margin:25px auto 5px!important; text-align:center;">
+            <div class="col-md-4">Infants</div>
+            <div class="col-md-4">Childern</div>
+            <div class="col-md-4">Adults</div>
+        </div>
+        <div class="row" style="width:65%;margin: 5px auto 30px!important;">
+            <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
+            <div class="col-md-4"><input id="children" class="form-control" min="0" step="1" value="0" type="number" /></div>
+            <div class="col-md-4"><input id="adults" class="form-control" min="0" value="0" step="1" type="number" /></div>
+        </div>
+        <div class="row">  </div>
+        <div class="row">
+
+            <div class="col-md-2">Buget</div>
+            <div class="col-md-10"> <input id="ex2" class="form-control" type="text" class="span2" value="" data-slider-min="100" data-slider-max="100000" data-slider-data-slider-value="[250,4500]" /> <b>$ 50000</b></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Hotel's stars</div>
+            <div class="col-md-10"> <input class="form-control" id="ex11" type="text" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"> Travel Class</div>
+            <div class="col-md-10">  <input id="ex13" class="form-control" type="text" data-slider-value="2" data-slider-max="4" data-slider-min="1" /></div>
+
+        </div>
+
+
+
+    </div>
+
     <div class="clearfix"> </div>
     <div class="clearfix"> </div>
-      <div class="contact11" style="background:url('images/style.png') 0 -260px; no-repeat cover">
-	<div >
-		<span>Your Style</span>
-	</div>          
-</div>
-        
+    <div class="clearfix"> </div>
+    <div class="contact11" style="background:url('images/style.png') 0 -260px; ">
+        <div>
+            <span>Your Style</span>
+        </div>
+    </div>
+
 
     <div id="step-2">
-<div class="row" style="width:684px!important;margin:30px auto;">
-        <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
-        <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
-        <div class="option" style="background-image:url('images/icons/night_club2.png');"><p>Disco</p></div>
-        <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Coffee Shop</p></div>
-        <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
-        <div class="option" style="background-image:url('images/icons/amusement_park2.png');"><p>Amusement</p></div>
-       
-    </div>
-    <div class="row"  style="width:570px!important;margin:30px auto;">
-        <div class="option" style="background-image:url('images/icons/bowling_alley2.png');"><p>Bowling</p></div>
-        <div class="option" style="background-image:url('images/icons/zoo2.png');"><p>Zoo</p></div>
-        <div class="option" style="background-image:url('images/icons/museum2.png');"><p>Land Marks</p></div>
-        <div class="option" style="background-image:url('images/icons/spa2.png');"><p>Spa</p></div>
-        <div class="option" style="background-image:url('images/icons/movie_theater2.png');"><p>Cinema</p></div>
+        <div class="row" style="width:684px!important;margin:30px auto;">
+            <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
+            <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
+            <div class="option" style="background-image:url('images/icons/night_club2.png');"><p>Disco</p></div>
+            <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Coffee Shop</p></div>
+            <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
+            <div class="option" style="background-image:url('images/icons/amusement_park2.png');"><p>Amusement</p></div>
+
+        </div>
+        <div class="row" style="width:570px!important;margin:30px auto;">
+            <div class="option" style="background-image:url('images/icons/bowling_alley2.png');"><p>Bowling</p></div>
+            <div class="option" style="background-image:url('images/icons/zoo2.png');"><p>Zoo</p></div>
+            <div class="option" style="background-image:url('images/icons/museum2.png');"><p>Landmarks</p></div>
+            <div class="option" style="background-image:url('images/icons/spa2.png');"><p>Spa</p></div>
+            <div class="option" style="background-image:url('images/icons/movie_theater2.png');"><p>Cinema</p></div>
 
 
-    </div>
-    <div class="row">     
-        <div class="clearfix"> </div>
-        <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="Done" />  
-    </div>
+        </div>
+        <div class="row">
+            <div class="clearfix"> </div>
+            <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="Done" />
+        </div>
     </div>
 
 
     <div id="resualt">
-        <div id="flight">
-            your flight
-            <ul>
-                <li>
-                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
-                </li>
-                <li>
-                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
-                </li>
-                <li>
-                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
-                </li>
-            </ul>
+        <div class="contact11" style="background:url('/images/airplane.png');background-position-y:-60px;">
+            <div>
+                <span style="text-shadow: 0 0 2px #aaa;">  Your Flight</span>
+            </div>
         </div>
-        <div id="car">
-            image|model
-        </div>
-         
 
+        <div id="flight">
+            <div class="row">
+                <div class="col-md-3">Airlines flight num </div>
+                <div class="col-md-9"> airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00 </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Airlines flight num </div>
+                <div class="col-md-9"> airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00 </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Airlines flight num </div>
+                <div class="col-md-9"> airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00 </div>
+            </div>
+
+        </div>
+        <div class="clearfix"> </div>
+        <div class="contact11" style="background:url('/images/car.jpg');background-position-y:-280px;">
+            <div>
+                <span style="text-shadow: 0 0 2px #aaa;">Your Rented Car</span>
+            </div>
+        </div>
+        <div id="cars">
+            <div class="row">
+                <div class="car">
+                    <div class="card-head">
+                        <div class="car-image"></div> 
+                        <div class="car-model">Volvo sffs</div>
+                        <div class="payment">
+                            <div class="car-prise">133$</div>
+                            <div class="payment-plan">Monthly</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="adress">Address</div>
+                    </div>
+                </div>
+                <div class="car">
+                    <div class="card-head">
+                        <div class="car-image"></div>
+                        <div class="car-model">Volvo sffs</div>
+                        <div class="payment">
+                            <div class="car-prise">133$</div>
+                            <div class="payment-plan">Monthly</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="adress">Address</div>
+                    </div>
+                </div>
+                <div class="car">
+                    <div class="card-head">
+                        <div class="car-image"></div>
+                        <div class="car-model">Volvo sffs</div>
+                        <div class="payment">
+                            <div class="car-prise">133$</div>
+                            <div class="payment-plan">Monthly</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="adress">Address</div>
+                    </div>
+                </div>
+                <div class="car">
+                    <div class="card-head">
+                        <div class="car-image"></div>
+                        <div class="car-model">Volvo sffs</div>
+                        <div class="payment">
+                            <div class="car-prise">133$</div>
+                            <div class="payment-plan">Monthly</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="adress">Address</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"> </div>
+        <div class="contact11" style="background:url('/images/hotel.png');background-position-y:0;">
+            <div>
+                <span style="text-shadow: 0 0 2px #aaa;">Your Hotel</span>
+            </div>
+        </div>
+        <div id="hotels">
+            <div class="aa">
+                <div class="row first">
+                    <div class="col-md-1 image"></div>
+                    <div class="col-md-9 hotel">hotel name<span class="prise">$123/night</span></div>
+                    <div class="col-md-2"><div class="star"> 2/5 </div></div>
+                </div>
+                <div class="row extra">
+                    <div class="col-md-7 textt">pdkgdi cie ipenpqiw neq iwqr qn xkww mxnf ken  pqnk dfxgdg  iwqr qn xkww mxnf ken  pqnk dfxgdg iwqr qn xkww mxnf ken  pqnk dfxgdg</div>
+                    <div class="col-md-5  map-continer"> <div class="map2"></div></div>
+                </div>
+
+            </div>
+            <div class="aa">
+                <div class="row first">
+                    <div class="col-md-1 image"></div>
+                    <div class="col-md-9 hotel">hotel name<span class="prise">$123/night</span></div>
+                    <div class="col-md-2"><div class="star"> 2/5 </div></div>
+                </div>
+                <div class="row extra">
+                    <div class="col-md-7 textt">pdkgdi cie ipenpqiw neq iwqr qn xkww mxnf ken  pqnk dfxgdg  iwqr qn xkww mxnf ken  pqnk dfxgdg iwqr qn xkww mxnf ken  pqnk dfxgdg</div>
+                    <div class="col-md-5 map-continer"> <div class="map2"></div></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="clearfix"> </div>
+        <div class="contact11" style="background:url('/images/schedule.png');background-position-y:0;">
+            <div>
+                <span style="text-shadow: 0 0 2px #aaa;">Your Schedule</span>
+            </div>
+        </div>
+        <div id="schedule">
+            
+        </div>
+        <div class="clearfix"> </div>
+        <div class="clearfix"> </div>
 
     </div>
-        	
 
 
 
-    
-    
-    
-<!-- footer -->
-	<div class="footer">
-	<div class="container">
-		<div class="footer-logo">
-			<div class="footer-logo-left">
-			</div>
-			<div class="footer-logo-right">
-                
-				<p><a href="#">Sindbad</a></p>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-		
-		<div class="clearfix"> </div>
-	</div>
+
+
+
+
+    <!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <div class="footer-logo-left">
+                </div>
+                <div class="footer-logo-right">
+
+                    <p><a href="#">Sindbad</a></p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
 
 
 </body>
