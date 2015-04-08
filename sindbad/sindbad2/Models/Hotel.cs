@@ -18,7 +18,7 @@ namespace sindbad2.Models
         public String hotelUrl { set; get; }
         public double Price { set; get;}
         public double tripAdvisorRating { set; get; }
-        public static Hotel BestHotel(Dictionary<string,object> jsonRetVal,double maxPrice)
+        public static List<Hotel> BestHotel(Dictionary<string,object> jsonRetVal,double maxPrice)
         {
             List<Hotel> hotelsSorted = new List<Hotel>();
             Dictionary<Hotel, int> hotelHash = new Dictionary<Hotel, int>();
@@ -64,16 +64,25 @@ namespace sindbad2.Models
             hotelsSorted = hotelsSorted.OrderBy(o => o.tripAdvisorRating).ToList();
             for (int index = 0; index < hotelsSorted.Count; index++)
             {
-                hotelHash[hotelsSorted[index]] += index;
+                hotelHash[hotelsSorted[index]] += (hotelsSorted.Count - index);
             }
-            Hotel retVal = null;
-            int tmpMin = -1;
-            foreach (KeyValuePair<Hotel,int> entry in hotelHash)
+            List<Hotel> retVal = new List<Hotel>();
+            for (int i = 0; i < 3; i++)
             {
-                if (retVal == null || tmpMin > entry.Value)
+                Hotel tmpMinHotel = null;
+                int tmpMin = -1;
+                foreach (KeyValuePair<Hotel, int> entry in hotelHash)
                 {
-                    retVal = entry.Key;
-                    tmpMin = entry.Value;
+                    if (tmpMinHotel == null || (tmpMin) > entry.Value)
+                    {
+                        tmpMinHotel = entry.Key;
+                        tmpMin = entry.Value;
+                    }
+                }
+                retVal.Add(tmpMinHotel);
+                if (tmpMinHotel != null)
+                {
+                    hotelHash.Remove(tmpMinHotel);
                 }
             }
             return retVal;
