@@ -67,7 +67,7 @@ namespace sindbad2.Models
                         cars.Add(car);
 
                         ++count;
-                        if (count == 10)
+                        if (count == 5)
                         {
                             this.finished = true;
                             return;

@@ -106,6 +106,8 @@ namespace sindbad2.Models
         private Object thisLock = new Object();
         public bool finished = false;
 
+        private int flightsNum; // for synchronizations
+
 
 
         //private 
@@ -218,14 +220,14 @@ namespace sindbad2.Models
 
                 this.toCity.placeId = placeId;
 
-                this.getAttractions(radius, this.attractionsString);
+                //this.getAttractions(radius, this.attractionsString);
             }
 
             this.getFromAirportsInfo(this.fromCity.location);
 
         }
 
-        #endregion //get place id
+        #endregion //get place id // first called
 
 
         #region get Attractions
@@ -458,12 +460,17 @@ namespace sindbad2.Models
                 }
             }
 
+            while(this.flightsNum < this.fromAirports.Count() * this.toAirports.Count()){}
+
+            this.getAttractions(this.radius, this.attractionsString);
+
+
             var x = 0;
 
 
         }
 
-        #endregion //Airport info
+        #endregion //Airport info // Second called
 
 
         #region flights info
@@ -505,6 +512,10 @@ namespace sindbad2.Models
             }
             catch(Exception e)
             {
+                lock(this.thisLock)
+                {
+                    this.flightsNum++;
+                }
                 return;
             }
 
@@ -532,12 +543,10 @@ namespace sindbad2.Models
                             this.remainMoney = this.maxPrice - this.trip.price;
                         }
                     }
+
+                    this.flightsNum++;
                 }
             }
-
-
-            var x = 0;
-
         }
 
         #endregion //flights info
