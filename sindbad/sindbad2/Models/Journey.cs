@@ -313,6 +313,7 @@ namespace sindbad2.Models
                 string placeName = jsonArray[i]["name"].ToString();
                 double? rating = (double?)jsonArray[i]["rating"];
                 string vicinty = jsonArray[i]["vicinity"].ToString();
+                string types = jsonArray[i]["types"].ToString();
 
                 Pair location = new Pair { First = latitude, Second = longtitude };
 
@@ -322,7 +323,8 @@ namespace sindbad2.Models
                     name = placeName,
                     placeID = placeId,
                     rating = rating == null ? -1 : rating.Value,
-                    vicinty = vicinty
+                    vicinty = vicinty ,
+                    types = types
                 };
 
                 attractions.Add(attr);
@@ -330,6 +332,7 @@ namespace sindbad2.Models
 
             return attractions;
         }
+
 
         private void getMedianOfAttractions()
         {
