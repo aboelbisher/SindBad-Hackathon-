@@ -7,7 +7,7 @@ namespace sindbad2.Models
 {
     public class Config
     {
-        static public string googleAppId = "AIzaSyCtynp8ZTbtw52AHLBiIn-ZZ83yx0UlvAg";
+        static public string googleAppId = "AIzaSyBETqNbGV57K_URw4n-utr5asnfYjwZGYE";
         static public string amadeuisAppId = "dv9T2akqevMJ5GKHH5E8BSKsiNODLoY8";
         static public string expediaAppId = "44st9skw7nz2fs89fzw74yau";
         static public string expediaCCID = "55505";
