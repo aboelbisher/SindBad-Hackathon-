@@ -29,7 +29,7 @@ namespace sindbad2.Models
             String t1 = pickUp.Year.ToString() + "-" + pickUp.Month.ToString() + "-" + pickUp.Day.ToString();
             String t2 = dropOff.Year.ToString() + "-" + dropOff.Month.ToString() + "-" + dropOff.Day.ToString();
 
-            apiUrl = "http://api.sandbox.amadeus.com/v1.2/cars/search-airport?location=" + IATA + "&pick_up=" + t1 + "&drop_off=" + t2 + "&apikey=dv9T2akqevMJ5GKHH5E8BSKsiNODLoY8";
+            apiUrl = "http://api.sandbox.amadeus.com/v1.2/cars/search-airport?location=" + IATA + "&pick_up=" + t1 + "&drop_off=" + t2 + "&apikey=" + Config.amadeuisAppId;
             String t = apiUrl;
             SendBadHttpRequest.sendHttpRequest(apiUrl, FindCar);
         }

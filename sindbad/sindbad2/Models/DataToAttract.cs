@@ -30,6 +30,7 @@ namespace sindbad2.Models
         public Dictionary<DateTime, List<Attraction>> schedule(DateTime startDate, DateTime endDate, List<Attraction> attractions)
         {
             PrepareForSched(attractions);
+            this.sched = new Dictionary<DateTime, List<Attraction>>();
             jumpDist = ((int)(1 - perc) * (endDate.Subtract(startDate).Days));
             for(var dateIt = startDate.AddDays(1);!dateIt.Equals(endDate);dateIt.AddDays(jumpDist))
             {
