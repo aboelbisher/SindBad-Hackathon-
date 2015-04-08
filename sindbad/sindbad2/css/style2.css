@@ -1,7 +1,179 @@
-#step-1,#step-2{
+#step-1,#step-2,#flight,#cars,#hotels,#schedule{
     width:900px;
     margin:40px auto;
 }
+#cars {
+    width:810px;
+}
+    #cars .row {
+    margin:auto;
+    }
+#flight .row{
+    margin:auto;
+    background-color:#eee;
+    color:#666;
+    padding:10px 0 ;
+    border-bottom:1px dashed #bbb;
+}
+    #flight .row:first-child {
+        border-radius:10px 10px 0 0;
+
+    }
+        #flight .row:last-child {
+        border-radius: 0 0 10px 10px ;
+         border-bottom:1px solid #bbb;
+
+    }
+    #flight .row > div:first-child {
+        border-right:1px dashed #bbb;
+    }
+#hotels{ 
+ width:930px;
+   
+   
+}
+#schedule {
+    width:800px;
+    text-align:center;
+    
+}
+    #schedule .row {
+        box-shadow: 0 10px 7px -1px #aaa;
+    }
+    #schedule .date {
+        color:#fff;
+        font-size:20px;
+        font-weight:600;
+        background-color:#283593;
+        padding:15px 0;
+    }
+        #schedule .date:first-child {
+            border-radius:10px 10px 0 0 ;        
+        }
+    #schedule .atr {
+        color:#444;
+        font-size:17px;
+        background-color:#eee;
+        padding:10px 0;
+        border-bottom :1px  dashed #ccc;
+    }
+        #schedule .atr:last-child {
+         border-radius: 0 0 10px 10px  ; 
+           border-bottom :1px  solid #ccc;    
+        }
+    #hotels .aa {
+    
+    }
+#hotels> .aa >.row {
+    background-color:#eee;
+    box-shadow:0 5px 4px -1px #aaa;
+    color:#444;
+    height:60px;  
+   
+    
+}
+
+#hotels> .aa >.row.first {
+    border-bottom:1px solid #bbb;
+}
+
+#hotels> .aa >.row.first .image {
+    background-color:#ccc;
+    background-size:cover;
+    height:60px;
+    width:60px;
+}
+    #hotels > .aa > .row.first .hotel {
+        vertical-align:central;
+        height:60px;
+        line-height:60px;
+        font-size:22px; 
+    }
+
+    #hotels > .aa > .row.first .prise {
+        vertical-align:central;
+        height:60px;
+        line-height:60px;
+        font-size:14px; 
+        color:#578948;
+        margin-left:10px;
+    }
+.map2 {
+    width:100%;
+    height:100%;
+  
+}
+.map-continer{
+    height:200px;
+}
+
+      #hotels > .aa > .row.first .star {
+        vertical-align:central;
+        text-align:center;
+
+        width:60px;
+        height:60px;
+        line-height:60px;
+        font-size:14px; 
+        background-image:url(/images/star.png);
+        background-size:contain;
+
+      }
+#hotels .aa> .row.extra {
+    background-color:#fff;
+    color:#444;
+    height:200px;    
+    display:none;
+}
+    .car {
+        width:250px;
+        height:110px;
+       box-shadow: 0 5px  3px -1px #aaa;
+        margin:20px 10px;
+        float:left;
+    }
+#hotels .aa .row.extra .textt {
+    padding:20px;
+}
+.card-head {
+    height:70px;
+    
+}
+     .car .car-image {
+            width:70px;
+            height:70px;
+            background-color:#ddd;
+            float:left;
+            margin-right:10px;
+        }
+     .car .card-body{
+        padding:10px;  
+        background-color:#eee; 
+     }
+        .car .car-model {
+            padding:5px 10px;
+            color:#666;
+            font-size:18px;
+
+        }
+        .car .payment {
+            padding-left:20px;
+           padding-right:20px;
+            margin-bottom:2px;
+            height:30px;
+        }
+            .car .payment .car-prise {
+                float:left;
+                color:#578948;
+            }
+            .car .payment .payment-plan {
+              float:right;
+            }
+        .car .adress {
+             width:100%;
+            color:#aaa;
+            bottom:0;
+        }
 #step-1 .row{
     margin-top: 25px!important;
 }

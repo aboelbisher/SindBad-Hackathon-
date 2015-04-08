@@ -117,12 +117,14 @@
     <Content Include="images\a7mad.jpg" />
     <Content Include="images\aa.png" />
     <Content Include="images\abo elrazek.jpg" />
+    <Content Include="images\airplane.png" />
     <Content Include="images\ana.jpg" />
     <Content Include="images\arrow.png" />
     <Content Include="images\banner.jpg" />
     <Content Include="images\banner.png" />
     <Content Include="images\bb.png" />
     <Content Include="images\camera.png" />
+    <Content Include="images\Car.jpg" />
     <Content Include="images\cc.png" />
     <Content Include="images\circle-1.png" />
     <Content Include="images\circle.png" />
@@ -135,6 +137,7 @@
     <Content Include="images\ee.png" />
     <Content Include="images\heart.png" />
     <Content Include="images\home.png" />
+    <Content Include="images\Hotel.png" />
     <Content Include="images\icons.png" />
     <Content Include="images\icons\amusement_park.png" />
     <Content Include="images\icons\amusement_park2.png" />
@@ -181,9 +184,11 @@
     <Content Include="images\round.png" />
     <Content Include="images\round2.png" />
     <Content Include="images\round3.png" />
+    <Content Include="images\schedule.png" />
     <Content Include="images\search-1.png" />
     <Content Include="images\search.png" />
     <Content Include="images\sp-1.png" />
+    <Content Include="images\star.png" />
     <Content Include="images\style.png" />
     <Content Include="images\twitter-1.png" />
     <Content Include="images\twitter-2.png" />

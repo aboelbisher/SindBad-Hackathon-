@@ -79,28 +79,28 @@ namespace sindbad2.Models
         private Pair location; // First = latitude , Second = longtitude
         private string cityName;
          */
-        private int maxPrice;
-        private string attractionsString;
-        private double radius;
-        private List<Attraction> attractions;
-        private string startDate;
-        private string endDate;
-        private int adultsNum;
-        private int childrenNum;
-        private int infantsNum;
-        private bool direct;
-        private TRAVEL_CLASS travelClass;
-        private double minStarRate;
-        private List<Hotel> hotels;
-        private double remainMoney;
-        private bool ifCar;
-        private CarRent cars;
+        public int maxPrice {get ; set;}
+        public string attractionsString {get ; set;}
+        public double radius {get ; set;}
+        public List<Attraction> attractions {get ; set;}
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+        public int adultsNum { get; set; }
+        public int childrenNum { get; set; }
+        public int infantsNum { get; set; }
+        public bool direct { get; set; }
+        public TRAVEL_CLASS travelClass { get; set; }
+        public double minStarRate { get; set; }
+        public List<Hotel> hotels { get; set; }
+        public double remainMoney { get; set; }
+        public bool ifCar { get; set; }
+        public CarRent cars { get; set; }
 
 
-        private Trip trip;
+        public Trip trip { get; set; }
 
-        private Dictionary<string, Airport> fromAirports;
-        private Dictionary<string, Airport> toAirports;
+        public Dictionary<string, Airport> fromAirports { get; set; }
+        public Dictionary<string, Airport> toAirports { get; set; }
 
 
 
@@ -110,9 +110,6 @@ namespace sindbad2.Models
         private int flightsNum; // for synchronizations
 
 
-
-        //private 
-        //private string[] toIATA;
 
 
         /// <summary>
@@ -486,9 +483,9 @@ namespace sindbad2.Models
             string dstApi = "&destination=" + toAirPort.IATA;
             string departureDateApi = "&departure_date=" + startDate;
             string retDateApi = "&return_date=" + returnDate;
-            string adultsApi = "&adults=" + adultsNum.ToString();
-            string childrenApi = "&children=" + childrenNum.ToString();
-            string infantsApi = "&infants=" + infantsNum.ToString();
+            string adultsApi = this.adultsNum > 0? "&adults=" + adultsNum.ToString() : "" ;
+            string childrenApi = this.childrenNum > 0 ? "&children=" + childrenNum.ToString() : "";
+            string infantsApi = this.infantsNum > 0 ? "&infants=" + infantsNum.ToString() : "";
             string directApi = "&direct=false"; //+ direct.ToString().ToLower();
             string currencyApi = "&currency=USD";
             string maxPriceApi = "&max_price=" + maxPrice.ToString();
@@ -579,8 +576,8 @@ namespace sindbad2.Models
                 + "/" + startDT.Year.ToString() ;
             string departureDateApi = "&departureDate=" + endDDT.Month.ToString() + "/" + endDDT.Day.ToString()
                 + "/" + endDDT.Year.ToString();
-            string adultsNumApi = "&Room.numberOfAdults=" + adultsNum.ToString();
-            string childrenNumApi = "&Room.numberOfChildren=" + childrenNum.ToString();
+            string adultsNumApi = this.adultsNum > 0 ? "&Room.numberOfAdults=" + this.adultsNum.ToString() : "";
+            string childrenNumApi = this.childrenNum > 0 ? "&Room.numberOfChildren=" + this.childrenNum.ToString() : "";
             string minStarRateApi = "&minStarRating=" + minStarRate.ToString();
 
 
