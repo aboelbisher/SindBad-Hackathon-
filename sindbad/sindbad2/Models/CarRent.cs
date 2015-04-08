@@ -61,7 +61,15 @@ namespace sindbad2.Models
                         double price = double.Parse(_car["rates"][0]["price"]["amount"].ToString());
                         String _type = _car["rates"][0]["type"].ToString();
                         ratePlan type = getRatePlan(_type);
-                        Url imageUrl = new Url(_car["images"][0]["url"].ToString());
+                        Url imageUrl;
+                        if(_car["images"] != null)
+                        {
+                            imageUrl = new Url(_car["images"][0]["url"].ToString());
+                        }
+                        else
+                        {
+                            imageUrl = new Url("https://cdn3.iconfinder.com/data/icons/transportation-2/41/transportation_car_icon-512.png");
+                        }
                         double estimatedTotal = double.Parse(_car["estimated_total"]["amount"].ToString());
                         Car car = new Car(price, type, imageUrl, estimatedTotal, providerName, line1, city);
                         cars.Add(car);
