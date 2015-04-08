@@ -22,5 +22,7 @@ namespace sindbad2.Models
 
         static public string getFlightsApi = "http://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?";
         static public string getHotelApi = "http://dev.api.ean.com/ean-services/rs/hotel/v3/list?cid=55505";
+
+        //static public string autoCompletionApi = ""
     }
 }
