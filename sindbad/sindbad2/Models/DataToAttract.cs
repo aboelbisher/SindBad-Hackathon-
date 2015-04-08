@@ -31,8 +31,8 @@ namespace sindbad2.Models
         {
             PrepareForSched(attractions);
             this.sched = new Dictionary<DateTime, List<Attraction>>();
-            jumpDist = ((int)(1 - perc) * (endDate.Subtract(startDate).Days));
-            for(var dateIt = startDate.AddDays(1);dateIt.CompareTo(endDate) > 0;dateIt.AddDays(jumpDist))
+            jumpDist = (int)((1 - perc) * (endDate.Subtract(startDate).Days));
+            for(var dateIt = startDate.AddDays(1);dateIt.CompareTo(endDate) < 0;dateIt = dateIt.AddDays(jumpDist))
             {
                 this.sched[dateIt] = new List<Attraction>();
                 Random r = new Random();
