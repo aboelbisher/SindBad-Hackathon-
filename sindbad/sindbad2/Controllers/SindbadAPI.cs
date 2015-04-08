@@ -24,7 +24,8 @@ namespace sindbad2.API
             public bool direct { get; set; }
             public TRAVEL_CLASS travelClass { get; set; }
 
-            public GoogleAttractions[] attractions { get; set; }
+            public string
+                attractions { get; set; }
         }
         // POST: api/SindbadAPI
         public PostEnumerableResponse Post(SindbadPostClass post)
