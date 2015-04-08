@@ -275,7 +275,7 @@ namespace sindbad2.Models
 
                 string startDateString = startDateTime.Year.ToString() + "-" + startDateTime.Month.ToString()
                     + "-" + startDateTime.Day.ToString();
-                this.getHotels(, this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.remainMoney);
+                this.getHotels(startDateString , this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.remainMoney);
 
             }
 
