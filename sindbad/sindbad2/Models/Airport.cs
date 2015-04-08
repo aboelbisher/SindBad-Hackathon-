@@ -91,10 +91,10 @@ namespace sindbad2.Models
                     }
                     else
                     {
-                        flight.from = new Airport();
-                        flight.from.IATA = it["origin"]["airport"].ToString();
-                        flight.from.cityIata = flight.from.IATA;
-                        flight.from.name = flight.from.IATA;
+                        flight.to = new Airport();
+                        flight.to.IATA = it["origin"]["airport"].ToString();
+                        flight.to.cityIata = flight.from.IATA;
+                        flight.to.name = flight.from.IATA;
                     }
                     if (iterator.Equals("outbound"))
                         retVal.outBound.Add(flight);
