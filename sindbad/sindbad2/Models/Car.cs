@@ -30,7 +30,7 @@ namespace sindbad2.Models
         private double price1;
         private ratePlan type1;
         private Url imageUrl1;
-        private double estimatedTotal1;
+        public double estimatedTotal1 { get; set; }
         private string line1;
         private string city { get; set; }
 

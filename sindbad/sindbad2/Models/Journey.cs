@@ -92,13 +92,15 @@ namespace sindbad2.Models
         private double minStarRate;
         private Hotel hotel;
         private double remainMoney;
+        private bool ifCar;
+        private CarRent cars;
+
 
         private Trip trip;
 
         private Dictionary<string, Airport> fromAirports;
         private Dictionary<string, Airport> toAirports;
 
-        private Action<Journey> myCallBack;
 
 
         private Object thisLock = new Object();
@@ -117,7 +119,9 @@ namespace sindbad2.Models
         /// </summary>
         /// <param name="cityName"></param>
         /// <param name="raduis"></param>
-        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate, string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct, TRAVEL_CLASS travelClass, double minStarRate = 0)
+        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate
+            , string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct
+            , TRAVEL_CLASS travelClass, bool ifCar = true ,double minStarRate = 0)
         {
 
             this.startDate = startDate;
@@ -129,6 +133,7 @@ namespace sindbad2.Models
             this.travelClass = travelClass;
             this.minStarRate = minStarRate;
             this.remainMoney = maxPrice;
+            this.ifCar = ifCar;
 
 
             this.fromCity = new City { name = fromCityName };
@@ -258,7 +263,19 @@ namespace sindbad2.Models
 
                 this.getMedianOfAttractions();
 
-                this.getHotels(this.startDate, this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.remainMoney);
+                DateTime startDateTime = Convert.ToDateTime(this.trip.outBound.Last().ArrivingTime);
+                DateTime endDateTime = Convert.ToDateTime(this.trip.inBound.Last().DepartTime);
+
+                if(ifCar)
+                {
+                    string IATA = this.trip.outBound.Last().to.IATA;
+
+                    this.getCar(IATA, startDateTime, endDateTime);  
+                }
+
+                string startDateString = startDateTime.Year.ToString() + "-" + startDateTime.Month.ToString()
+                    + "-" + startDateTime.Day.ToString();
+                this.getHotels(, this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.remainMoney);
 
             }
 
@@ -331,6 +348,35 @@ namespace sindbad2.Models
 
 
         #endregion //get Attractions
+
+        #region get car
+
+        private void getCar(string IATA, DateTime startTime , DateTime endTime)
+        {
+            CarRent carRent = new CarRent(IATA, startTime, endTime);
+
+            while(!carRent.finished){}
+
+            this.cars = carRent;
+        }
+
+        private void getMaxCarPriceAndDecreaseMaxPrice(List<Car> cars)
+        {
+            double max = 0;
+            foreach (Car car in cars)
+            {
+                if(car.estimatedTotal1 > max)
+                {
+                    max = car.estimatedTotal1;
+                }
+            }
+
+            this.remainMoney -= max ;
+        }
+
+
+        #endregion // get car
+
 
         #region Aiport info
 
