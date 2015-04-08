@@ -93,8 +93,8 @@ namespace sindbad2.Models
                     {
                         flight.to = new Airport();
                         flight.to.IATA = it["destination"]["airport"].ToString();
-                        flight.to.cityIata = flight.from.IATA;
-                        flight.to.name = flight.from.IATA;
+                        flight.to.cityIata = flight.to.IATA;
+                        flight.to.name = flight.to.IATA;
                     }
                     if (iterator.Equals("outbound"))
                         retVal.outBound.Add(flight);
