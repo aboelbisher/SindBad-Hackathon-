@@ -169,7 +169,6 @@ namespace sindbad2.Models
                 var longtitude = res[0]["geometry"]["location"]["lng"];
 
                 this.fromCity.location = new Pair(latitude.ToString(), longtitude.ToString());
-
                 this.fromCity.placeId = placeId;
             }
 
@@ -453,7 +452,16 @@ namespace sindbad2.Models
         {
 
             var request = (HttpWebRequest)result.AsyncState;
-            var response = (HttpWebResponse)request.EndGetResponse(result);
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse)request.EndGetResponse(result);
+            }
+            catch(Exception e)
+            {
+                return;
+            }
+
             using (var stream = response.GetResponseStream())
             {
                 var r = new StreamReader(stream);
