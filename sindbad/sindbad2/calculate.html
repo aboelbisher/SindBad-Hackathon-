@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <title>Fly High a Travel Category Flat Bootstarp Resposive Website Template | Home :: w3layouts</title>
@@ -89,6 +89,32 @@ $("#ex2").slider({
         if(str=="()"){
             alert("You have to select al least one category ");
         }
+
+
+        $.post("/api/SindbadAPI", {
+            "fromCityName": "paris",
+            "toCityName": "london",
+            "maxPrice": "1234",
+            "startDate": "2015-12-20",
+            "endDate": "2015-12-28",
+            "adultsNum": "3",
+            "childrenNum": "2",
+            "infantsNum": "2",
+            "direct":"false",
+            "travelClass":"2" ,
+            "attractions":"food|zoo"
+        })
+        .done(function (data) {
+            alert(" success");
+            console.dir(data);
+        })
+        .fail(function () {
+             alert("error");
+        })
+        .always(function () {
+             alert("finished");
+        });
+
         console.log(str);
     });
     
