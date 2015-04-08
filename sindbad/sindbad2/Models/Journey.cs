@@ -633,13 +633,13 @@ namespace sindbad2.Models
                 this.remainMoney -= this.hotels.First().Price;
             }
 
-            /*
+            
             var randomiser = new DataToAttract();
             DateTime startDateTime = Convert.ToDateTime(this.trip.outBound.Last().ArrivingTime);
             DateTime endDateTime = Convert.ToDateTime(this.trip.inBound.Last().DepartTime);
             this.randomisedAttractions = randomiser.schedule(startDateTime, endDateTime, this.attractions);
 
-             */
+             
  
             this.finished = true;
 

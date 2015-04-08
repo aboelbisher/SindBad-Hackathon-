@@ -68,22 +68,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
             $("#ex13").slider({});
 
-            $(".first").click(function () {
-                var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
-                var mapOptions = {
-                    zoom: 11,
-                    center: myLatlng
-                }
-                var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
-                $(".row.extra").slideUp();
-                $(this).siblings(".extra").slideToggle();
-                for (var i = 0; i < document.getElementsByClassName('map2').length; i++) {
-                    google.maps.event.trigger(document.getElementsByClassName('map2')[i], 'resize');
-                    map.setCenter(new google.maps.LatLng(32.8167, 34.9833), 11);
-                }
+            //$(".first").click(function () {
+            //    var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
+            //    var mapOptions = {
+            //        zoom: 11,
+            //        center: myLatlng
+            //    }
+            //    var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
+            //    $(".row.extra").slideUp();
+            //    $(this).siblings(".extra").slideToggle();
+            //    for (var i = 0; i < document.getElementsByClassName('map2').length; i++) {
+            //        google.maps.event.trigger(document.getElementsByClassName('map2')[i], 'resize');
+            //        map.setCenter(new google.maps.LatLng(32.8167, 34.9833), 11);
+            //    }
 
                 
-            });
+            //});
 
             $("#to2").click(function () {
               
@@ -193,6 +193,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                       </div>\
                   </div>");
                     
+                    });
+
+                    document.getElementsByClassName("first").addEventListener("click", function () {
+                   
+                            var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
+                            var mapOptions = {
+                                zoom: 11,
+                                center: myLatlng
+                            }
+                            var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
+                            $(".row.extra").slideUp();
+                            $(this).siblings(".extra").slideToggle();
+                            for (var i = 0; i < document.getElementsByClassName('map2').length; i++) {
+                                google.maps.event.trigger(document.getElementsByClassName('map2')[i], 'resize');
+                                map.setCenter(new google.maps.LatLng(32.8167, 34.9833), 11);
+                            }
                     });
 
                     var lats=[];
