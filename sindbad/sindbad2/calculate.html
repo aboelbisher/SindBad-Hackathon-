@@ -163,9 +163,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     "attractions": str,
                     "ifCar": $("#carC").val()
                 })
-                .done(function (data) {
+                .done(function (data,res) {
 
-                    console.dir(data);
+                    console.dir(data); 
+                    console.dir(res);
                 })
                 .fail(function () {
                     alert("error");
@@ -460,7 +461,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                21/08/14
            </div> 
             <div class="row atr">
-                go for swinning
+                <h5> go for swinning</h5>
+                <p>go for the pool to swim and have fun</p>
             </div> 
             <div class="row atr">
                 go for swinning
