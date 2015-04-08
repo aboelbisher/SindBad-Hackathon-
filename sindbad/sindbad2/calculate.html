@@ -64,7 +64,7 @@ $("#ex2").slider({
     $("#ex13").slider({});
     
     $("#to2").click(function(){
-        var str="(";
+        var str="";
        $(".option").toArray().forEach(function(category){
             var url = $(category).css("background-image");
            if(!endwith(url,"2.png)")){
@@ -77,7 +77,7 @@ $("#ex2").slider({
                  str+="aquarium|";
                } 
                if(url == "museum"){
-                 str+="art-gallery|";
+                 str+="art_gallery|";
                }
                if(url == "restaurant"){
                  str+="food|";
@@ -85,24 +85,35 @@ $("#ex2").slider({
            }
        });
         str+=")";
-        str= str.replace("|)",")");
-        if(str=="()"){
+        str = str.replace("|)", "");
+
+        if(str==")"){
             alert("You have to select al least one category ");
         }
+        if (    $("#from-coutnry").val() == "" ||
+               $("#to-coutnry").val() == "" ||
+              $("#from-date").val() =="" ||   
+              $("#to-date").val() ==""  
+            ){
+            alert("Missing fields");
+            return;
+        }
 
+        /*
+        */
 
         $.post("/api/SindbadAPI", {
-            "fromCityName": "paris",
-            "toCityName": "london",
-            "maxPrice": "1234",
-            "startDate": "2015-12-20",
-            "endDate": "2015-12-28",
-            "adultsNum": "3",
-            "childrenNum": "2",
-            "infantsNum": "2",
-            "direct":"false",
-            "travelClass":"2" ,
-            "attractions":"food|zoo"
+            "fromCityName": $("#from-city").val() + " " + $("#from-coutnry").val(),
+            "toCityName": $("#to-city").val() + " " + $("#to-coutnry").val(),
+            "maxPrice": $("#ex2").val(),
+            "startDate": $("#from-date").val(),
+            "endDate": $("#to-date").val(),
+            "adultsNum": $("#adults").val(),
+            "childrenNum": $("#children").val(),
+            "infantsNum": $("#infants").val(),
+            "direct": "false",
+            "travelClass": $("#ex13").val(),
+            "attractions": str
         })
         .done(function (data) {
             alert(" success");
@@ -184,7 +195,8 @@ $("#ex2").slider({
                     <div class="col-md-4">  <select class="form-control" id="to-coutnry"> </select></div>
         </div>
     <div  class="row">
-         <div class="col-md-6"></div> 
+        <div class="col-md-2">City:</div>
+        <div class="col-md-4">  <input class="form-control" type="text" id="from-city"> </select></div>
          <div class="col-md-2">City:</div> 
         <div class="col-md-4">  <input class="form-control" type="text" id="to-city"> </select></div>
     </div>
@@ -196,13 +208,13 @@ $("#ex2").slider({
                      </div>
     <div class="row">  </div>
         <div class="row" style="width:65%;margin:25px auto 5px!important; text-align:center;">  
-                     <div class="col-md-4">infants</div>
-                    <div class="col-md-4">childern</div>
-                    <div class="col-md-4">adults</div>
+                     <div class="col-md-4">Infants</div>
+                    <div class="col-md-4">Childern</div>
+                    <div class="col-md-4">Adults</div>
                    </div>   
      <div class="row" style="width:65%;margin: 5px auto 30px!important;">  
                     <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
-                    <div class="col-md-4"><input id="childern" class="form-control" min="0"  step="1" value="0" type="number" /></div>
+                    <div class="col-md-4"><input id="children" class="form-control" min="0" step="1" value="0" type="number" /></div>
                     <div class="col-md-4"><input id="adults" class="form-control" min="0" value="0" step="1" type="number" /></div>
                                  </div>  
     <div class="row">  </div>
@@ -216,7 +228,7 @@ $("#ex2").slider({
                     <div class="col-md-10"> <input class="form-control" id="ex11" type="text" /></div>
     </div>   
      <div class="row">       
-                    <div class="col-md-2"> Plan class</div>   
+                    <div class="col-md-2"> Travel Class</div>   
                     <div class="col-md-10">  <input id="ex13" class="form-control" type="text"  data-slider-value="2" data-slider-max="4"  data-slider-min="1" /></div>
   
     </div>
@@ -239,25 +251,49 @@ $("#ex2").slider({
 <div class="row" style="width:684px!important;margin:30px auto;">
         <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
         <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
-        <div class="option" style="background-image:url('images/icons/night-clup2.png');"><p>Desico</p></div>
-        <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Cafe Shop</p></div>
+        <div class="option" style="background-image:url('images/icons/night_club2.png');"><p>Disco</p></div>
+        <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Coffee Shop</p></div>
         <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
-        <div class="option" style="background-image:url('images/icons/amusement-park2.png');"><p>Amusement</p></div>
+        <div class="option" style="background-image:url('images/icons/amusement_park2.png');"><p>Amusement</p></div>
        
     </div>
     <div class="row"  style="width:570px!important;margin:30px auto;">
-        <div class="option" style="background-image:url('images/icons/bowling-alley2.png');"><p>Bowling</p></div>
+        <div class="option" style="background-image:url('images/icons/bowling_alley2.png');"><p>Bowling</p></div>
         <div class="option" style="background-image:url('images/icons/zoo2.png');"><p>Zoo</p></div>
         <div class="option" style="background-image:url('images/icons/museum2.png');"><p>Land Marks</p></div>
         <div class="option" style="background-image:url('images/icons/spa2.png');"><p>Spa</p></div>
-        <div class="option" style="background-image:url('images/icons/movie-theater2.png');"><p>Cinema</p></div>
+        <div class="option" style="background-image:url('images/icons/movie_theater2.png');"><p>Cinema</p></div>
 
 
     </div>
     <div class="row">     
         <div class="clearfix"> </div>
-        <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="next" />  
+        <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="Done" />  
     </div>
+    </div>
+
+
+    <div id="resualt">
+        <div id="flight">
+            your flight
+            <ul>
+                <li>
+                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
+                </li>
+                <li>
+                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
+                </li>
+                <li>
+                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
+                </li>
+            </ul>
+        </div>
+        <div id="car">
+            image|model
+        </div>
+         
+
+
     </div>
         	
 

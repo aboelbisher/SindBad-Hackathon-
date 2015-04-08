@@ -32,7 +32,6 @@ namespace sindbad2.Models
             for(int i=0;i<hotelLists.Count;i++)
             {
                 Hotel hotel = new Hotel();
-                 hotel.Price = Double.Parse(values["@total"].ToString());
                 hotel.address = hotelLists[i]["address1"].ToString();
                 hotel.name = hotelLists[i]["name"].ToString();
                 hotel.city = hotelLists[i]["city"].ToString();

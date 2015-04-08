@@ -102,6 +102,7 @@ namespace sindbad2.Models
 
 
         private Object thisLock = new Object();
+        public bool finished = false;
 
 
 
@@ -116,9 +117,7 @@ namespace sindbad2.Models
         /// </summary>
         /// <param name="cityName"></param>
         /// <param name="raduis"></param>
-        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate,
-            string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct,
-            TRAVEL_CLASS travelClass, Action<Journey> callback, double minStarRate = 0)
+        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate, string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct, TRAVEL_CLASS travelClass, double minStarRate = 0)
         {
 
             this.startDate = startDate;
@@ -130,7 +129,6 @@ namespace sindbad2.Models
             this.travelClass = travelClass;
             this.minStarRate = minStarRate;
             this.remainMoney = maxPrice;
-            this.myCallBack = callback;
 
 
             this.fromCity = new City { name = fromCityName };
@@ -483,6 +481,7 @@ namespace sindbad2.Models
                 }
             }
 
+
             var x = 0;
 
         }
@@ -557,8 +556,9 @@ namespace sindbad2.Models
 
                 this.hotel = Hotel.BestHotel(dict,this.remainMoney);
                 this.remainMoney -= this.hotel.Price;
-                this.myCallBack(this);
             }
+
+            this.finished = true;
 
         #endregion// hotels
 

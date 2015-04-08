@@ -5,12 +5,33 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using sindbad2.Models;
+using System.Threading;
 
-namespace sindbad2.API
+namespace sindbad2.Controllers
 {
-    public class SindbadAPI : ApiController
+    public class SindbadAPIController : ApiController
     {
-
+        public static Journey journey;
+        public static SindbadPostClass post;
+        public class PostEnumerableResponse : PostResponse
+        {
+            public Journey data { get; set; }
+        }
+        public enum HttpPostResult
+        {
+            UNAUTHORIZE = 0,
+            NOT_FOUND = 1,
+            NULL = 2,
+            FOUND = 3,
+            EMPTY = 4,
+            WRONG_PASS = 5,
+            SUCCESS = 6,
+            FAIL = 7
+        }
+        public class PostResponse
+        {
+            public HttpPostResult result { get; set; }
+        }
         public class SindbadPostClass
         {
             public string fromCityName { get; set; }
@@ -27,7 +48,9 @@ namespace sindbad2.API
             public string
                 attractions { get; set; }
         }
+
         // POST: api/SindbadAPI
+        //
         public PostEnumerableResponse Post(SindbadPostClass post)
         {
             PostEnumerableResponse result = new PostEnumerableResponse
@@ -37,37 +60,30 @@ namespace sindbad2.API
                 data = null
             };
 
-            Journey jr = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate,
-                post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass, myCallback);
+            SindbadAPIController.post = post;
 
-            result.data = jr;
+            Thread thread = new Thread(ThreadProc);
+
+            thread.Start();
+            thread.Join();
+
+
+
+            result.data = SindbadAPIController.journey;
             return result;
         }
 
-        public void myCallback(Journey jr)
+        private static void ThreadProc()
         {
-            var x = 0;
+            SindbadAPIController.journey = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate,
+               post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass);
+            while(!SindbadAPIController.journey.finished)
+            {}
+
         }
 
+
     }
 
-    public class PostEnumerableResponse : PostResponse
-    {
-        public Journey data { get; set; }
-    }
-    public enum HttpPostResult
-    {
-        UNAUTHORIZE = 0,
-        NOT_FOUND = 1,
-        NULL = 2,
-        FOUND = 3,
-        EMPTY = 4,
-        WRONG_PASS = 5,
-        SUCCESS = 6,
-        FAIL = 7
-    }
-    public class PostResponse
-    {
-        public HttpPostResult result { get; set; }
-    }
+   
 }
