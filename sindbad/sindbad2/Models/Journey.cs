@@ -90,7 +90,7 @@ namespace sindbad2.Models
         private bool direct;
         private TRAVEL_CLASS travelClass;
         private double minStarRate;
-        private Hotel hotel;
+        private List<Hotel> hotel;
         private double remainMoney;
         private bool ifCar;
         private CarRent cars;
