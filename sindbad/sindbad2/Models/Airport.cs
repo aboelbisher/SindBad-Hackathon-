@@ -67,7 +67,7 @@ namespace sindbad2.Models
             string[] collect = { "outbound", "inbound" };
             foreach (var iterator in collect)
             {
-                foreach (var it in array2["outbound"]["flights"])
+                foreach (var it in array2[iterator]["flights"])
                 {
                     Flight flight = new Flight();
                     flight.DepartTime = it["departs_at"].ToString();
@@ -92,14 +92,14 @@ namespace sindbad2.Models
                     else
                     {
                         flight.to = new Airport();
-                        flight.to.IATA = it["origin"]["airport"].ToString();
+                        flight.to.IATA = it["destination"]["airport"].ToString();
                         flight.to.cityIata = flight.from.IATA;
                         flight.to.name = flight.from.IATA;
                     }
                     if (iterator.Equals("outbound"))
                         retVal.outBound.Add(flight);
                     else
-                        retVal.inBound.Insert(0,flight);
+                        retVal.inBound.Add(flight);
                 }
             }
             return retVal;
