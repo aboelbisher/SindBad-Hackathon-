@@ -91,7 +91,7 @@ namespace sindbad2.Models
         private TRAVEL_CLASS travelClass;
         private double minStarRate;
         private Hotel hotel;
-
+        private double remainMoney;
 
         private Trip trip;
 
@@ -129,7 +129,7 @@ namespace sindbad2.Models
             this.direct = direct;
             this.travelClass = travelClass;
             this.minStarRate = minStarRate;
-
+            this.remainMoney = maxPrice;
             this.myCallBack = callback;
 
 
@@ -261,7 +261,7 @@ namespace sindbad2.Models
 
                 this.getMedianOfAttractions();
 
-                this.getHotels(this.startDate, this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.maxPrice);
+                this.getHotels(this.startDate, this.endDate, this.hotelLocation, this.childrenNum, this.adultsNum, this.minStarRate, this.remainMoney);
 
             }
 
@@ -469,7 +469,7 @@ namespace sindbad2.Models
                     {
 
                         this.trip = Trip.MakeTrip(values, this.fromAirports.Union(this.toAirports).ToDictionary(k => k.Key, v => v.Value));
-                        //var result = d1.Union(d2).Union(d3).ToDictionary (k => k.Key, v => v.Value
+                        this.remainMoney = this.maxPrice - this.trip.price;
                     }
                     else
                     {
@@ -477,6 +477,7 @@ namespace sindbad2.Models
                         if (tmpTrip.price < this.trip.price)
                         {
                             this.trip = tmpTrip;
+                            this.remainMoney = this.maxPrice - this.trip.price;
                         }
                     }
                 }
@@ -491,7 +492,7 @@ namespace sindbad2.Models
 
         #region hotels
 
-        private void getHotels(string startDate , string endDate , GeoCoordinate location , int childrenNum , int adultsNum , double minStarRate , int maxPrice)
+        private void getHotels(string startDate , string endDate , GeoCoordinate location , int childrenNum , int adultsNum , double minStarRate , double maxPrice)
         {
 
 
@@ -554,8 +555,8 @@ namespace sindbad2.Models
 
                 //var test = values[0] as Dictionary<string, object>;
 
-                this.hotel = Hotel.BestHotel(dict);
-
+                this.hotel = Hotel.BestHotel(dict,this.remainMoney);
+                this.remainMoney -= this.hotel.Price;
                 this.myCallBack(this);
             }
 
