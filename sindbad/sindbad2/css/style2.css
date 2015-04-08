@@ -1,4 +1,4 @@
-#step-1,#step-2,#flight,#cars,#hotels,#schedule{
+#step-1,#step-2,#flight,#flight2,#cars,#hotels,#schedule{
     width:900px;
     margin:40px auto;
 }
@@ -19,23 +19,23 @@
     #cars .row {
     margin:auto;
     }
-#flight .row{
+#flight .row,#flight2 .row{
     margin:auto;
     background-color:#eee;
     color:#666;
     padding:10px 0 ;
     border-bottom:1px dashed #bbb;
 }
-    #flight .row:first-child {
+    #flight .row:first-child,#flight2 .row:first-child {
         border-radius:10px 10px 0 0;
 
     }
-        #flight .row:last-child {
+        #flight .row:last-child, #flight2 .row:last-child {
         border-radius: 0 0 10px 10px ;
          border-bottom:1px solid #bbb;
 
     }
-    #flight .row > div:first-child {
+    #flight .row > div:first-child,flight2 .row > div:first-child {
         border-right:1px dashed #bbb;
     }
 #hotels{ 
@@ -116,7 +116,7 @@
     height:200px;
 }
 
-      #hotels > .aa > .row.first .star {
+    .star {
         vertical-align:central;
         text-align:center;
 
@@ -152,7 +152,9 @@
             width:70px;
             height:70px;
             background-color:#ddd;
-            background-size:cover;
+            background-size:contain;
+            background-repeat:no-repeat;
+            background-position:center;
             float:left;
             margin-right:10px;
         }

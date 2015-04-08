@@ -164,6 +164,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <div class='col-md-9'> " + tt.from.name + " ," + tt.DepartTime + " ->" + tt.to.name + " ," + tt.ArrivingTime + " </div>\
                             </div>");
                     });
+
+                    data.data.trip.inBound.forEach(function (tt) {
+                        $("#flight2").append(" <div class='row'>\
+                                <div class='col-md-3'>" + tt.companyIATA + tt.flightNumber + " </div>\
+                                <div class='col-md-9'> " + tt.from.name + " ," + tt.DepartTime + " ->" + tt.to.name + " ," + tt.ArrivingTime + " </div>\
+                            </div>");
+                    });
+                    $("#flight2").after("<div style='color:#22aa33;float:left;'>Total :$"+data.data.trip.price+"</div>");
                     if (!data.data.ifCar) {
                         $('#cartitle').hide();
                     }else{
@@ -184,6 +192,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     data.data.hotels.forEach(function(hotel){
                         $('#hotels').append(" <div class='aa'>\
                       <div class='row first'>\
+                           <input class='attu' type='hidden' value='"+hotel.location.Latitude+"'> \
+                            <input class='lattu' type='hidden' value='" + hotel.location.Longitude + "'> \
                           <div class='col-md-1 image'></div>\
                           <div class='col-md-9 hotel'>" +hotel.name + "<span class='prise'>$" + hotel.Price + " /Trip</span></div>\
                           <div class='col-md-2'><div class='star'> "+hotel.Rating+"/5 </div></div> </div>\
@@ -194,50 +204,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   </div>");
                     
                     });
+                    for (var i = 0; i < document.getElementsByClassName("first").length; i++) {
+                        document.getElementsByClassName("first")[i].addEventListener("click", function () {
 
-                    document.getElementsByClassName("first").addEventListener("click", function () {
-                   
-                            var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
-                            var mapOptions = {
-                                zoom: 11,
-                                center: myLatlng
-                            }
-                            var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
+                            console.dir($(this).find(".attu"));
+                           
+                           
                             $(".row.extra").slideUp();
                             $(this).siblings(".extra").slideToggle();
                             for (var i = 0; i < document.getElementsByClassName('map2').length; i++) {
-                                google.maps.event.trigger(document.getElementsByClassName('map2')[i], 'resize');
-                                map.setCenter(new google.maps.LatLng(32.8167, 34.9833), 11);
+                                var myLatlng = new google.maps.LatLng($(document.getElementsByClassName("map2")[i]).find(".lattu").value, $(document.getElementsByClassName("map2")[i]).find(".attu").value);
+                                var mapOptions = {
+                                    zoom: 11,
+                                    center: myLatlng
+                                }
+                                var map = new google.maps.Map(document.getElementsByClassName("map2")[i], mapOptions);
+                                google.maps.event.trigger(this, 'resize');
+                                map.setCenter(myLatlng, 11);
                             }
-                    });
-
-                    var lats=[];
-                    for (var i = 0; i < data.data.hotels.length;i++){
-
+                        });
+                    }
+                    for (var key in data.data.randomisedAttractions) {
+                        $("#schedule").append('<div class="row date">' + key + ' </div> ');
+                        for (var i = 0; i< data.data.randomisedAttractions[key].length; i++) {
+                            $("#schedule").append('<div class="row atr">' + data.data.randomisedAttractions[key][i].name + ' <br/><div class="star" style="margin:auto;">' + data.data.randomisedAttractions[key][i].rating + '</div><br>' + data.data.randomisedAttractions[key][i].vicinty + ' </div> ');
+                           
+                        }
                     }
 
-
-
-
-                    var myLatlng = new google.maps.LatLng(32.8167, 34.9833);
-                    var mapOptions = {
-                        zoom: 11,
-                        center: myLatlng
-                    }
-                    var map = new google.maps.Map(document.getElementsByClassName('map2')[0], mapOptions);
-
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        title: 'Hello World!'
-                    });
-                    map = new google.maps.Map(document.getElementsByClassName('map2')[1], mapOptions);
-                    marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        title: 'Hello World!'
-                    });
-                   
                   
                 })
                 .fail(function () {
@@ -456,6 +450,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           
 
         </div>
+        <h2 style="text-align:center;"> Back to home</h2>
+        <div id="flight2">
+
+
+        </div>
         <div class="clearfix"> </div>
         <div class="contact11" id="cartitle" style="background:url('/images/car.jpg');background-position-y:-280px;">
             <div>
@@ -485,34 +484,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
         <div id="schedule">
-           <div class="row date">
-               21/08/14
-           </div> 
-            <div class="row atr">
-                <h5> go for swinning</h5>
-                <p>go for the pool to swim and have fun</p>
-            </div> 
-            <div class="row atr">
-                go for swinning
-            </div> 
-            <div class="row date">
-                21/08/14
-            </div>
-            <div class="row atr">
-                go for swinning
-            </div>
-            <div class="row atr">
-                go for swinning
-            </div> 
-            <div class="row date">
-                21/08/14
-            </div>
-            <div class="row atr">
-                go for swinning
-            </div>
-            <div class="row atr">
-                go for swinning
-            </div> 
+          
+            
         </div>
         <div class="clearfix"> </div>
         <div class="clearfix"> </div>
