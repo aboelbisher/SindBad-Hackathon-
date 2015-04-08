@@ -205,16 +205,29 @@ namespace sindbad2.Models
                 var latitude = res[0]["geometry"]["location"]["lat"];
                 var longtitude = res[0]["geometry"]["location"]["lng"];
 
-                GeoCoordinate northEastCoor = new GeoCoordinate(Double.Parse(res[0]["geometry"]["viewport"]["northeast"]["lat"].ToString()),
-                   Double.Parse(res[0]["geometry"]["viewport"]["northeast"]["lng"].ToString()));
+                GeoCoordinate northEastCoor;
+                GeoCoordinate southWestCoor;
+                GeoCoordinate centerCoor;
+                double radius;
 
-                GeoCoordinate southWestCoor = new GeoCoordinate(Double.Parse(res[0]["geometry"]["viewport"]["southwest"]["lat"].ToString()),
-                   Double.Parse(res[0]["geometry"]["viewport"]["southwest"]["lng"].ToString()));
+                if(res[0]["geometry"]["viewport"] != null)
+                {
+                    northEastCoor = new GeoCoordinate(Double.Parse(res[0]["geometry"]["viewport"]["northeast"]["lat"].ToString()),
+                    Double.Parse(res[0]["geometry"]["viewport"]["northeast"]["lng"].ToString()));
 
-                GeoCoordinate centerCoor = new GeoCoordinate(Double.Parse(latitude.ToString()),
-                   Double.Parse(longtitude.ToString()));
+                    southWestCoor = new GeoCoordinate(Double.Parse(res[0]["geometry"]["viewport"]["southwest"]["lat"].ToString()),
+                       Double.Parse(res[0]["geometry"]["viewport"]["southwest"]["lng"].ToString()));
 
-                double radius = Math.Max(centerCoor.GetDistanceTo(northEastCoor), centerCoor.GetDistanceTo(southWestCoor));
+                    centerCoor = new GeoCoordinate(Double.Parse(latitude.ToString()),
+                       Double.Parse(longtitude.ToString()));
+
+                    radius = Math.Max(centerCoor.GetDistanceTo(northEastCoor), centerCoor.GetDistanceTo(southWestCoor));
+
+                }
+                else
+                {
+                    radius = 15000;
+                }
                 this.radius = radius;
                 this.toCity.location = new Pair(latitude.ToString(), longtitude.ToString());
 
@@ -620,11 +633,14 @@ namespace sindbad2.Models
                 this.remainMoney -= this.hotels.First().Price;
             }
 
+            /*
             var randomiser = new DataToAttract();
             DateTime startDateTime = Convert.ToDateTime(this.trip.outBound.Last().ArrivingTime);
             DateTime endDateTime = Convert.ToDateTime(this.trip.inBound.Last().DepartTime);
             this.randomisedAttractions = randomiser.schedule(startDateTime, endDateTime, this.attractions);
 
+             */
+ 
             this.finished = true;
 
         #endregion// hotels
