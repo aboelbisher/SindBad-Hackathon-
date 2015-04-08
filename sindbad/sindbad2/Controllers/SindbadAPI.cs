@@ -5,11 +5,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using sindbad2.Models;
+using System.Threading;
 
 namespace sindbad2.API
 {
     public class SindbadAPI : ApiController
     {
+
+        public static Journey journey;
+        public static SindbadPostClass post;
 
         public class SindbadPostClass
         {
@@ -37,12 +41,19 @@ namespace sindbad2.API
                 data = null
             };
 
-            Journey jr = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate,
-                post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass, myCallback);
-
-            result.data = jr;
+            var myThread = new Thread(ThreadProc);
+            myThread.Start();
+            myThread.Join();
+             
+            result.data = journey;
             return result;
         }
+
+        private static void ThreadProc()
+        {
+            SindbadAPI.journey = new Journey(post.fromCityName, post.toCityName, post.maxPrice, post.attractions, post.startDate, post.endDate, post.adultsNum, post.childrenNum, post.infantsNum, post.direct, post.travelClass);
+        }
+
 
         public void myCallback(Journey jr)
         {

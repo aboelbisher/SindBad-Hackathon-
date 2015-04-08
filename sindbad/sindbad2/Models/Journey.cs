@@ -116,9 +116,7 @@ namespace sindbad2.Models
         /// </summary>
         /// <param name="cityName"></param>
         /// <param name="raduis"></param>
-        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate,
-            string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct,
-            TRAVEL_CLASS travelClass, Action<Journey> callback, double minStarRate = 0)
+        public Journey(string fromCityName, string toCityName, int maxPrice, string attractions, string startDate, string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct, TRAVEL_CLASS travelClass, double minStarRate = 0)
         {
 
             this.startDate = startDate;
@@ -130,7 +128,6 @@ namespace sindbad2.Models
             this.travelClass = travelClass;
             this.minStarRate = minStarRate;
             this.remainMoney = maxPrice;
-            this.myCallBack = callback;
 
 
             this.fromCity = new City { name = fromCityName };
