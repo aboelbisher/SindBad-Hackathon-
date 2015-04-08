@@ -388,7 +388,7 @@ namespace sindbad2.Models
                     max = car.estimatedTotal1;
                 }
             }
-
+             
             this.remainMoney -= max ;
         }
 
