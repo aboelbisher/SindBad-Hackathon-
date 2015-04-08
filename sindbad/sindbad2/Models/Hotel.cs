@@ -37,8 +37,8 @@ namespace sindbad2.Models
                 hotel.city = hotelLists[i]["city"].ToString();
                 hotel.Rating = Double.Parse(hotelLists[i]["hotelRating"].ToString());
                 hotel.ShortDesc = hotelLists[i]["shortDescription"].ToString();
-                hotel.tripAdvisorRating = Double.Parse(hotelLists[i]["tripAdvisorRating"]
-                                     .ToString());
+                hotel.tripAdvisorRating = Double.Parse(hotelLists[i]["tripAdvisorRating"] == null ? "3.5" :
+                                     hotelLists[i]["tripAdvisorRating"].ToString());
                 Dictionary<string, object> values = JsonConvert.DeserializeObject<Dictionary<string, object>>
                     (hotelLists[i]["RoomRateDetailsList"].ToString());
                 values = JsonConvert.DeserializeObject<Dictionary<string,object>>(values["RoomRateDetails"].ToString());
