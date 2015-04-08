@@ -98,6 +98,8 @@ namespace sindbad2.Models
         private Dictionary<string, Airport> fromAirports;
         private Dictionary<string, Airport> toAirports;
 
+        private Action<Journey> myCallBack;
+
 
         private Object thisLock = new Object();
 
@@ -116,7 +118,7 @@ namespace sindbad2.Models
         /// <param name="raduis"></param>
         public Journey(string fromCityName, string toCityName, int maxPrice, GoogleAttractions[] attractions, string startDate,
             string returnDate, int adultsNum, int childrenNum, int infantsNum, bool direct,
-            TRAVEL_CLASS travelClass, double minStarRate = 0)
+            TRAVEL_CLASS travelClass, Action<Journey> callback, double minStarRate = 0)
         {
 
             this.startDate = startDate;
@@ -127,6 +129,8 @@ namespace sindbad2.Models
             this.direct = direct;
             this.travelClass = travelClass;
             this.minStarRate = minStarRate;
+
+            this.myCallBack = callback;
 
 
             this.fromCity = new City { name = fromCityName };
@@ -552,7 +556,7 @@ namespace sindbad2.Models
 
                 this.hotel = Hotel.BestHotel(dict);
 
-                var x = 0;
+                this.myCallBack(this);
             }
 
         #endregion// hotels
