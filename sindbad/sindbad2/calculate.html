@@ -103,8 +103,8 @@ $("#ex2").slider({
         */
 
         $.post("/api/SindbadAPI", {
-            "fromCityName": $("#from-city").val() + $("#from-coutnry").val(),
-            "toCityName": $("#to-city").val() + $("#to-coutnry").val(),
+            "fromCityName": $("#from-city").val() + " " + $("#from-coutnry").val(),
+            "toCityName": $("#to-city").val() + " " + $("#to-coutnry").val(),
             "maxPrice": $("#ex2").val(),
             "startDate": $("#from-date").val(),
             "endDate": $("#to-date").val(),
@@ -208,9 +208,9 @@ $("#ex2").slider({
                      </div>
     <div class="row">  </div>
         <div class="row" style="width:65%;margin:25px auto 5px!important; text-align:center;">  
-                     <div class="col-md-4">infants</div>
-                    <div class="col-md-4">childern</div>
-                    <div class="col-md-4">adults</div>
+                     <div class="col-md-4">Infants</div>
+                    <div class="col-md-4">Childern</div>
+                    <div class="col-md-4">Adults</div>
                    </div>   
      <div class="row" style="width:65%;margin: 5px auto 30px!important;">  
                     <div class="col-md-4"><input id="infants" class="form-control" min="0" step="1" value="0" type="number" /></div>
@@ -252,7 +252,7 @@ $("#ex2").slider({
         <div class="option" style="background-image:url('images/icons/bar2.png');"><p>Bar</p></div>
         <div class="option" style="background-image:url('images/icons/casino2.png');"><p>Casino</p></div>
         <div class="option" style="background-image:url('images/icons/night_club2.png');"><p>Disco</p></div>
-        <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Cafe Shop</p></div>
+        <div class="option" style="background-image:url('images/icons/cafe2.png');"><p>Coffee Shop</p></div>
         <div class="option" style="background-image:url('images/icons/restaurant2.png');"><p>Restaurant</p></div>
         <div class="option" style="background-image:url('images/icons/amusement_park2.png');"><p>Amusement</p></div>
        
@@ -268,19 +268,30 @@ $("#ex2").slider({
     </div>
     <div class="row">     
         <div class="clearfix"> </div>
-        <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="next" />  
+        <input id="to2" class="btn-lg btn btn-primary" class="form-control" type="submit" value="Done" />  
     </div>
     </div>
 
 
     <div id="resualt">
+        <div id="flight">
             your flight
-        <ul>
-            <li>
-                <div>Airlines flight num from airport XXXX time 00-00-00 00:00 -to airport XXXX time 00-00-00 00:00 </div>
-
-            </li>
-        </ul>
+            <ul>
+                <li>
+                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
+                </li>
+                <li>
+                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
+                </li>
+                <li>
+                    <div> Airlines flight num | airport XXXX  time 00-00-00 00:00  -> airport XXXX time 00-00-00 00:00  </div>
+                </li>
+            </ul>
+        </div>
+        <div id="car">
+            image|model
+        </div>
+         
 
 
     </div>
