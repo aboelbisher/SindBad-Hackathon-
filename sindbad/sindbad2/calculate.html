@@ -227,7 +227,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                           <div class='col-md-9 hotel'>" +hotel.name + "<span class='prise'>$" + hotel.Price + " /Trip</span></div>\
                           <div class='col-md-2'><div class='star'> "+hotel.Rating+"/5 </div></div> </div>\
                       <div class='row extra'>\
-                          <div class='col-md-7 textt'>" + hotel.ShortDesc.slice(43) + "</div>\
+                          <div class='col-md-7 textt'>" + hotel.ShortDesc.slice(52) + "</div>\
                           <div class='col-md-5  map-continer'> <div class='map2'></div></div>\
                       </div>\
                   </div>");
@@ -236,18 +236,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     for (var i = 0; i < document.getElementsByClassName("first").length; i++) {
                         document.getElementsByClassName("first")[i].addEventListener("click", function () {
 
-                            console.dir($(document.getElementsByClassName("map2")[i]).find(".attu").value);
-                           
+                            
                            
                             $(".row.extra").slideUp();
                             $(this).siblings(".extra").slideToggle();
                             for (var i = 0; i < document.getElementsByClassName('map2').length; i++) {
-                                var myLatlng = new google.maps.LatLng(parseFloat($(document.getElementsByClassName("map2")[i]).find(".attu").value), parseFloat($(document.getElementsByClassName("map2")[i]).find(".lattu").value));
+
+
+                                var myLatlng = new google.maps.LatLng(parseFloat($(document.getElementsByClassName("first")[i]).find(".attu")[0].value), parseFloat($(document.getElementsByClassName("first")[i]).find(".lattu")[0].value));
                                 var mapOptions = {
-                                    zoom: 11,
+                                    zoom: 15,
                                     center: myLatlng
                                 }
                                 var map = new google.maps.Map(document.getElementsByClassName("map2")[i], mapOptions);
+                                var marker = new google.maps.Marker({
+                                    position: myLatlng,
+                                    map: map
+                                });
                                 //google.maps.event.trigger(this, 'resize');
                                 //map.setCenter(myLatlng, 11);
                             }
