@@ -13,12 +13,12 @@ namespace sindbad2.Models
         public List<Attraction> nightLife = new List<Attraction>();
         public List<Attraction> otherAttr = new List<Attraction>();
         public int jumpDist { get; set; }
-        public static  double perc = 0.7;
+        public static double perc = 0.7;
         public void PrepareForSched(List<Attraction> attracts)
         {
             foreach (var iterator in attracts)
             {
-                if(iterator.types.Contains("night") || iterator.types.Contains("bar")
+                if (iterator.types.Contains("night") || iterator.types.Contains("bar")
                     || iterator.types.Contains("casino"))
                 {
                     nightLife.Add(iterator);
@@ -35,53 +35,53 @@ namespace sindbad2.Models
             var attractionsPairs = getAttractionsInPairs();
             this.sched = new Dictionary<DateTime, List<Attraction>>();
             jumpDist = (int)((1 - perc) * (endDate.Subtract(startDate).Days));
-            for(var dateIt = startDate.AddDays(1);dateIt.CompareTo(endDate) < 0;dateIt = dateIt.AddDays(jumpDist))
+            for (var dateIt = startDate.AddDays(1); dateIt.CompareTo(endDate) < 0; dateIt = dateIt.AddDays(jumpDist))
             {
                 this.sched[dateIt] = new List<Attraction>();
                 Random r = new Random();
-                int indexToRemove = r.Next(otherAttr.Count);
+                int indexToRemove = r.Next(attractionsPairs.Count);
                 this.sched[dateIt].Add((Attraction)attractionsPairs[indexToRemove].First);
                 this.sched[dateIt].Add((Attraction)attractionsPairs[indexToRemove].Second);
                 attractionsPairs.RemoveAt(indexToRemove);
             }
             return sched;
-          }
+        }
 
         public List<Pair> getAttractionsInPairs()
         {
             int i = 0;
             List<Pair> attractions = new List<Pair>();
-            for (i = 0 ; i < this.nightLife.Count ; i++)
+            for (i = 0; i < this.nightLife.Count; i++)
             {
                 GeoCoordinate myCoor = new GeoCoordinate(Double.Parse(this.nightLife[i].location.First.ToString())
                     , Double.Parse(this.nightLife[i].location.Second.ToString()));
                 int nearestIndex = this.getNearestAttr(myCoor);
 
-                if(nearestIndex == -1)
+                if (nearestIndex == -1)
                 {
                     break;
                 }
 
-                Pair newPair = new Pair(this.nightLife[i] , this.otherAttr[nearestIndex]);
+                Pair newPair = new Pair(this.nightLife[i], this.otherAttr[nearestIndex]);
 
                 attractions.Add(newPair);
 
                 this.otherAttr.RemoveAt(nearestIndex);
             }
-            
-          
-            if(!( i == this.nightLife.Count - 1))
+
+
+            if (!(i == this.nightLife.Count - 1))
             {
-                  for(int j = i ; j < this.nightLife.Count-1 ; j+=2)
-                  {
-                      Pair newPair = new Pair(this.nightLife[j] , this.nightLife[j+1]);
-                      attractions.Add(newPair);
-                  }
+                for (int j = i; j < this.nightLife.Count - 1; j += 2)
+                {
+                    Pair newPair = new Pair(this.nightLife[j], this.nightLife[j + 1]);
+                    attractions.Add(newPair);
+                }
             }
 
-            if(this.otherAttr.Count > 1)
+            if (this.otherAttr.Count > 1)
             {
-                for(int j = 0 ; j < this.otherAttr.Count-1 ; j+=2)
+                for (int j = 0; j < this.otherAttr.Count - 1; j += 2)
                 {
                     Pair newPair = new Pair(this.otherAttr[j], this.otherAttr[j + 1]);
                     attractions.Add(newPair);
@@ -93,16 +93,16 @@ namespace sindbad2.Models
 
         }
 
-        public int  getNearestAttr(GeoCoordinate cor)
+        public int getNearestAttr(GeoCoordinate cor)
         {
             double range = -1;
             int retVal = -1;
-            for (int i = 0 ; i < this.otherAttr.Count ; i++) 
+            for (int i = 0; i < this.otherAttr.Count; i++)
             {
                 GeoCoordinate myCoor = new GeoCoordinate(Double.Parse(this.otherAttr[i].location.First.ToString())
                     , Double.Parse(this.otherAttr[i].location.Second.ToString()));
 
-                if(range == -1 || range > cor.GetDistanceTo(myCoor))
+                if (range == -1 || range > cor.GetDistanceTo(myCoor))
                 {
                     range = cor.GetDistanceTo(myCoor);
                     retVal = i;

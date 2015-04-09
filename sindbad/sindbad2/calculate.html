@@ -36,6 +36,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         }
 
+        function setMarkers(map, attractions, hotels) {
+
+            var image = 'Hotel.png';
+
+            for (var i = 0; i < attractions.length; i++) {
+                var att = attractions[i];
+                var myLatLng = new google.maps.LatLng(att[0], att[1]);
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                });
+            }
+            for (var i = 0; i < hotels.length; i++) {
+                var hotel = hotels[i];
+                var myLatLng = new google.maps.LatLng(hotel[0], hotel[1]);
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    icon: image
+                });
+            }
+
+            var hotel = hotels[0];
+            var myLatLng = new google.maps.LatLng(hotel[0], hotel[1]);
+            map.setCenter(myLatLng);
+        }
+
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
                 event.preventDefault();
@@ -171,15 +198,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <div class='col-md-9'> " + tt.from.name + " ," + tt.DepartTime + " ->" + tt.to.name + " ," + tt.ArrivingTime + " </div>\
                             </div>");
                     });
-                    $("#flight2").after("<div style='color:#22aa33;float:left;'>Total :$"+data.data.trip.price+"</div>");
+                    $("#flight2").after("<div style='color:#22aa33;float:left;margin-left:170px;'>Total :$"+data.data.trip.price+"</div>");
                     if (!data.data.ifCar) {
                         $('#cartitle').hide();
                     }else{
                     data.data.cars.cars.forEach(function (car) {
                         $("#cars").append(" <div class='car'> <div class='card-head'> <div class='car-image' style='background-image:url(" + car.imageUrl1.m_url.m_urlOriginal + ")'></div>\
 <div class='car-model'>" + car.providerName + "</div> <div class='payment'> \
-                                    <div class='car-prise'>"+car.price1+"$</div>\
-                                    <div class='payment-plan'>Monthly</div>\
+                                    <div class='car-prise'>" + car.estimatedTotal1 + "$</div>\
+                                    <div class='payment-plan'>Total</div>\
                                 </div>\
                             </div>\
                             <div class='card-body'>\
@@ -189,6 +216,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                     });
                     }
+                    var hotels = [];
+                    var attractions = [];
                     data.data.hotels.forEach(function(hotel){
                         $('#hotels').append(" <div class='aa'>\
                       <div class='row first'>\
@@ -198,39 +227,48 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                           <div class='col-md-9 hotel'>" +hotel.name + "<span class='prise'>$" + hotel.Price + " /Trip</span></div>\
                           <div class='col-md-2'><div class='star'> "+hotel.Rating+"/5 </div></div> </div>\
                       <div class='row extra'>\
-                          <div class='col-md-7 textt'>"+hotel.ShortDesc+"</div>\
+                          <div class='col-md-7 textt'>" + hotel.ShortDesc.slice(43) + "</div>\
                           <div class='col-md-5  map-continer'> <div class='map2'></div></div>\
                       </div>\
                   </div>");
-                    
+                        hotels.push([hotel.location.Latitude,hotel.location.Longitude]);
                     });
                     for (var i = 0; i < document.getElementsByClassName("first").length; i++) {
                         document.getElementsByClassName("first")[i].addEventListener("click", function () {
 
-                            console.dir($(this).find(".attu"));
+                            console.dir($(document.getElementsByClassName("map2")[i]).find(".attu").value);
                            
                            
                             $(".row.extra").slideUp();
                             $(this).siblings(".extra").slideToggle();
                             for (var i = 0; i < document.getElementsByClassName('map2').length; i++) {
-                                var myLatlng = new google.maps.LatLng($(document.getElementsByClassName("map2")[i]).find(".lattu").value, $(document.getElementsByClassName("map2")[i]).find(".attu").value);
+                                var myLatlng = new google.maps.LatLng(parseFloat($(document.getElementsByClassName("map2")[i]).find(".attu").value), parseFloat($(document.getElementsByClassName("map2")[i]).find(".lattu").value));
                                 var mapOptions = {
                                     zoom: 11,
                                     center: myLatlng
                                 }
                                 var map = new google.maps.Map(document.getElementsByClassName("map2")[i], mapOptions);
-                                google.maps.event.trigger(this, 'resize');
-                                map.setCenter(myLatlng, 11);
+                                //google.maps.event.trigger(this, 'resize');
+                                //map.setCenter(myLatlng, 11);
                             }
                         });
                     }
                     for (var key in data.data.randomisedAttractions) {
-                        $("#schedule").append('<div class="row date">' + key + ' </div> ');
+                        $("#schedule").append('<div class="row date">' + key.toString().slice(0,key.toString().length-9) + ' </div> ');
                         for (var i = 0; i< data.data.randomisedAttractions[key].length; i++) {
                             $("#schedule").append('<div class="row atr">' + data.data.randomisedAttractions[key][i].name + ' <br/><div class="star" style="margin:auto;">' + data.data.randomisedAttractions[key][i].rating + '</div><br>' + data.data.randomisedAttractions[key][i].vicinty + ' </div> ');
-                           
+                            attractions.push([data.data.randomisedAttractions[key][i].location.First, data.data.randomisedAttractions[key][i].location.Second]);
                         }
                     }
+
+
+                    var mapOptions = {
+                        zoom: 11
+                    }
+                    var map = new google.maps.Map(document.getElementById('map3'),
+                                                  mapOptions);
+
+                    setMarkers(map, attractions, hotels);
 
                   
                 })
@@ -487,8 +525,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           
             
         </div>
-        <div class="clearfix"> </div>
-        <div class="clearfix"> </div>
+
+        <div id="map3" style="width:100%;height:250px;">
+
+        </div>
+
 
     </div>
 
